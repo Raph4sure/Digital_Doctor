@@ -1,0 +1,601 @@
+:root {
+    // Variables
+
+    --color-primary: black;
+    --headings-color: rgb(253, 5, 5);
+    --button-color: rgb(253, 5, 5);
+    --button-text-color: rgb(252, 247, 247);
+    --body-color: rgb(73, 11, 61);
+    --link-hover: rgb(6, 31, 252);
+    --container-color: rgb(156, 149, 185, 25%);
+    --footer-color: rgb(156, 149, 185);
+    --footer-text-color: rgb(252, 247, 247);
+    --shadow-box-color: rgba(0, 0, 0, 0.3);
+}
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@mixin responsive($breakpoint) {
+    @if $breakpoint == phone {
+        @media (max-width: 600px) {
+            @content;
+        }
+    }
+    @if $breakpoint == tab-port {
+        @media (max-width: 900px) {
+            @content;
+        }
+    }
+    @if $breakpoint == tab-land {
+        @media (max-width: 1200px) {
+            @content;
+        }
+    }
+    @if $breakpoint == big-desktop {
+        @media (max-width: 1900px) {
+            @content;
+        }
+    }
+}
+
+html {
+    font-size: 62.5%; // 1rem = 16px
+
+    @include responsive(big-desktop) {
+        font-size: 58%; // 1rem = 12px
+    }
+    @include responsive(tab-land) {
+        font-size: 56.25%; // 1rem = 9px
+    }
+    @include responsive(tab-port) {
+        font-size: 50%; // 1rem = 8px
+    }
+    @include responsive(phone) {
+        font-size: 35%; // 1rem = 5.6px
+    }
+}
+
+body {
+    font-family: "SUSE", sans-serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1.7;
+    color: var(--body-color);
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: underline !important;
+        outline: none;
+        color: -var(--link-hover);
+    }
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, auto);
+}
+
+.headnav {
+    grid-column: 1/-1;
+    grid-row: 1/2;
+    display: flex;
+    margin-top: 0.5rem;
+
+    .header {
+        flex: 0 0 21%;
+    }
+    .lab {
+        flex: 0 0 79%;
+    }
+
+    .inp {
+        visibility: hidden;
+    }
+
+    .nav {
+        display: flex;
+        flex: 1;
+        flex-basis: auto;
+        justify-content: flex-end;
+        align-items: center;
+        padding-top: 0.5rem;
+
+        .nav__div {
+            margin-right: 5rem;
+            margin-top: -3rem;
+
+            @include responsive(phone) {
+                margin-right: 1rem;
+            }
+
+            a.nav__div_li {
+                color: var(--headings-color);
+                font-size: 3rem;
+                font-weight: 530;
+                margin-right: 2rem;
+
+                &:hover {
+                    color: var(--link-hover);
+                }
+
+                @include responsive(tab-land) {
+                    font-size: 2.5rem;
+                }
+                @include responsive(tab-port) {
+                    font-size: 3rem;
+                }
+            }
+        }
+    }
+}
+
+.mainaside {
+    grid-column: 1/-1;
+    grid-row: 2/3;
+    display: flex;
+
+    @include responsive(tab-port) {
+        flex-direction: column;
+    }
+    @include responsive(phone) {
+        flex-direction: column;
+    }
+
+    .main {
+        flex: 1;
+        position: relative;
+
+        &__img {
+            margin-left: 4.5rem;
+            object-fit: contain;
+            max-width: 40vw;
+
+            @include responsive(big-desktop) {
+                margin-left: 1rem;
+            }
+        }
+
+        &__h2 {
+            color: var(--headings-color);
+            font-weight: 700;
+            font-size: 6rem;
+            line-height: 6rem;
+            position: absolute;
+            top: 13%;
+            right: 1.5%;
+
+            @include responsive(big-desktop) {
+                font-size: 4rem;
+                right: 0.5%;
+            }
+            @include responsive(tab-land) {
+                font-size: 3.5rem;
+            }
+            @include responsive(tab-port) {
+                font-size: 4.5rem;
+                top: 13%;
+                right: 3%;
+            }
+            @include responsive(phone) {
+                right: 5%;
+            }
+        }
+
+        &__p {
+            line-height: 8rem;
+            font-size: 5rem;
+            position: absolute;
+            top: 20%;
+            left: 48%;
+            text-align: center;
+
+            @include responsive(big-desktop) {
+                font-size: 3rem;
+                top: 18%;
+                left: 52%;
+                line-height: 7rem;
+            }
+            @include responsive(tab-land) {
+                font-size: 2.5rem;
+                top: 18%;
+                left: 50%;
+                line-height: 6rem;
+            }
+            @include responsive(tab-port) {
+                line-height: 6.5rem;
+                top: 21%;
+                left: 49%;
+                font-size: 3.5rem;
+            }
+            @include responsive(phone) {
+                line-height: 6.5rem;
+                top: 20%;
+                left: 40%;
+                line-height: 7.5rem;
+            }
+        }
+
+        &__p2 {
+            padding-left: 1.5rem;
+            margin-top: 0rem;
+            line-height: 7rem;
+
+            @include responsive(big-desktop) {
+                padding-left: 2.5rem;
+                line-height: 6rem;
+            }
+            @include responsive(tab-land) {
+                line-height: 7rem;
+                margin-top: 2rem;
+            }
+            @include responsive(tab-port) {
+                line-height: 5rem;
+            }
+            @include responsive(phone) {
+                margin-right: 2rem;
+            }
+        }
+        .span-p2 {
+            font-weight: 600;
+        }
+    }
+
+    .aside {
+        flex: 0 0 30%;
+        padding: 1.5rem;
+
+        @include responsive(big-desktop) {
+            flex: 0 0 35%;
+        }
+        @include responsive(tab-land) {
+            flex: 0 0 38%;
+        }
+        @include responsive(tab-port) {
+            padding-left: 2.5rem;
+        }
+
+        &__h2 {
+            font-weight: 550;
+            font-size: 3.5rem;
+
+            @include responsive(big-desktop) {
+                font-size: 3rem;
+            }
+            @include responsive(tab-land) {
+            }
+        }
+
+        &__p {
+            padding-bottom: 2rem;
+
+            @include responsive(phone) {
+                margin-right: 2rem;
+            }
+        }
+    }
+}
+
+.others {
+    grid-column: 1/-1;
+    grid-row: 3/4;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, auto);
+
+    &__row1 {
+        grid-row: 1/2;
+        grid-column: 1/2;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+
+        @include responsive(tab-port) {
+            margin: 0rem 0rem 2rem 0rem;
+        }
+
+        &-h2 {
+            color: var(--headings-color);
+        }
+    }
+
+    &__row2 {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        gap: 6rem;
+        justify-content: space-around;
+
+        @include responsive(big-desktop) {
+            gap: 2rem;
+        }
+        @include responsive(tab-land) {
+            gap: 1rem;
+        }
+        @include responsive(tab-port) {
+            grid-template-columns: auto;
+            grid-template-row: repeat(3, auto);
+            margin: 0rem 3rem 0rem 3rem;
+        }
+
+        .article {
+            background-color: var(--container-color);
+            border-radius: 5rem 0 5rem 0;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            padding: 2rem;
+
+            &-h3 {
+                text-align: center;
+
+                @include responsive(big-desktop) {
+                    font-size: 2.8rem;
+                }
+            }
+        }
+        &-article1 {
+            margin-left: 6rem;
+            @include responsive(big-desktop) {
+                margin-left: 3rem;
+
+                @include responsive(tab-port) {
+                    margin-left: 0rem;
+                }
+            }
+        }
+
+        &-article3 {
+            margin-right: 6rem;
+            @include responsive(big-desktop) {
+                margin-right: 3rem;
+            }
+            @include responsive(tab-port) {
+                margin-right: 0rem;
+            }
+        }
+    }
+
+    &__row3 {
+        &-article {
+            border-radius: 5rem 0 5rem 0;
+            background-color: var(--container-color);
+            margin: 2rem;
+        }
+
+        &-p {
+            padding: 2.5rem;
+            font-weight: 300;
+
+            .span-heading {
+                color: var(--headings-color);
+                font-weight: 600;
+            }
+        }
+    }
+    &__row4 {
+        margin-top: 1rem;
+
+        .span-row4 {
+            color: var(--headings-color);
+            font-weight: 600;
+        }
+        &-p {
+            margin-left: 3rem;
+        }
+    }
+
+    &__row5 {
+        display: flex;
+        justify-content: center;
+
+        &-button {
+            text-decoration: none;
+            background-color: var(--button-color);
+            color: var(--button-text-color);
+            font-weight: 500;
+            padding: 0rem 2rem 0rem 2rem;
+            border-radius: 2.5rem 0 2.5rem 0;
+            margin: 2rem 0 3rem 0;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+.footer {
+    grid-column: 1/-1;
+    grid-row: 4/5;
+    background-color: var(--footer-color);
+    color: var(--footer-text-color);
+    padding-top: 1.5rem;
+
+    &__div1 {
+        font-weight: 300;
+
+        &-p {
+            margin-left: 2rem;
+        }
+    }
+    &__div2 {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 3rem;
+
+        @include responsive(tab-port) {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            margin-top: 0rem;
+
+            .footer__div2 {
+                &-article1-p {
+                    grid-column: 1/2;
+                    margin-left: -5rem;
+                    margin-bottom: -0.4rem;
+                }
+                &-article2 {
+                    grid-column: 1/2;
+                }
+
+                &-article3 {
+                    margin-top: -4rem;
+                }
+            }
+        }
+
+        &-article2 {
+            img {
+                height: 3.4rem;
+                width: 3.4rem;
+                object-fit: contain;
+
+                &:first-child {
+                    margin-left: 3rem;
+                }
+            }
+        }
+
+        &-article3 {
+            padding-bottom: 1rem;
+        }
+
+        &-article1-p {
+            margin: 2rem;
+        }
+    }
+}
+
+h3 {
+    display: none;
+    visibility: hidden;
+}
+
+// Side bar
+@include responsive(tab-port) {
+    .nav {
+        height: 30%;
+        width: 30vw;
+        position: absolute;
+        background-color: rgb(156, 149, 185, 95%);
+        transition: all 0.5s;
+        transform: translateX(30vw);
+        z-index: 2;
+        right: 0;
+
+        &__div {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+
+            &_li {
+                color: var(--button-text-color);
+                text-decoration: none;
+            }
+            &_li:hover {
+                color: var(--link-hover);
+                text-decoration: underline;
+            }
+        }
+    }
+    input {
+        display: none;
+        visibility: hidden;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .toggle {
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        top: 20px;
+        right: 15px;
+        z-index: 3;
+        cursor: pointer;
+        border-radius: 2px;
+        background-color: var(--button-text-color);
+        box-shadow: 0 0 10px var(--shadow-box-color);
+
+        .common {
+            position: absolute;
+            height: 2px;
+            width: 20px;
+            background-color: var(--headings-color);
+            border-radius: 50px;
+            transition: 0.3s ease;
+        }
+        .top_line {
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .middle_line {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .bottom_line {
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    input:checked {
+        ~ .toggle {
+            .top_line {
+                left: 2px;
+                top: 14px;
+                width: 25px;
+                transform: rotate(225deg);
+            }
+            .bottom_line {
+                left: 2px;
+                top: 14px;
+                width: 25px;
+                transform: rotate(-225deg);
+            }
+            .middle_line {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+        }
+
+        ~ .nav {
+            transform: translateX(0);
+            box-shadow: 0 0 15px var(--shadow-box-color);
+        }
+    }
+    h3 {
+        display: block;
+        visibility: visible;
+        color: var(--button-text-color);
+        font-size: 5rem;
+        font-weight: 800;
+        margin-right: 05rem;
+        padding-right: -20rem;
+        padding: 10px 0;
+        padding-right: 30px;
+        pointer-events: none;
+    }
+
+    a.nav__div_li {
+        &:hover,
+        &:active,
+        &:focus {
+            font-size: 130% !important;
+            transition: font-size 0.1s !important;
+        }
+    }
+}
