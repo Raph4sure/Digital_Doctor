@@ -9,12 +9,13 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const session = require("express-session");
 // Importing the router
-const patientRouter = require("./routes/patient");
-const adminRouter = require("./routes/admin");
-const doctorRouter = require("./routes/doctor");
-const appointmentRouter = require("./routes/appointment");
-const cors = require('cors');
+const patientRouter = require("./routes/patientRoutes");
+const doctorRouter = require("./routes/doctorRoutes");
+const appointmentRouter = require("./routes/appointmentRoutes");
+const adminRouter = require("./routes/adminRoutes");
+const cors = require("cors");
 
+// const css = require("./public/css/homepage.css");
 
 // const bodyParser = require("body-parser");
 
@@ -23,7 +24,6 @@ const db = require("./database");
 
 const app = express();
 app.use(cors()); // Use CORS to allow requests from any origin
-
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -45,11 +45,98 @@ app.use(
     })
 );
 
+// Home page
+app.get("/", (req, res) => {
+    res.render("homepage", {
+        pageTitle: "Homepage",
+        cssPath: "/css/homepage.css",
+        message: "Welcome to the homepage",
+    });
+});
+
+// Home page
+app.get("/homepage.html", (req, res) => {
+    res.redirect("/homepage");
+});
+
+// About page
+app.get("/homepage", (req, res) => {
+    res.render("homepage", {
+        pageTitle: "Homepage",
+        cssPath: "/css/homepage.css",
+        message: "Welcome to the homepage",
+    });
+});
+
+app.get("/About.html", (req, res) => {
+    res.redirect("/about");
+});
+
+// About page
+app.get("/about", (req, res) => {
+    res.render("About", {
+        pageTitle: "About",
+        cssPath: "/css/About.css",
+        message: "Welcome to the About Us page",
+    });
+});
+
+// Contact page
+app.get("/Contact.html", (req, res) => {
+    res.redirect("/contact");
+});
+
+app.get("/contact", (req, res) => {
+    res.render("Contact", {
+        pageTitle: "Contact",
+        cssPath: "/css/contact.css",
+        message: "Welcome to the Contact Us page",
+    });
+});
+// Dashboard page
+app.get("/Dashboard.html", (req, res) => {
+    res.redirect("/dashboard");
+});
+
+app.get("/dashboard", (req, res) => {
+    res.render("Dashboard", {
+        pageTitle: "Dashboard",
+        cssPath: "/css/dashboard.css",
+        message: "Welcome to the Dashboard page",
+    });
+});
+// Consultation page
+app.get("/Consultation.html", (req, res) => {
+    res.redirect("/consultation");
+});
+
+app.get("/consultation", (req, res) => {
+    res.render("Consultation", {
+        pageTitle: "Consultation",
+        cssPath: "/css/Consultation.css",
+        message: "Welcome to the consultation page",
+    });
+});
+// Contact page
+app.get("/Contact.html", (req, res) => {
+    res.redirect("/contact");
+});
+
+app.get("/contact", (req, res) => {
+    res.render("Contact", {
+        pageTitle: "Contact",
+        cssPath: "/css/Contact.css",
+        message: "Welcome to the Contact Us page",
+    });
+});
+
+
+
 // Using Patient router
 app.use("/api/patients", patientRouter);
-app.use("/api/admin", adminRouter);
 app.use("/api/doctors", doctorRouter);
-app.use("/api/appointments", appointmentRouter);
+app.use("/api/appointment", appointmentRouter);
+app.use("/api/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -67,14 +154,14 @@ app.use(function (err, req, res, next) {
     res.render("error");
 });
 
-app.get("/", async (req, res) => {
-    try {
-        const [rows] = await db.query("SELECT * FROM patients");
-        res.json(rows);
-    } catch (err) {
-        res.status(500).send("Database Error: " + err.message);
-    }
-});
+// app.get("/", async (req, res) => {
+//     try {
+//         const [rows] = await db.query("SELECT * FROM patients");
+//         res.json(rows);
+//     } catch (err) {
+//         res.status(500).send("Database Error: " + err.message);
+//     }
+// });
 
 // connecting to the database and starting the server
 db.getConnection()

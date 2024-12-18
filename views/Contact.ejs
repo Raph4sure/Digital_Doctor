@@ -1,0 +1,240 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="description"
+            content="Digital Doctor's homepage offers intuitive access to online medical consultations, 24/7 healthcare, and certified professionals."
+        />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../css/Contact.css"/>
+        <title>Document</title>
+    </head> -->
+<%- include('partials/header') %>
+<body class="container">
+    <%- include('partials/nav_bar') %>
+    <!-- <section class="headnav">
+            <header class="header">
+                <div class="header__div">
+                    <img
+                        src="../img/logo6.png"
+                        class="logo"
+                        alt="Digital Doctor"
+                    />
+                </div>
+            </header>
+            <label class="lab">
+                <input class="inp" type="checkbox" />
+                <div class="toggle">
+                    <span class="top_line common"></span>
+                    <span class="middle_line common"></span>
+                    <span class="bottom_line common"></span>
+                </div>
+                <nav class="nav">
+                    <div class="nav__div">
+                        <h3>MENU</h3>
+                        <a href="#" class="nav__div_li">Home</a>
+                        <a class="nav__div_li" href="#">Consultation</a>
+                        <a class="nav__div_li" href="#">Doctors</a>
+                        <a class="nav__div_li" href="#">Contact Us</a>
+                        <a class="nav__div_li" href="#">About</a>
+                    </div>
+                </nav>
+            </label>
+        </section> -->
+    <!-- start here -->
+    <section class="main2">
+        <div class="div1">
+            <h1 class="div1-h1">contact us</h1>
+            <p class="div1-p">
+                We'd love to hear from you! Whether you have a question, need
+                support, or just want to share feedback. <br />
+                Please feel free to reach out to us through any of the following
+                methods:
+            </p>
+        </div>
+        <div class="div2">
+            <div class="div2__row">
+                <div class="div2__row-card1 cards">
+                    <a class="div2__row-card1-a" href="#"
+                        ><img
+                            class="div2__row-card1-img cards-img"
+                            src="./../img/contact.png"
+                    /></a>
+                    <h2 class="div2__row-card1-h2 cards-h2">CONTACT NUMBER</h2>
+                    <p class="cards-p">+ 1232 5674 34</p>
+                    <p class="cards-p">+ 1235 2355 98</p>
+                </div>
+                <div class="div2__row-card2 cards">
+                    <a class="div2__row-card2-a" href="#"
+                        ><img
+                            class="div2__row-card2-img cards-img"
+                            src="./../img/email.png"
+                    /></a>
+                    <span class="span"
+                        ><h2 class="div2__row-card2-h2 cards-h2">
+                            EMAIL ADRESS
+                        </h2></span
+                    >
+                    <p class="cards-p">info@digitaldoctor.gmail</p>
+                    <p class="cards-p">info@digitaldoctor.aol</p>
+                </div>
+                <div class="div2__row-card3 cards">
+                    <a class="div2__row-card3-a" href="#"
+                        ><img
+                            class="div2__row-card3-img cards-img"
+                            src="./../img/post.png"
+                    /></a>
+                    <h2 class="div2__row-card3-h2 cards-h2">ADDRESS</h2>
+                    <p class="cards-p">
+                        198 West 21st street,<br />
+                        Suite 721 New York NY10016
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="message">
+        <div class="message__div">
+            <h1 class="message__div-h1">Leave us a message</h1>
+        </div>
+        <form
+            action="#"
+            enctype="multipart/form-data"
+            class="form"
+            id="registrationForm"
+        >
+            <div class="form__group form_val">
+                <label class="form__label form__label-anim" for="first_name"
+                    >Name</label
+                >
+                <input
+                    type="text"
+                    class="form__input form__input-anim"
+                    id="name"
+                    placeholder="Name"
+                    name="name"
+                    required
+                    minlength="3"
+                    custommaxlength="30"
+                />
+            </div>
+
+            <div class="form__group form_val">
+                <label class="form__label form__label-anim" for="email"
+                    >Email</label
+                >
+                <input
+                    type="email"
+                    class="form__input form__input-anim"
+                    id="email"
+                    name="email"
+                    placeholder="Email Address"
+                    required
+                    minlength="5"
+                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                />
+            </div>
+            <div class="form__group form_val">
+                <label class="form__label form__label-anim" for="age"
+                    >Phone</label
+                >
+                <input
+                    type="number"
+                    class="form__input form__input-anim"
+                    id="phone_no"
+                    placeholder="phone"
+                    name="phone"
+                    required
+                    minlength="8"
+                />
+            </div>
+
+            <div class="form__group form_val">
+                <label class="form__label form__label-anim" for="address"
+                    >Subject</label
+                >
+
+                <input type="text" class="form__input form__input-anim"
+                id="subject" name="subject" placeholder="Your Subject"" required
+                minlength="10" />
+            </div>
+
+            <div class="form__group form_val">
+                <label class="form__label form__label-anim" for="address"
+                    >Message</label
+                >
+
+                <input
+                    type="text"
+                    class="form__input form__input-anim form__input-message"
+                    id="message"
+                    name="message"
+                    placeholder="Type Your Message"
+                    required
+                    minlength="10"
+                />
+            </div>
+
+            <button class="form__button" type="submit">Submit</button>
+        </form>
+    </section>
+
+    <!-- end here -->
+    <%- include('partials/footer') %>
+
+    <!-- <footer class="footer">
+            <div class="footer__div1">
+                <p class="footer__div1-p">
+                    <span>About Digital Doctors:</span> Digital Doctor connects
+                    you with certified doctors online, offering 24/7 access to
+                    quality healthcare. Learn more in our Privacy
+                    <a href="#">Policy and Terms</a> &
+                    <a href="#">Conditions.</a>
+                </p>
+            </div>
+            <div class="footer__div2">
+                <article class="footer__div2-article1">
+                    <p class="footer__div2-article1-p">
+                        <a href="#">Home</a>/<a href="#">Consultation</a>/<a
+                            href="#"
+                            >Doctors</a
+                        >/<a href="#">About Us</a>
+                    </p>
+                </article>
+                <article class="footer__div2-article2">
+                    <p>Connect With Us On</p>
+                    <div>
+                        <a href="#"
+                            ><img src="../img/linkedIn.png" alt="Facebook Logo"
+                        /></a>
+                        <a href="#"
+                            ><img
+                                src="../img/xtwitter.png"
+                                alt="Twitter(X) Logo"
+                        /></a>
+                        <a href="#"
+                            ><img src="../img/facebook.png" alt="LinkedIn Logo"
+                        /></a>
+                    </div>
+                </article>
+                <article class="footer__div2-article3">
+                    <p>
+                        Contact Us
+                        <br />
+                        Email: <a href="#">support@digitaldoctor.com</a>
+                        <br />
+                        Phone: +2347066886470
+                    </p>
+                </article>
+            </div>
+        </footer> -->
+</body>
+<!-- </html> -->

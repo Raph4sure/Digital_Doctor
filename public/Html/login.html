@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./../css/login.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+            integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap"
+            rel="stylesheet"
+        />
+        <title>Login</title>
+    </head>
+    <body>
+        <main class="container">
+            <section class="container__body">
+                <form action="#" class="form" id="loginForm">
+                    <div class="form__group">
+                        <h2 class="form__h2">Login</h2>
+                    </div>
+                    <div class="form__group form_val">
+                        <label class="form__label form__label-anim" for="email"
+                            >Email Address</label
+                        >
+                        <input
+                            type="email"
+                            class="form__input form__input-anim"
+                            id="email"
+                            placeholder="Email Address"
+                            required
+                            minlength="5"
+                            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                        />
+                        <span class="error-icon hidden">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        </span>
+                        <span class="success-icon hidden">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </span>
+                        <div class="error"></div>
+                    </div>
+
+                    <div class="form__group form_val">
+                        <label
+                            class="form__label form__label-anim"
+                            for="password"
+                            >Password</label
+                        >
+                        <input
+                            type="password"
+                            class="form__input form__input-anim"
+                            id="password"
+                            placeholder="Password"
+                            required
+                            minlength="8"
+                            custommaxlength="30"
+                        />
+                        <span class="error-icon hidden">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        </span>
+                        <span class="success-icon hidden">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </span>
+                        <div class="error"></div>
+                    </div>
+
+                    <button class="form__button" type="submit">Login</button>
+                </form>
+                <p class="container__body-p">
+                    Don't have an account? Click
+                    <a href="./registration.html">Here</a> Instead
+                </p>
+            </section>
+        </main>
+        <script src="./../javascripts/login.js"></script>
+    </body>
+</html>
