@@ -15,6 +15,12 @@ const appointmentRouter = require("./routes/appointmentRoutes");
 const adminRouter = require("./routes/adminRoutes");
 const cors = require("cors");
 
+// const crypto = require("crypto");
+// const secret = crypto.randomBytes(64).toString("hex");
+// console.log(secret);
+
+const staticRouter = require("./routes/staticRoutes");
+
 // const css = require("./public/css/homepage.css");
 
 // const bodyParser = require("body-parser");
@@ -45,91 +51,9 @@ app.use(
     })
 );
 
-// Home page
-app.get("/", (req, res) => {
-    res.render("homepage", {
-        pageTitle: "Homepage",
-        cssPath: "/css/homepage.css",
-        message: "Welcome to the homepage",
-    });
-});
 
-// Home page
-app.get("/homepage.html", (req, res) => {
-    res.redirect("/homepage");
-});
-
-// About page
-app.get("/homepage", (req, res) => {
-    res.render("homepage", {
-        pageTitle: "Homepage",
-        cssPath: "/css/homepage.css",
-        message: "Welcome to the homepage",
-    });
-});
-
-app.get("/About.html", (req, res) => {
-    res.redirect("/about");
-});
-
-// About page
-app.get("/about", (req, res) => {
-    res.render("About", {
-        pageTitle: "About",
-        cssPath: "/css/About.css",
-        message: "Welcome to the About Us page",
-    });
-});
-
-// Contact page
-app.get("/Contact.html", (req, res) => {
-    res.redirect("/contact");
-});
-
-app.get("/contact", (req, res) => {
-    res.render("Contact", {
-        pageTitle: "Contact",
-        cssPath: "/css/contact.css",
-        message: "Welcome to the Contact Us page",
-    });
-});
-// Dashboard page
-app.get("/Dashboard.html", (req, res) => {
-    res.redirect("/dashboard");
-});
-
-app.get("/dashboard", (req, res) => {
-    res.render("Dashboard", {
-        pageTitle: "Dashboard",
-        cssPath: "/css/dashboard.css",
-        message: "Welcome to the Dashboard page",
-    });
-});
-// Consultation page
-app.get("/Consultation.html", (req, res) => {
-    res.redirect("/consultation");
-});
-
-app.get("/consultation", (req, res) => {
-    res.render("Consultation", {
-        pageTitle: "Consultation",
-        cssPath: "/css/Consultation.css",
-        message: "Welcome to the consultation page",
-    });
-});
-// Contact page
-app.get("/Contact.html", (req, res) => {
-    res.redirect("/contact");
-});
-
-app.get("/contact", (req, res) => {
-    res.render("Contact", {
-        pageTitle: "Contact",
-        cssPath: "/css/Contact.css",
-        message: "Welcome to the Contact Us page",
-    });
-});
-
+// Use the static routes
+app.use("/", staticRouter);
 
 
 // Using Patient router

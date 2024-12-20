@@ -76,6 +76,7 @@ exports.login = async (req, res) => {
         }
 
         const patient = rows[0];
+        console.log("Patient Information:", patient);
         // comparing entered password with the hashed password in the database
         const passwordMatch = await bcrypt.compare(
             password,
@@ -177,3 +178,30 @@ exports.logout = (req, res) => {
     }
 };
 
+
+
+
+/* 
+exports.showBookingForm = async (req, res) => {
+    if (!req.session.isLoggedIn) {
+        return res.redirect("/login");
+    }
+
+    try {
+        const [rows] = await db.query(
+            "SELECT first_name, last_name, email, phone, gender FROM Patients WHERE id = ?",
+            [req.session.patientId]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "Patient not found" });
+        }
+
+        res.render("bookAppointment", { patientData: rows[0] }); // Render the booking form with patient data
+    } catch (error) {
+        res.status(500).json({
+            error: "Failed to retrieve profile: " + error.message,
+        });
+    }
+};
+ */

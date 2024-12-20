@@ -8,41 +8,16 @@ const db = require("./../database");
 const multer = require("multer");
 
 
+const upload = require("../middleware/upload");
 
-// Multer storage configuration
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "./uploads");
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, `${file.fieldname}-${uniqueSuffix}-${file.originalname}`);
-    },
-});
 
-const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 1024 * 1024 * 5,
-    },
-    fileFilter: (req, file, cb) => {
-        const allowedMimeTypes = ["image/jpeg", "image/jpg", "image/png"];
-        if (allowedMimeTypes.includes(file.mimetype)) {
-            cb(null, true);
-        } else {
-            cb(
-                new Error(
-                    "Invalid file type. Only JPEG, JPG, PNG files are allowed"
-                )
-            );
-        }
-    },
-});
 
 // Doctors Registration route
-exports.register = upload.single("profile_image"), async (req, res) => {
+exports.register =  async (req, res) => {
     console.log("Body", req.body);
-    console.log("File:", req.file);
+    console.log("File:", req.files);
+    console.log("Doctor ID:", req.session.doctorId);
+
     const {
         first_name,
         last_name,
@@ -74,7 +49,7 @@ exports.register = upload.single("profile_image"), async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         // Get the profile image filename
-        const profileImage = req.file ? req.file.filename : null;
+        const profileImage = req.files ? req.files[0].filename : null;
 
         // Insert the new patient into the database
         const query = `INSERT INTO Doctors ( first_name, last_name, email,password_hash, specialization, gender, phone, profile_image)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -167,17 +142,22 @@ exports.getProfile = async (req, res) => {
 
 // Update doctor profile
 exports.updateProfile = async (req, res) => {
+
+    const profileImages = req.files
+        ? req.files.map((file) => file.filename)
+        : [];
+
     const { first_name, last_name, specialization, phone } = req.body;
 
     try {
         await db.query(
-            "UPDATE Doctors SET first_name = ?, last_name = ?, specialization = ?, gender = ?, profile_image = ?, phone = ?, WHERE id = ?",
+            "UPDATE Doctors SET first_name = ?, last_name = ?, specialization = ?, gender = ?, profile_image = ?, phone = ? WHERE id = ?",
             [
                 first_name,
                 last_name,
                 specialization,
-                profile_image,
                 gender,
+                profileImages.join(", "),
                 phone,
                 req.session.doctorId,
             ]

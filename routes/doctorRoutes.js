@@ -1,6 +1,3 @@
-
-
-
 /* // Multer storage configuration
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -213,13 +210,33 @@ const doctorController = require("../controllers/doctorController");
 // requiring the function requireLogin
 const { requireLogin } = require("../middleware/authMiddleware");
 
+const upload = require("../middleware/upload");
 
+const uploadFiles = require("../middleware/upload");
 
-router.post("/register", doctorController.register);
+/* router.post("/register", doctorController.register);
 router.post("/login", doctorController.login);
 router.post("/logout", doctorController.logout);
 router.get("/getProfile", requireLogin, doctorController.getProfile);
 router.put("/updateProfile", requireLogin, doctorController.updateProfile);
 router.delete("/deleteProfile", requireLogin, doctorController.deleteProfile);
+ */
+
+router.post(
+    "/register",
+    uploadFiles("profile_image", 1),
+    doctorController.register
+);
+router.post("/login", doctorController.login);
+router.post("/logout", doctorController.logout);
+router.get("/getProfile", requireLogin, doctorController.getProfile);
+router.put(
+    "/updateProfile",
+    requireLogin,
+    uploadFiles("profile_image", 1),
+    doctorController.updateProfile
+);
+router.delete("/deleteProfile", requireLogin, doctorController.deleteProfile);
+
 
 module.exports = router;
