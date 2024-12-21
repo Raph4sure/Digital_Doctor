@@ -76,7 +76,7 @@ exports.login = async (req, res) => {
         }
 
         const patient = rows[0];
-        console.log("Patient Information:", patient);
+        // console.log("Patient Information:", patient);
         // comparing entered password with the hashed password in the database
         const passwordMatch = await bcrypt.compare(
             password,
