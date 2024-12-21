@@ -330,6 +330,9 @@ const enhancedValidateForm = (formSelector) => {
                 if (response.ok) {
                     alert("Registration Successful");
                     formElement.reset();
+                    // redirect to the 
+                    // dashboard page
+                    window.location.href = "http://localhost:3300/dashboard";
                 } else {
                     const data = await response.json();
                     alert(data.error || "Registration failed");

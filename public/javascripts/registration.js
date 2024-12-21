@@ -243,6 +243,10 @@ const enhancedValidateForm = (formSelector) => {
     if (response.ok) {
         alert("Registration Successful");
         formElement.reset(); // Reset form after successful submission
+
+        // Redirect to Dashboard page
+        window.location.href = "/dashboard.html";
+
     } else {
         alert(data.error || "Registration failed");
     }

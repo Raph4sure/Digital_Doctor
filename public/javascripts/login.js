@@ -331,8 +331,10 @@ const validateForm = (formSelector) => {
 
             if (response.ok) {
                 alert(result.message);
-                window.location.href =
-                    "http://127.0.0.1:5501/public/Html/homepage.html";
+                window.location.href = "http://localhost:3300/dashboard";
+                
+                // redirect to the dashboard page
+                
             } else {
                 if (result.error.includes("email")) {
                     const emailError = document
