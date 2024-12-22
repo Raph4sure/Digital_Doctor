@@ -184,6 +184,30 @@ router.get("/bookAppointment", async (req, res) => {
     }
 });
 
+router.get("/showAppointment.html", (req, res) => {
+    res.redirect("/showAppointment");
+});
 
+router.get("/showAppointment", async (req, res) => {
+    try {
+        const patientId = req.session.patientId;
+
+        const query = `SELECT * FROM Appointments WHERE patient_id = ?
+            ORDER BY appointment_date DESC, appointment_time DESC`;
+
+        const [appointments] = await db.query(query, [patientId]);
+
+        if (appointments.length === 0) {
+            return res.status(404).json({ message: "No appointments found" });
+        }
+
+        res.render("showAppointment", { appointments });
+
+        //    res.status(200).json({ appointments: appointments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error fetching appointments" });
+    }
+});
 
 module.exports = router;

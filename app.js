@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const session = require("express-session");
 // Importing the router
+const staticRouter = require("./routes/staticRoutes");
 const patientRouter = require("./routes/patientRoutes");
 const doctorRouter = require("./routes/doctorRoutes");
 const appointmentRouter = require("./routes/appointmentRoutes");
@@ -19,7 +20,6 @@ const cors = require("cors");
 // const secret = crypto.randomBytes(64).toString("hex");
 // console.log(secret);
 
-const staticRouter = require("./routes/staticRoutes");
 
 // const css = require("./public/css/homepage.css");
 
@@ -52,8 +52,6 @@ app.use(
 );
 
 
-// Use the static routes
-app.use("/", staticRouter);
 
 
 // Using Patient router
@@ -61,6 +59,10 @@ app.use("/api/patients", patientRouter);
 app.use("/api/doctors", doctorRouter);
 app.use("/api/appointment", appointmentRouter);
 app.use("/api/admin", adminRouter);
+
+// Use the static routes
+app.use("/", staticRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

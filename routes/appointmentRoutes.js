@@ -15,8 +15,13 @@ const uploadFiles = require("../middleware/upload");
 
 router.use(requireLogin);
 
-router.post("/book", uploadFiles("medical_images", 5), appointmentController.bookAppointment);
-router.get("/showAppointment/patient/:id", appointmentController.showAppointment);
+// Route to handle booking appointment
+router.post("/bookAppointment", uploadFiles("medical_images", 5), appointmentController.bookAppointment);
+
+// router.get("/bookAppointment", appointmentController.bookAppointment);
+// router.post("/bookAppointment", uploadFiles("medical_images", 5), appointmentController.bookAppointment);
+// router.get("/showAppointment", appointmentController.showAppointment);
+
 router.put("/updateAppointment/patient/:id", uploadFiles("medical_images", 5), appointmentController.updateAppointment);
 router.delete("/deleteAppointment/patient/:id", appointmentController.deleteAppointment);
 

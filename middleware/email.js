@@ -18,7 +18,7 @@ exports.sendEmail = async (to, subject, templatePath, templateData) => {
 
         const msg = {
             to,
-            from: "jalingoskoolmedia@gmail.com", 
+            from: "Digital Doctor", 
             subject,
             html: template,
         };
