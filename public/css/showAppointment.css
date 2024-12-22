@@ -12,6 +12,13 @@
   --shadow-box-color: rgba(0, 0, 0, 0.3);
 }
 
+.body table td, .body table th {
+  padding: 10px;
+  border: 2px solid black;
+  text-align: center;
+  color: black;
+}
+
 *,
 *::after,
 *::before {
@@ -181,7 +188,7 @@ a:hover, a:focus, a:active {
   font-size: 2.5rem;
   margin-bottom: 2rem;
 }
-.side__bar-li:nth-child(3) .side__bar-a {
+.side__bar-li .side__bar-a:active {
   color: var(--footer-color);
 }
 .side__bar-a {
@@ -193,9 +200,26 @@ a:hover, a:focus, a:active {
   grid-row: 3/6;
   padding-left: 2rem;
   margin-bottom: 30rem;
+  margin-right: 3rem;
 }
 .body-text {
   margin-top: 2rem;
+}
+.body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+.body table th {
+  background-color: var(--footer-color);
+  color: var(--body-color);
+}
+.body table td {
+  font-weight: 550;
+}
+.body table .link {
+  color: var(--link-hover);
 }
 
 hr {
