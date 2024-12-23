@@ -14,7 +14,6 @@
     --shadow-box-color: rgba(0, 0, 0, 0.3);
 }
 
-
 %table-line {
     padding: 10px;
     border: 2px solid black;
@@ -174,6 +173,8 @@ a {
     display: grid;
     grid-template-columns: repeat(10, auto);
     grid-template-rows: repeat(8, auto);
+    min-height: 70vh;
+
 }
 
 .top__container2 {
@@ -220,8 +221,7 @@ a {
     grid-row: 3/6;
     padding-left: 2rem;
     margin-bottom: 30rem;
-        margin-right: 3rem;
-
+    margin-right: 3rem;
 
     &-text {
         margin-top: 2rem;
@@ -247,7 +247,6 @@ a {
         }
         .link {
             color: var(--link-hover);
-            
         }
     }
 }

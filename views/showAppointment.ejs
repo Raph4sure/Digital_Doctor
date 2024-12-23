@@ -60,7 +60,11 @@
           <a class="side__bar-a" href="">Reports</a>
         </li>
         <li class="side__bar-li">
-          <a class="side__bar-a" href="">Logout</a>
+          <!-- <a class="side__bar-a" href="">Logout</a>
+            -->
+          <form action="/logout" method="POST">
+            <button type="submit" style="background:none; border:none; color:blue; text-decoration:none; cursor:pointer; font-size:24px;" class="side__bar-a">Logout</button>
+          </form>
         </li>
       </ul>
     </section>
@@ -126,7 +130,10 @@
       </table>
     </section>
     <% } else { %>
-    <p>No appointments found.</p>
+    <!-- <p>No appointments found.</p> -->
+    <section class="body">
+      <p style="font-weight: bold; color: red;">No appointments found.</p>
+    </section>
     <% } %>
   </main>
 

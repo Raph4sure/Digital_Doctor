@@ -4,9 +4,12 @@ exports.requireLogin = (req, res, next)  => {
     if (req.session && req.session.isLoggedIn) {
         next();
     } else {
-        return res
+        /*  return res
             .status(401)
-            .json({ error: "Unauthourized: You need to log in " });
+            .json({ error: "Unauthourized: You need to log in " }); */
+        // console.log("User not logged in, redirecting to login page...");
+
+                return res.redirect('/login?alert=Please%20log%20in%20to%20continue');
     }
 }
 

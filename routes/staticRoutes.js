@@ -8,6 +8,9 @@ const path = require("path");
 
 const uploadFiles = require("../middleware/upload");
 
+const { requireLogin } = require("./../middleware/authMiddleware");
+
+
 // Home page
 router.get("/", (req, res) => {
     res.render("homepage", {
@@ -60,6 +63,8 @@ router.get("/contact", (req, res) => {
 router.get("/Dashboard.html", (req, res) => {
     res.redirect("/dashboard");
 });
+
+
 
 router.get("/dashboard", (req, res) => {
     res.render("Dashboard", {
@@ -193,7 +198,7 @@ router.get("/showAppointment.html", (req, res) => {
     res.redirect("/showAppointment");
 });
 
-router.get("/showAppointment", async (req, res) => {
+router.get("/showAppointment", requireLogin, async (req, res) => {
     try {
         const patientId = req.session.patientId;
 
@@ -202,9 +207,9 @@ router.get("/showAppointment", async (req, res) => {
 
         const [appointments] = await db.query(query, [patientId]);
 
-        if (appointments.length === 0) {
-            return res.status(404).json({ message: "No appointments found" });
-        }
+        // if (appointments.length === 0) {
+        //     return res.status(404).json({ message: "No appointments found" });
+        // }
 
         // Parse the medical_images field if it's a stringified JSON array
         appointments.forEach((appointment) => {
@@ -385,6 +390,24 @@ router.delete("/deleteAppointment/:id", async (req, res) => {
     }
 });
 
+
+
+// Patient Logout route
+router.post("/logout", (req, res) => {
+    if (req.session) {
+        req.session.destroy((err) => {
+            if (err) {
+                return res.status(500).json({ error: "Failed to logout" });
+            } else {
+                return res.redirect("/homepage");
+
+                // res.json({ message: "Logout successful" });
+            }
+        });
+    } else {
+        res.status(400).json({ error: "No active session to logout" });
+    }
+});
 
 
 module.exports = router;

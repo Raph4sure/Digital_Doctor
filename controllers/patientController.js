@@ -3,9 +3,8 @@ const bcrypt = require("bcrypt");
 // requiring database
 const db = require("./../database");
 
-
 // Patient Registration route
-exports.register =  async (req, res) => {
+exports.register = async (req, res) => {
     // console.log("Request Body:", req.body); // Debugging
     const {
         first_name,
@@ -170,16 +169,15 @@ exports.logout = (req, res) => {
             if (err) {
                 return res.status(500).json({ error: "Failed to logout" });
             } else {
-                res.json({ message: "Logout successful" });
+              return res.redirect("/homepage.html");
+
+                // res.json({ message: "Logout successful" });
             }
         });
     } else {
         res.status(400).json({ error: "No active session to logout" });
     }
 };
-
-
-
 
 /* 
 exports.showBookingForm = async (req, res) => {

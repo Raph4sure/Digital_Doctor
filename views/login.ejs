@@ -79,5 +79,16 @@
             </section>
         </main>
         <script src="./../javascripts/login.js"></script>
+        <!-- Add this script to handle the alert message --> 
+        <script>
+          // Check if the 'alert' query parameter exists in the URL
+          const urlParams = new URLSearchParams(window.location.search);
+          const alertMessage = urlParams.get('alert');
+
+          // If the alert parameter exists, show an alert with the message
+          if (alertMessage) {
+            alert(decodeURIComponent(alertMessage)); // Decode to handle spaces in the message
+          }
+        </script>
     </body>
 </html>

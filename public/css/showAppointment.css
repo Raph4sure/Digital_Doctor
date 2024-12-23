@@ -159,6 +159,7 @@ a:hover, a:focus, a:active {
   display: grid;
   grid-template-columns: repeat(10, auto);
   grid-template-rows: repeat(8, auto);
+  min-height: 70vh;
 }
 
 .top__container2 {

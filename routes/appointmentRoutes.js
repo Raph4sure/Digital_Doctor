@@ -13,7 +13,7 @@ const uploadFiles = require("../middleware/upload");
 
 
 
-router.use(requireLogin);
+// router.use(requireLogin);
 
 // Route to handle booking appointment
 router.post("/bookAppointment", uploadFiles("medical_images", 5), appointmentController.bookAppointment);
