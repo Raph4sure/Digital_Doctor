@@ -10,7 +10,6 @@ const uploadFiles = require("../middleware/upload");
 
 const { requireLogin } = require("./../middleware/authMiddleware");
 
-
 // Home page
 router.get("/", (req, res) => {
     res.render("homepage", {
@@ -63,8 +62,6 @@ router.get("/contact", (req, res) => {
 router.get("/Dashboard.html", (req, res) => {
     res.redirect("/dashboard");
 });
-
-
 
 router.get("/dashboard", (req, res) => {
     res.render("Dashboard", {
@@ -344,7 +341,6 @@ router.post(
     }
 );
 
-
 // Route for deleting an Image
 
 router.post("/deleteImage", async (req, res) => {
@@ -373,11 +369,10 @@ router.post("/deleteImage", async (req, res) => {
     }
 });
 
-
 // Deleting an appointment
 
 router.delete("/deleteAppointment/:id", async (req, res) => {
-     console.log(req.method);
+    console.log(req.method);
     try {
         const appointmentId = req.params.id;
         const query = "DELETE FROM Appointments WHERE id = ?";
@@ -389,8 +384,6 @@ router.delete("/deleteAppointment/:id", async (req, res) => {
         res.status(500).send("Error deleting appointment");
     }
 });
-
-
 
 // Patient Logout route
 router.post("/logout", (req, res) => {
@@ -409,5 +402,42 @@ router.post("/logout", (req, res) => {
     }
 });
 
+// Router to show all doctors
+router.get("/showAllDoctors", async (req, res) => {
+    try {
+        const query = `SELECT * FROM Doctors ORDER BY first_name, last_name ASC`;
+
+        const [doctors] = await db.query(query);
+
+        if (doctors.length === 0) {
+            return res.status(404).json({ message: "No doctors found" });
+        }
+
+        // Handling showing of images
+      /*   doctors.forEach((doctor) => {
+            if (doctor.profile_image === "string") {
+                try {
+                    doctor.profile_image = JSON.parse(doctor.profile_image);
+                } catch (error) {
+                    console.error("Error parsing profile image:", error);
+                    doctor.profile_image = [];
+                }
+            }
+        }); */
+
+        // res.render("showAllDoctors", { doctors });
+        res.render("showAllDoctors", {
+            doctors,
+            pageTitle: "showAllDoctors",
+            cssPath: "/css/showAllDoctor.css",
+            message: "showAllDoctors page",
+        });
+    } catch (error) {
+        console.error("Error fetching Data:", error);
+        res.status(500).json({
+            message: "Fetching Data failed: " + error.message,
+        });
+    }
+});
 
 module.exports = router;

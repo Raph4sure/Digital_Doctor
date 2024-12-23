@@ -30,6 +30,6 @@ router.post("/bookAppointment", uploadFiles("medical_images", 5), appointmentCon
 router.delete("/deleteAppointment/:id", appointmentController.deleteAppointment);
 
 // Route to render the book appointment form with patient data
-router.get("/book", appointmentController.getPatientData);
+// router.get("/book", appointmentController.getPatientData);
 
 module.exports = router;

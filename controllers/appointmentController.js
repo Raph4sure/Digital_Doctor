@@ -270,7 +270,9 @@ exports.deleteAppointment = async (req, res) => {
     }
 };
 
-// Get patient data
+
+
+/* // Get patient data
 exports.getPatientData = (req, res) => {
     const patient_id = req.session.patient_id; // Assuming patient_id is stored in the session after login
 
@@ -302,3 +304,4 @@ exports.getPatientData = (req, res) => {
         });
     });
 };
+ */
