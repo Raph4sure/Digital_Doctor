@@ -13,7 +13,6 @@ const express = require("express");
 const router = express.Router();
 // const db = require("./../database");
 
-
 exports.bookAppointment = async (req, res) => {
     // console.log(req.body, req.files); // Log the request body and files for debugging
     try {
@@ -118,8 +117,6 @@ exports.bookAppointment = async (req, res) => {
     }
 };
 
-
-
 // router.get("/showAppointment.html", (req, res) => {
 //     res.redirect("/showAppointment");
 // });
@@ -147,7 +144,7 @@ exports.bookAppointment = async (req, res) => {
 // };
 
 // Update Appointment (Reschedule an appointment)
-exports.updateAppointment = async (req, res) => {
+/* exports.updateAppointment = async (req, res) => {
     try {
         const {
             doctor_id,
@@ -195,7 +192,69 @@ exports.updateAppointment = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Error updating appointment" });
     }
-};
+}; */
+
+// editing and posting appointment
+
+/* exports.editAppointment = async (req, res) => {
+    try {
+        const appointmentId = req.params.id;
+
+        const {
+            preffered_doctor,
+            appointment_date,
+            appointment_time,
+            appointment_reasons,
+            status,
+        } = req.body;
+
+        const query = `UPDATE Appointments SET preffered doctor =?, appointment_date = ?, appointment_time = ?, appointment_reasons = ?, status = ? WHERE id = ?`;
+
+        await db.query(query, [
+            preffered_doctor,
+            appointment_date,
+            appointment_time,
+            appointment_reasons,
+            status,
+            appointmentId,
+        ]);
+
+        res.status(200).send("Appointment Upadated Successfuly");
+    } catch (error) {
+        res.status(500).send("Error Updating Appointment");
+    }
+}; */
+
+
+// Route to show the edit form for a specific appointment
+/* router.get("/editAppointment/:id", async (req, res) => {
+    try {
+        // Extract the appointment ID from the route parameter
+        const appointmentId = req.params.id;
+
+        // Query to fetch the appointment details from the database
+        const query = "SELECT * FROM Appointments WHERE id = ?";
+
+        // Execute the query with the appointment ID as the parameter
+        const [appointments] = await db.query(query, [appointmentId]);
+
+        // Check if the appointment exists
+        if (appointments.length === 0) {
+            // If no appointment is found, send a 404 response
+            return res.status(404).send("Appointment not found");
+        }
+
+        // Render the "editAppointment" view and pass the appointment data to it
+        res.render("editAppointment", { appointment: appointments[0] });
+    } catch (error) {
+        // Log any errors that occur during the process
+        console.error(error);
+        // Send a 500 response if an error occurs
+        res.status(500).send("Error fetching appointment");
+    }
+}); */
+
+
 
 // Cancel an Appointment
 exports.deleteAppointment = async (req, res) => {

@@ -3,6 +3,11 @@ const express = require("express");
 const router = express.Router();
 const db = require("./../database");
 
+const fs = require("fs");
+const path = require("path");
+
+const uploadFiles = require("../middleware/upload");
+
 // Home page
 router.get("/", (req, res) => {
     res.render("homepage", {
@@ -201,6 +206,25 @@ router.get("/showAppointment", async (req, res) => {
             return res.status(404).json({ message: "No appointments found" });
         }
 
+        // Parse the medical_images field if it's a stringified JSON array
+        appointments.forEach((appointment) => {
+            if (
+                appointment.medical_images &&
+                typeof appointment.medical_images === "string"
+            ) {
+                try {
+                    appointment.medical_images = JSON.parse(
+                        appointment.medical_images
+                    ); // Parse the string to array
+                } catch (err) {
+                    console.error("Error parsing medical_images:", err);
+                    appointment.medical_images = []; // Fallback to empty array if parsing fails
+                }
+            }
+        });
+
+        console.log(appointments.medical_images);
+
         res.render("showAppointment", { appointments });
 
         //    res.status(200).json({ appointments: appointments });
@@ -209,5 +233,141 @@ router.get("/showAppointment", async (req, res) => {
         res.status(500).json({ message: "Error fetching appointments" });
     }
 });
+
+// Editing appointment
+router.get("/editAppointment/:id", async (req, res) => {
+    // console.log(req.body);
+    // console.log(req.params);
+    // console.log(req.files);
+
+    try {
+        const appointmentId = req.params.id;
+
+        const query = "SELECT * FROM Appointments WHERE id = ?";
+
+        const [appointments] = await db.query(query, [appointmentId]);
+
+        if (appointments.length === 0) {
+            return res.status(404).send({ message: "Appointment not found" });
+        }
+
+        appointments.forEach((appointment) => {
+            if (
+                appointment.medical_images &&
+                typeof appointment.medical_images === "string"
+            ) {
+                try {
+                    appointment.medical_images = JSON.parse(
+                        appointment.medical_images
+                    ); // Parse the string to array
+                } catch (err) {
+                    console.error("Error parsing medical_images:", err);
+                    appointment.medical_images = []; // Fallback to empty array if parsing fails
+                }
+            }
+        });
+
+        console.log(appointments.medical_images);
+
+        res.render("editAppointment", { appointment: appointments[0] });
+    } catch (error) {
+        console.error(error);
+        // res.status(500).send({ message: "Error fetching appointment" });
+        res.status(500).json({
+            message: "Error fetching appointment " + error.message,
+        });
+    }
+});
+
+router.post(
+    "/editAppointment/:id",
+    uploadFiles("medical_images", 5),
+    async (req, res) => {
+        // console.log(req.body);
+        // console.log(req.params);
+        // console.log(req.files);
+        // console.log(appointment.medical_images);
+        try {
+            const appointmentId = req.params.id;
+
+            const {
+                preferred_doctor,
+                appointment_date,
+                appointment_time,
+                appointment_reasons,
+                status,
+                medical_images,
+            } = req.body;
+
+            let medicalImages = [];
+            if (req.files && req.files.length > 0) {
+                medicalImages = req.files.map((file) => file.path); // Get paths of uploaded files
+            }
+
+            if (medicalImages.length === 0) {
+                const [appointments] = await db.query(
+                    "SELECT medical_images FROM Appointments WHERE id = ?",
+                    [appointmentId]
+                );
+                if (appointments.length > 0 && appointments[0].medical_images) {
+                    medicalImages = JSON.parse(appointments[0].medical_images); // Parse existing images
+                }
+            }
+
+            // Convert medicalImages array to a JSON string for storage
+            const medicalImagesString = JSON.stringify(medicalImages);
+
+            const query = `UPDATE Appointments SET preferred_doctor =?, appointment_date = ?, appointment_time = ?, appointment_reasons = ?, status = ?, medical_images = ? WHERE id = ?`;
+
+            await db.query(query, [
+                preferred_doctor,
+                appointment_date,
+                appointment_time,
+                appointment_reasons,
+                status,
+                medicalImagesString,
+                appointmentId,
+            ]);
+
+            res.redirect("/showAppointment");
+
+            // res.status(200).send("Appointment Upadated Successfuly");
+        } catch (error) {
+            // res.status(500).send("Error Updating Appointment");
+            res.status(500).json("Error Updating Appointment" + error.message);
+        }
+    }
+);
+
+
+// Route for deleting an Image
+
+router.post("/deleteImage", async (req, res) => {
+    try {
+        const { imagePath } = req.body;
+
+        // Delete the file from the filesystem
+        const absolutePath = path.join(__dirname, "../", imagePath); // Adjust path as needed
+        if (fs.existsSync(absolutePath)) {
+            fs.unlinkSync(absolutePath); // Delete the file
+        }
+
+        // Remove the image from the database
+        const query = `
+            UPDATE Appointments 
+            SET medical_images = JSON_REMOVE(medical_images, JSON_UNQUOTE(JSON_SEARCH(medical_images, 'one', ?)))
+            WHERE JSON_CONTAINS(medical_images, JSON_QUOTE(?))
+        `;
+
+        await db.query(query, [imagePath, imagePath]);
+
+        res.json({ success: true, message: "Image deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting image:", error.message);
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+
 
 module.exports = router;

@@ -6,7 +6,7 @@ const db = require("./../database");
 
 // Patient Registration route
 exports.register =  async (req, res) => {
-    console.log("Request Body:", req.body); // Debugging
+    // console.log("Request Body:", req.body); // Debugging
     const {
         first_name,
         last_name,

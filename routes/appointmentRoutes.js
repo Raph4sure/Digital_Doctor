@@ -18,11 +18,15 @@ router.use(requireLogin);
 // Route to handle booking appointment
 router.post("/bookAppointment", uploadFiles("medical_images", 5), appointmentController.bookAppointment);
 
+// router.post("/editAppointment/:id", uploadFiles("medical_images", 5), appointmentController.editAppointment);
+
 // router.get("/bookAppointment", appointmentController.bookAppointment);
 // router.post("/bookAppointment", uploadFiles("medical_images", 5), appointmentController.bookAppointment);
 // router.get("/showAppointment", appointmentController.showAppointment);
 
-router.put("/updateAppointment/patient/:id", uploadFiles("medical_images", 5), appointmentController.updateAppointment);
+
+// router.put("/updateAppointment/patient/:id", uploadFiles("medical_images", 5), appointmentController.updateAppointment);
+
 router.delete("/deleteAppointment/patient/:id", appointmentController.deleteAppointment);
 
 // Route to render the book appointment form with patient data

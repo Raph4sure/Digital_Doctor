@@ -87,32 +87,52 @@
                         <th>Existing Medical Record</th>
                         <th>Status</th>
                         <th>Medical Images</th>
-                        <!-- <th>Action</th> -->
+                        <th>Action</th>
                     </thead>
                     <% appointments.forEach(appointment => { %>
-                    <!-- <p class="body-text"><strong>Preferred Doctor:</strong> <%= appointment.preferred_doctor %></p>
-                        <p class="body-text"><strong>Appointment Date:</strong> <%= appointment.appointment_date %></p>
-                        <p class="body-text"><strong>Appointment Time:</strong> <%= appointment.appointment_time %></p>
-                        <p class="body-text"><strong>Reasons:</strong> <%= appointment.appointment_reasons %></p>
-                        <p class="body-text"><strong>Existing Medical Record:</strong> <%= appointment.medical_record %></p>
-                        <p class="body-text"><strong>Medical Images:</strong> <%= appointment.medical_images ? 'Available' : 'Not Available' %></p>
-                        <hr> -->
-                            <tbody>
+                    <tbody>
                         <tr>
                             <td><%= appointment.preferred_doctor %></td>
                             <td><%= appointment.appointment_date %></td>
                             <td><%= appointment.appointment_time %></td>
                             <td><%= appointment.appointment_reasons %></td>
-                            <!-- <td><%= appointment.appointment_reasons %></td> -->
-                            <td><%= appointment.medical_images ? 'Available' : 'Not Available' %></td>
+                            <td><%= appointment.existing_medical_record %></td>
                             <td><%= appointment.status %></td>
+                            <td>
+                                <% if (Array.isArray(appointment.medical_images)
+                                && appointment.medical_images.length > 0) { %>
+                                <%
+                                appointment.medical_images.forEach(function(image)
+                                { %>
+                                <img
+                                    src="<%= image %>"
+                                    alt="Medical Image"
+                                    style="
+                                        width: 100px;
+                                        height: auto;
+                                        margin-right: 10px;
+                                    "
+                                />
+                                <% }); %> <% } else { %> Not Available <% } %>
+                            </td>
 
-                        <td><a class="link" href="#">Edit</a> <br><a class="link" href="#">Delete</a></td>
+                            <!-- <td><%= appointment.status %></td> -->
 
+                            <td>
+                                <a
+                                    class="link"
+                                    href="/editAppointment/<%= appointment.id %>"
+                                    >Edit</a
+                                >
+                                <br /><a
+                                    class="link"
+                                    href="/deleteAppointment/<%= appointment.id %>"
+                                    >Delete</a
+                                >
+                            </td>
                         </tr>
                     </tbody>
-                <% }) %>
-
+                    <% }) %>
                 </table>
             </section>
             <% } else { %>
