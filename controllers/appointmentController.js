@@ -259,18 +259,14 @@ exports.bookAppointment = async (req, res) => {
 // Cancel an Appointment
 exports.deleteAppointment = async (req, res) => {
     try {
-        const query =
-            "DELETE FROM appointments WHERE id = ? AND patient_id = ?";
-        const [result] = await db.query(query, [req.params.id, req.user.id]);
+        const appointmentId = req.params.id;
+        const query = "DELETE FROM Appointments WHERE id = ?";
+        await db.query(query, [appointmentId]);
 
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: "Appointment not found" });
-        }
-
-        res.json({ message: "Appointment deleted successfully" });
+        res.redirect("/showAppointment");
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Error deleting appointment" });
+        res.status(500).send("Error deleting appointment");
     }
 };
 

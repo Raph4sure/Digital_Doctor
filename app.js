@@ -15,6 +15,8 @@ const doctorRouter = require("./routes/doctorRoutes");
 const appointmentRouter = require("./routes/appointmentRoutes");
 const adminRouter = require("./routes/adminRoutes");
 const cors = require("cors");
+const methodOverride = require("method-override");
+
 
 // const crypto = require("crypto");
 // const secret = crypto.randomBytes(64).toString("hex");
@@ -28,6 +30,10 @@ const cors = require("cors");
 // Importing database.js
 const db = require("./database");
 
+
+
+
+
 const app = express();
 app.use(cors()); // Use CORS to allow requests from any origin
 
@@ -38,6 +44,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+
+
+
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -55,8 +65,8 @@ app.use(
     })
 );
 
-
-
+// for method override
+app.use(methodOverride("_method"));
 
 // Using Patient router
 app.use("/api/patients", patientRouter);

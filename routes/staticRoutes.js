@@ -369,5 +369,22 @@ router.post("/deleteImage", async (req, res) => {
 });
 
 
+// Deleting an appointment
+
+router.delete("/deleteAppointment/:id", async (req, res) => {
+     console.log(req.method);
+    try {
+        const appointmentId = req.params.id;
+        const query = "DELETE FROM Appointments WHERE id = ?";
+        await db.query(query, [appointmentId]);
+
+        res.redirect("/showAppointment");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error deleting appointment");
+    }
+});
+
+
 
 module.exports = router;

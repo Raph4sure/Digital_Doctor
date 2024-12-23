@@ -27,7 +27,7 @@ router.post("/bookAppointment", uploadFiles("medical_images", 5), appointmentCon
 
 // router.put("/updateAppointment/patient/:id", uploadFiles("medical_images", 5), appointmentController.updateAppointment);
 
-router.delete("/deleteAppointment/patient/:id", appointmentController.deleteAppointment);
+router.delete("/deleteAppointment/:id", appointmentController.deleteAppointment);
 
 // Route to render the book appointment form with patient data
 router.get("/book", appointmentController.getPatientData);
