@@ -1,0 +1,59 @@
+.container {
+    // display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, auto);
+}
+
+.headnav {
+    grid-column: 1/-1;
+    grid-row: 1/2;
+    display: flex;
+    margin-top: 0.5rem;
+
+    .header {
+        flex: 0 0 21%;
+    }
+    .lab {
+        flex: 0 0 79%;
+    }
+
+    .inp {
+        visibility: hidden;
+    }
+
+    .nav {
+        display: flex;
+        flex: 1;
+        flex-basis: auto;
+        justify-content: flex-end;
+        align-items: center;
+        padding-top: 0.5rem;
+
+        .nav__div {
+            margin-right: 5rem;
+            margin-top: -3rem;
+
+            @include responsive(phone) {
+                margin-right: 1rem;
+            }
+
+            a.nav__div_li {
+                color: $headings-color;
+                font-size: 3rem;
+                font-weight: 530;
+                margin-right: 2rem;
+
+                &:hover {
+                    color: $link-hover;
+                }
+
+                @include responsive(tab-land) {
+                    font-size: 2.5rem;
+                }
+                @include responsive(tab-port) {
+                    font-size: 3rem;
+                }
+            }
+        }
+    }
+}

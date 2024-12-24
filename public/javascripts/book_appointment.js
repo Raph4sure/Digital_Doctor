@@ -320,7 +320,7 @@ const enhancedValidateForm = (formSelector) => {
 
             try {
                 const response = await fetch(
-                    "http://localhost:3300/api/appointment/book",
+                    "http://localhost:3300/api/appointment/bookAppointment",
                     {
                         method: "POST",
                         body: formData, // No need for Content-Type header

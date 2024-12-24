@@ -67,7 +67,7 @@ body {
     font-weight: 400;
     font-size: 2.5rem;
     line-height: 1.7;
-    color: var(--body-color);
+    color: $body-color;
     overflow-x: hidden;
 }
 
@@ -79,7 +79,7 @@ a {
     &:active {
         text-decoration: underline !important;
         outline: none;
-        color: -var(--link-hover);
+        color: -$link-hover;
     }
 }
 
@@ -92,10 +92,10 @@ a {
 }
 
 .heading {
-    background-color: var(--footer-color);
+    background-color: $footer-color;
     width: 100%;
     text-align: center;
-    color: var(--body-color);
+    color: $body-color;
     font-size: 3rem;
 }
 
@@ -117,7 +117,7 @@ a {
         text-align: center;
         margin-top: 20rem;
         margin-bottom: 1rem;
-        color: var(--headings-color);
+        color: $headings-color;
     }
 
 
@@ -127,8 +127,8 @@ a {
 .footer {
     grid-column: 1/-1;
     grid-row: 4/5;
-    background-color: var(--footer-color);
-    color: var(--footer-text-color);
+    background-color: $footer-color;
+    color: $footer-text-color;
     // padding-top: 1.5rem;
 
     &__div {
@@ -140,7 +140,7 @@ a {
             color: rgb(0, 0, 0);
 
             &-a {
-                color: var(--headings-color);
+                color: $headings-color;
                 text-decoration: none;
                 &:hover {
                     text-decoration: underline;

@@ -1,0 +1,83 @@
+@import "main";
+
+
+
+.container-h2{
+    background-color: $footer-color;
+    // color: $link-hover;
+    text-align: center;
+    margin: 3rem 0 2rem 0;
+}
+
+.doctor-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.doctor-card {
+    background-color: $button-text-color; 
+    // background-color: rgb(156, 149, 185);
+    /* background-color: rgb(73, 11, 61); */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+}
+
+.doctor-card__image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.doctor-card__name {
+    font-size: 1.2em;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.doctor-card__specialization {
+    font-size: 1em;
+    color: #666;
+    margin: 5px 0;
+}
+
+.doctor-card__bio {
+    font-size: 0.9em;
+    color: #444;
+    margin: 10px 0;
+}
+
+.doctor-card__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.button {
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.view-profile {
+    // background-color: #007bff;
+}
+
+.book-appointment {
+    background-color: $button-color2;
+}
+
+.button:hover {
+    opacity: 0.9;
+}

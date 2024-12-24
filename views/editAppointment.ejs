@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+<%- include('partials/header') %>
+<%- include('partials/nav_bar') %>
 
 <body>
   <h1>Edit Appointment</h1>
@@ -40,25 +34,26 @@
     <% } %><br> -->
 
 
-       <!-- Medical Images Section -->
-       <h3>Medical Images</h3>
-       <% if (Array.isArray(appointment.medical_images) && appointment.medical_images.length > 0) { %>
-       <% appointment.medical_images.forEach(function(image, index) { %>
-       <div style="margin-bottom: 10px;">
-         <img src="/<%= image %>" alt="Medical Image" style="width: 100px; height: auto; margin-right: 10px;" />
-         <button type="button" onclick="deleteImage('<%= image %>')">Delete</button>
-       </div>
-       <% }); %>
-       <% } else { %>
-       <p>No images available</p>
-       <% } %>
+    <!-- Medical Images Section -->
+    <h3>Medical Images</h3>
+    <% if (Array.isArray(appointment.medical_images) && appointment.medical_images.length > 0) { %>
+    <% appointment.medical_images.forEach(function(image, index) { %>
+    <div style="margin-bottom: 10px;">
+      <img src="/<%= image %>" alt="Medical Image" style="width: 100px; height: auto; margin-right: 10px;" />
+      <button type="button" onclick="deleteImage('<%= image %>')">Delete</button>
+    </div>
+    <% }); %>
+    <% } else { %>
+    <p>No images available</p>
+    <% } %>
 
-       <!-- Add new images -->
-       <label for="medical_images">Upload New Images:</label>
-       <input type="file" id="medical_images" name="medical_images" multiple /><br />
+    <!-- Add new images -->
+    <label for="medical_images">Upload New Images:</label>
+    <input type="file" id="medical_images" name="medical_images" multiple /><br />
 
     <button type="submit">Save Changes</button>
   </form>
+<%- include('partials/footer') %>
 
   <script>
     function deleteImage(imagePath) {

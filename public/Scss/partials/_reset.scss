@@ -1,0 +1,45 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%; // 1rem = 16px
+
+    @include responsive(big-desktop) {
+        font-size: 58%; // 1rem = 12px
+    }
+    @include responsive(tab-land) {
+        font-size: 56.25%; // 1rem = 9px
+    }
+    @include responsive(tab-port) {
+        font-size: 50%; // 1rem = 8px
+    }
+    @include responsive(phone) {
+        font-size: 35%; // 1rem = 5.6px
+    }
+}
+
+body {
+    font-family: "SUSE", sans-serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1.7;
+    color: $body-color;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: underline !important;
+        outline: none;
+        color: $link-hover;
+    }
+}

@@ -317,48 +317,6 @@ a:hover, a:focus, a:active {
   margin: 2rem;
 }
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-html {
-  font-size: 62.5%;
-}
-@media (max-width: 1900px) {
-  html {
-    font-size: 58%;
-  }
-}
-@media (max-width: 1200px) {
-  html {
-    font-size: 56.25%;
-  }
-}
-@media (max-width: 900px) {
-  html {
-    font-size: 50%;
-  }
-}
-@media (max-width: 600px) {
-  html {
-    font-size: 35%;
-  }
-}
-
-body {
-  font-family: "SUSE", sans-serif;
-  font-weight: 400;
-  font-size: 2rem;
-  line-height: 1.7;
-  color: rgb(73, 11, 61);
-  overflow-x: hidden;
-}
-
 .complete_body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -389,7 +347,7 @@ body {
   padding-left: 4rem;
   margin-bottom: -4rem;
 }
-@media (max-width: 1900px) {
+@media (max-width: 1920px) {
   .main_left-text-h1 {
     font-size: 8rem;
   }
@@ -405,7 +363,7 @@ body {
   white-space: pre;
   margin-left: -10rem;
 }
-@media (max-width: 1900px) {
+@media (max-width: 1920px) {
   .main_left-text-p {
     font-size: 2.5rem;
   }
@@ -458,7 +416,7 @@ body {
 .form__h2 {
   text-align: center;
 }
-@media (max-width: 1900px) {
+@media (max-width: 1920px) {
   .form {
     min-width: 45vw;
   }

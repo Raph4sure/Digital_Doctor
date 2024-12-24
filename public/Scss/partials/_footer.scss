@@ -1,0 +1,73 @@
+
+.footer {
+    grid-column: 1/-1;
+    grid-row: 4/5;
+    background-color: $footer-color;
+    color: $footer-text-color;
+    padding-top: 1.5rem;
+
+    &__div1 {
+        font-weight: 300;
+
+        &-p {
+            margin-left: 2rem;
+        }
+    }
+    &__div2 {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 3rem;
+
+        @include responsive(tab-port) {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            margin-top: 0rem;
+
+            .footer__div2 {
+                &-article1-p {
+                    grid-column: 1/2;
+                    margin-left: -5rem;
+                    margin-bottom: -0.4rem;
+                }
+                &-article2 {
+                    grid-column: 1/2;
+                }
+
+                &-article3 {
+                    margin-top: -4rem;
+                }
+            }
+        }
+
+        &-article2 {
+            img {
+                height: 3.4rem;
+                width: 3.4rem;
+                object-fit: contain;
+
+                &:first-child {
+                    margin-left: 3rem;
+                }
+            }
+
+            &-p {
+                color: $headings-color;
+                font-weight: 500;
+            }
+        }
+
+        &-article3 {
+            padding-bottom: 1rem;
+
+            &-header {
+                color: $headings-color;
+                font-weight: 500;
+                // margin-left: 2rem;
+            }
+        }
+
+        &-article1-p {
+            margin: 2rem;
+        }
+    }
+}

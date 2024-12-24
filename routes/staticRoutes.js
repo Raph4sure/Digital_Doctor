@@ -146,11 +146,11 @@ router.get("/bookAppointment.html", (req, res) => {
 //     });
 // });
 
-router.get("/bookAppointment", async (req, res) => {
+router.get("/bookAppointment", requireLogin, async (req, res) => {
     // Check if the patient is logged in
-    if (!req.session.isLoggedIn || !req.session.patientId) {
-        return res.redirect("/login"); // Redirect to login page if not logged in
-    }
+    // if (!req.session.isLoggedIn || !req.session.patientId) {
+    //     return res.redirect("/login"); // Redirect to login page if not logged in
+    // }
 
     try {
         // Fetch patient details from the database
@@ -271,7 +271,12 @@ router.get("/editAppointment/:id", async (req, res) => {
 
         console.log(appointments.medical_images);
 
-        res.render("editAppointment", { appointment: appointments[0] });
+        res.render("editAppointment", {
+            appointment: appointments[0],
+            pageTitle: "editAppointment",
+            cssPath: "/css/editAppointment.css",
+            message: "Welcome to the Edit page",
+        });
     } catch (error) {
         console.error(error);
         // res.status(500).send({ message: "Error fetching appointment" });
@@ -414,7 +419,7 @@ router.get("/showAllDoctors", async (req, res) => {
         }
 
         // Handling showing of images
-      /*   doctors.forEach((doctor) => {
+        /*   doctors.forEach((doctor) => {
             if (doctor.profile_image === "string") {
                 try {
                     doctor.profile_image = JSON.parse(doctor.profile_image);
