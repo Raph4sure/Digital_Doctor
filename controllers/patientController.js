@@ -87,6 +87,10 @@ exports.login = async (req, res) => {
         // If password matches, create a session
         req.session.patientId = patient.id;
         req.session.isLoggedIn = true;
+        req.session.user = {
+            id: patient.id,
+            role: "patient",
+        }
 
         res.json({ message: "Login Successful", patientId: patient.id });
     } catch (error) {
@@ -169,7 +173,7 @@ exports.logout = (req, res) => {
             if (err) {
                 return res.status(500).json({ error: "Failed to logout" });
             } else {
-              return res.redirect("/homepage.html");
+              return res.redirect("/logout");
 
                 // res.json({ message: "Logout successful" });
             }

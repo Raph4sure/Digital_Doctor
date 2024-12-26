@@ -69,9 +69,9 @@ app.use(
 app.use(methodOverride("_method"));
 
 // Using Patient router
-app.use("/api/patients", patientRouter);
-app.use("/api/doctors", doctorRouter);
-app.use("/api/appointment", appointmentRouter);
+// app.use("/api/patients", patientRouter);
+// app.use("/api/doctors", doctorRouter);
+// app.use("/api/appointment", appointmentRouter);
 app.use("/api/admin", adminRouter);
 
 // Use the static routes

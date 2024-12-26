@@ -1,0 +1,45 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% patients.forEach(patient => { %>
+    <tr>
+      <td><%= patient.id %></td>
+      <td><%= patient.name %></td>
+      <td><%= patient.email %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<div class="pagination">
+  <% if (currentPage > 1) { %>
+  <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
+  <% } %>
+  <% for (let i = 1; i <= totalPages; i++) { %>
+  <a href="?page=<%= i %>&limit=<%= limit %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+  <% } %>
+  <% if (currentPage < totalPages) { %>
+  <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
+  <% } %>
+</div>
+
+
+
+
+
+
+
+<!-- .pagination a.active {
+font-weight: bold;
+color: white;
+background-color: blue;
+padding: 5px 10px;
+border-radius: 5px;
+text-decoration: none;
+} -->

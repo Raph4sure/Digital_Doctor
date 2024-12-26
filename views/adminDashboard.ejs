@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+<%- include('partials/nav_bar') %>
+
+<body class="container">
+
+
+  <!--  -->
+
+  <main class="container2">
+    <section class="top__container2">
+      <h3 class="top__container2-h2">Welcome, Admin Alabi Raphael</h3>
+    </section>
+
+    <section class="side__bar">
+      <h4 class="side__bar-h4">My Portal</h4>
+      <ul class="side__bar-ul">
+        <li class="side__bar-li"><a class="side__bar-a" href="">Dashboard</a></li>
+        <li class="side__bar-li"><a class="side__bar-a" href="">Patient</a></li>
+        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Appointment</a></li>
+        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Doctors</a></li>
+        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Admins</a></li>
+     
+        <form action="/logout" method="POST">
+          <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
+        </form>
+      </ul>
+    </section>
+
+    <section class="body">
+      <% admins.forEach(admin => { %>
+       
+      <p class="body-text">First Name: <%= admin.name %></p>
+      <p class="body-text">Last Name: Rapahel</p>
+      <p class="body-text">Email: Raph4sure007@gmail.com</p>
+      <p class="body-text">Phone: 07066886470</p>
+      <p class="body-text">Date of Birth: 17/03/2020</p>
+      <p class="body-text">Gender: Male</p>
+      <p class="body-text">
+        Address: 29, Ifelodun str; megida, Ayobo, Alimosho LGA Lagos
+        state
+      </p>
+      <% }) %>
+    </section>
+  </main>
+  <!--  -->
+  <%- include('partials/footer') %>
+
+</body>
+
+</html>

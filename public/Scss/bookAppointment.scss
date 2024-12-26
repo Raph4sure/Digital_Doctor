@@ -7,13 +7,10 @@
 
 
 .complete_body {
-    // display: flex;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    // grid-template-columns: repeat(2, 1fr);
     justify-content: center;
-    // align-items: center;
-    // place-self: center;
+   
 }
 
 .main_left {
@@ -21,12 +18,7 @@
     grid-column: 1/2;
     min-width: 50vw;
     display: grid;
-    // justify-self: center;
-    // place-self: center;
-    // align-self: center;
-    // place-items: center;
-    // margin: 0 0 30rem 0rem;
-    // padding-left: 20rem;
+
     grid-template-columns: repeat(5, auto);
     grid-template-rows: repeat(5, auto);
 

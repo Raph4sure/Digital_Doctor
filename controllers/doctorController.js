@@ -109,6 +109,8 @@ exports.login = async (req, res) => {
     }
 };
 
+
+
 // Doctor logout route
 exports.logout = (req, res) => {
     req.session.destroy((err) => {
@@ -121,24 +123,7 @@ exports.logout = (req, res) => {
 };
 
 // View doctor profile
-exports.getProfile = async (req, res) => {
-    try {
-        const [rows] = await db.query(
-            "SELECT first_name, last_name, email, specialization, phone, gender, profile_image FROM Doctors WHERE id = ?",
-            [req.session.doctorId]
-        );
 
-        if (rows.length === 0) {
-            return res.status(404).json({ error: "Doctor not found" });
-        }
-
-        res.json(rows[0]);
-    } catch (error) {
-        res.status(500).json({
-            error: "Failed to retrieve profile: " + error.message,
-        });
-    }
-};
 
 // Update doctor profile
 exports.updateProfile = async (req, res) => {

@@ -6,11 +6,11 @@ const adminController = require("../controllers/adminController");
 const router = express.Router();
 
 
-router.post("/register", adminController.register);
-router.post("/login", adminController.login);
-router.post("/registerDoctor", requireLogin, adminController.registerDoctor);
-router.get("/getAllDoctors", requireLogin, adminController.getAllDoctors);
-router.put("/updateDoctor/:id", requireLogin, adminController.updateDoctor);
-router.delete("/deleteDoctor/:id", requireLogin, adminController.deleteDoctor);
+router.post("/registerAdmin", adminController.registerAdmin);
+// router.post("/login", adminController.login);
+// router.post("/registerDoctor", requireLogin, adminController.registerDoctor);
+// router.get("/getAllDoctors", requireLogin, adminController.getAllDoctors);
+// router.put("/updateDoctor/:id", requireLogin, adminController.updateDoctor);
+// router.delete("/deleteDoctor/:id", requireLogin, adminController.deleteDoctor);
 
 module.exports = router;

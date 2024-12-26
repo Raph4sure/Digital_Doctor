@@ -63,13 +63,27 @@ router.get("/Dashboard.html", (req, res) => {
     res.redirect("/dashboard");
 });
 
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", requireLogin, (req, res) => {
     res.render("Dashboard", {
         pageTitle: "Dashboard",
         cssPath: "/css/dashboard.css",
         message: "Welcome to the Dashboard page",
     });
 });
+
+// Admin Dashboard page
+router.get("/adminDashboard.html", (req, res) => {
+    res.redirect("admindashboard");
+});
+
+router.get("/adminDashboard", (req, res) => {
+    res.render("adminDashboard", {
+        pageTitle: "Dashboard",
+        cssPath: "/css/adminDashboard.css",
+        message: "Welcome to the Admin Dashboard page",
+    });
+});
+
 // Consultation page
 router.get("/Consultation.html", (req, res) => {
     res.redirect("/consultation");
@@ -130,6 +144,19 @@ router.get("/login", (req, res) => {
         pageTitle: "login",
         cssPath: "/css/login.css",
         message: "Welcome to the Patient login page",
+    });
+});
+
+// Patient login
+router.get("/adminLogin.html", (req, res) => {
+    res.redirect("/adminLogin");
+});
+
+router.get("/adminLogin", (req, res) => {
+    res.render("adminLogin", {
+        pageTitle: "adminLogin",
+        cssPath: "/css/adminLogin.css",
+        message: "Welcome to the Admin login page",
     });
 });
 
@@ -236,6 +263,7 @@ router.get("/showAppointment", requireLogin, async (req, res) => {
     }
 });
 
+
 // Editing appointment
 router.get("/editAppointment/:id", async (req, res) => {
     // console.log(req.body);
@@ -269,7 +297,7 @@ router.get("/editAppointment/:id", async (req, res) => {
             }
         });
 
-        console.log(appointments.medical_images);
+        // console.log(appointments.medical_images);
 
         res.render("editAppointment", {
             appointment: appointments[0],
@@ -383,7 +411,8 @@ router.delete("/deleteAppointment/:id", async (req, res) => {
         const query = "DELETE FROM Appointments WHERE id = ?";
         await db.query(query, [appointmentId]);
 
-        res.redirect("/showAppointment");
+        // res.redirect("/showAppointment");
+        res.status(200).json({ message: "Appointment deleted successfully" });
     } catch (error) {
         console.error(error);
         res.status(500).send("Error deleting appointment");
@@ -442,6 +471,294 @@ router.get("/showAllDoctors", async (req, res) => {
         res.status(500).json({
             message: "Fetching Data failed: " + error.message,
         });
+    }
+});
+
+// Admin Dashboard
+router.get("/adminDashboard", async (req, res) => {
+    const adminId = req.params.id
+    try {
+        const query = "SELECT * FROM Admins WHERE id = ?";
+
+        const [admins] = await db.query(query, [adminId]);
+
+        if (admins.length === 0) {
+            return res.status(404).send({ message: "No Admin found" });
+        }
+        res.render("adminDashboard", {
+            admins: admins[0],
+            pageTitle: "Manage Admin",
+            cssPath: manageAdmin.cssPath,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error fetching Admin " + error.message,
+        });
+    }
+});
+
+// Managing Admin
+router.get("/manageAdmin", async (req, res) => {
+    try {
+        const query = "SELECT * FROM Admins";
+        const [admins] = await db.query(query);
+        if (admins.length === 0) {
+            return res.status(404).send({ message: "No Admin found" });
+        }
+        res.render("manageAdmin", {
+            admin: admins[0],
+            pageTitle: "Manage Admin",
+            cssPath: manageAdmin.cssPath,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error fetching Admin " + error.message,
+        });
+    }
+});
+
+// Deleting Admin
+router.delete("/deleteAdmin", async (req, res) => {
+    const adminIdToDelete = req.params.id;
+    // check to stop Admin from Deleting itself
+    if (req.session.user.id === adminIdToDelete) {
+        req.status(400).json({ error: "You cannot delete your account" });
+    }
+
+    try {
+        const [result] = await db.query("DELETE FROM Admins WHERE id = ?", [
+            adminIdToDelete,
+        ]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Admin not found" });
+        }
+
+        res.json({ message: "Admin deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: "An error occured while deleting the admin.",
+        });
+    }
+});
+
+// To show all Patient
+/* router.get("/showAllPatient", async (req, res) => {
+    try {
+        const [patients] = await db.query("SELECT * FROM Patients");
+
+        if (patients.length === 0) {
+            return res.status(404).json({ error: "No Patients Registered" });
+        }
+
+        // res.json(patients[0]);
+        res.render("showAllPatient", { patients });
+    } catch (error) {
+        res.status(500).json({
+            error: "Failed to retrieve patients: " + error.message,
+        });
+    }
+}); */
+
+router.get("/showAllPatient", async (req, res) => {
+    try {
+        // Get the page and limit from query parameters, set defaults if not provided
+        const page = parseInt(req.query.page) || 1; // Default to page 1
+        const limit = parseInt(req.query.limit) || 10; // Default to 10 items per page
+        const offset = (page - 1) * limit;
+
+        // Query the total number of patients for pagination metadata
+        const [countResult] = await db.query(
+            "SELECT COUNT(*) as total FROM Patients"
+        );
+        const totalPatients = countResult[0].total;
+
+        // Query the paginated data
+        const [patients] = await db.query(
+            "SELECT * FROM Patients LIMIT ? OFFSET ?",
+            [limit, offset]
+        );
+
+        // Calculate total pages
+        const totalPages = Math.ceil(totalPatients / limit);
+
+        // Check if patients are found
+        if (patients.length === 0) {
+            return res.status(404).json({ error: "No Patients Registered" });
+        }
+
+        // Send paginated results
+        res.render("showAllPatient", {
+            patients,
+            currentPage: page,
+            totalPages,
+            totalPatients,
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "Failed to retrieve patients: " + error.message,
+        });
+    }
+});
+
+// delete patient by id
+router.delete("/deletePatient/:id", async (req, res) => {
+    const patientIdToDelete = req.params.id;
+
+    try {
+        const [result] = await db.query("DELETE FROM Patients WHERE id = ?", [
+            patientIdToDelete,
+        ]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                error: "Patient not found",
+            });
+        }
+
+        res.json({ message: "Patient deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: "An error occured while deleting Patient " + error.message,
+        });
+    }
+});
+
+// Editing Patient Profile
+router.get("/editPatient/:id", async (req, res) => {
+    try {
+        const patientId = req.params.id;
+
+        const query = "SELECT *  FROM Patients WHERE id = ?";
+
+        const [patients] = await db.query(query, [patientId]);
+
+        if (patients.length === 0) {
+            return res.status(404).send({ message: "Patient not found" });
+        }
+
+        res.render("editPatient", {
+            patient: patients[0],
+            pageTitle: "editPatient",
+            cssPath: "/css/editPatient.css",
+            message: "Welcome to the edit page",
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error fetching patient " + error.message,
+        });
+    }
+});
+
+
+// posting edited patient profile
+router.post("/editPatient/:id", async (req, res) => {
+    try {
+        const patientId = req.params.id;
+
+        const { first_name, last_name, phone, date_of_birth, gender, address } =
+            req.body;
+
+        const query = `UPDATE Patients SET first_name = ?, last_name = ?, phone = ?, date_of_birth = ?, gender = ?, address = ? WHERE id = ?`;
+
+        await db.query(query, [
+            first_name,
+            last_name,
+            phone,
+            date_of_birth,
+            gender,
+            address,
+        ]);
+
+        res.redirect("/Dashboard");
+    } catch (error) {
+        res.status(500).json("Error Updating Patient" + error.message);
+    }
+});
+
+
+
+
+// Delete Doctor by id
+
+router.delete("/deleteDoctor/:id", async (req, res) => {
+    const doctorIdToDelete = req.params.id;
+
+    try {
+        const [result] = await db.query("DELETE FROM Doctors WHERE id = ?", [
+            doctorIdToDelete,
+        ]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                error: "Doctor not found",
+            });
+        }
+
+        res.json({ message: "Doctor deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: "An error occured while deleting Doctor " + error.message,
+        });
+    }
+});
+
+
+// Editing Doctor Profile
+router.get("/editDoctor/:id", async (req, res) => {
+    try {
+        const doctorId = req.params.id;
+
+        const query = "SELECT *  FROM Doctors WHERE id = ?";
+
+        const [doctors] = await db.query(query, [doctorId]);
+
+        if (doctors.length === 0) {
+            return res.status(404).send({ message: "Doctor not found" });
+        }
+
+        res.render("editDoctor", {
+            doctor: doctors[0],
+            pageTitle: "editDoctor",
+            cssPath: "/css/editDoctor.css",
+            message: "Welcome to the edit page",
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error fetching Doctor " + error.message,
+        });
+    }
+});
+
+
+// posting edited Doctor profile
+router.post("/editDoctor/:id", async (req, res) => {
+    try {
+        const doctorId = req.params.id;
+
+        const { first_name, last_name, phone, date_of_birth, gender, address } =
+            req.body;
+
+        const query = `UPDATE Doctors SET first_name = ?, last_name = ?, phone = ?, date_of_birth = ?, gender = ?, address = ? WHERE id = ?`;
+
+        await db.query(query, [
+            first_name,
+            last_name,
+            phone,
+            date_of_birth,
+            gender,
+            address,
+        ]);
+
+        res.redirect("/Dashboard");
+    } catch (error) {
+        res.status(500).json("Error Updating Doctor" + error.message);
     }
 });
 
