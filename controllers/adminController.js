@@ -1,5 +1,7 @@
 const express = require("express");
 const db = require("./../database");
+const bcrypt = require("bcrypt");
+
 // creating a router instance
 const router = express.Router();
 
@@ -30,7 +32,7 @@ exports.registerAdmin = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         // Insert new admin into the database
-        const query = `INSERT INTO Admins (name, email, password_hash, role) VALUES (?, ?, ?, 'Admin')`;
+        const query = `INSERT INTO Admins (name, email, password_hash, role) VALUES (?, ?, ?, ?)`;
 
         await db.query(query, [name, email, hashedPassword, role]);
 
@@ -44,7 +46,7 @@ exports.registerAdmin = async (req, res) => {
 
 
 // Admin login route
-router.post("/loginAdmin", async (req, res) => {
+exports.loginAdmin  = async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -57,11 +59,10 @@ router.post("/loginAdmin", async (req, res) => {
         if (admins.length === 0) {
             return res
                 .status(400)
-                .json({ error: "Invalid username or pasword" });
+                .json({ error: "Invalid username or password" });
         }
 
         const admin = admins[0];
-
 
         // Compare the provided password with the hashed password in the database
         const passwordMatch = await bcrypt.compare(
@@ -71,7 +72,7 @@ router.post("/loginAdmin", async (req, res) => {
         if (!passwordMatch) {
             return res
                 .status(400)
-                .json({ error: "Invalid username or pasword" });
+                .json({ error: "Invalid username or password" });
         }
 
         // If password matches, create a session
@@ -79,14 +80,16 @@ router.post("/loginAdmin", async (req, res) => {
         req.session.isLoggedIn = true;
         req.session.user = {
             id: admin.id,
-            role: ["Admin", "Super Admin"]
-        }
+            role: ["Admin", "Super Admin"],
+        };
+
+        // console.log("Session set:", req.session); // Log session to check
 
         res.json({ message: "Login Successful", adminId: admin.id });
     } catch (error) {
         res.status(500).json({ error: "Login failed: " + error.message });
     }
-});
+};
 
 
 /* 

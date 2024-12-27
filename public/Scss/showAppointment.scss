@@ -1,9 +1,4 @@
-
-
 @import "main";
-
-
-
 
 %table-line {
     padding: 10px;
@@ -11,7 +6,6 @@
     text-align: center;
     color: black;
 }
-
 
 // start
 .container2 {
@@ -66,12 +60,14 @@
     padding-left: 2rem;
     margin-bottom: 30rem;
     margin-right: 3rem;
+    overflow-x: auto;
+    display: block;
 
     &-text {
         margin-top: 2rem;
     }
 
-    table {
+    .table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 5rem;

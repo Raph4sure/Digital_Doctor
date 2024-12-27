@@ -63,7 +63,7 @@ router.get("/Dashboard.html", (req, res) => {
     res.redirect("/dashboard");
 });
 
-router.get("/dashboard", requireLogin, (req, res) => {
+router.get("/dashboard", (req, res) => {
     res.render("Dashboard", {
         pageTitle: "Dashboard",
         cssPath: "/css/dashboard.css",
@@ -72,7 +72,7 @@ router.get("/dashboard", requireLogin, (req, res) => {
 });
 
 // Admin Dashboard page
-router.get("/adminDashboard.html", (req, res) => {
+/* router.get("/adminDashboard.html", (req, res) => {
     res.redirect("admindashboard");
 });
 
@@ -82,7 +82,7 @@ router.get("/adminDashboard", (req, res) => {
         cssPath: "/css/adminDashboard.css",
         message: "Welcome to the Admin Dashboard page",
     });
-});
+}); */
 
 // Consultation page
 router.get("/Consultation.html", (req, res) => {
@@ -173,7 +173,7 @@ router.get("/bookAppointment.html", (req, res) => {
 //     });
 // });
 
-router.get("/bookAppointment", requireLogin, async (req, res) => {
+router.get("/bookAppointment", async (req, res) => {
     // Check if the patient is logged in
     // if (!req.session.isLoggedIn || !req.session.patientId) {
     //     return res.redirect("/login"); // Redirect to login page if not logged in
@@ -222,7 +222,7 @@ router.get("/showAppointment.html", (req, res) => {
     res.redirect("/showAppointment");
 });
 
-router.get("/showAppointment", requireLogin, async (req, res) => {
+router.get("/showAppointment", async (req, res) => {
     try {
         const patientId = req.session.patientId;
 
@@ -262,7 +262,6 @@ router.get("/showAppointment", requireLogin, async (req, res) => {
         res.status(500).json({ message: "Error fetching appointments" });
     }
 });
-
 
 // Editing appointment
 router.get("/editAppointment/:id", async (req, res) => {
@@ -475,28 +474,139 @@ router.get("/showAllDoctors", async (req, res) => {
 });
 
 // Admin Dashboard
-router.get("/adminDashboard", async (req, res) => {
-    const adminId = req.params.id
-    try {
-        const query = "SELECT * FROM Admins WHERE id = ?";
+/* router.get(
+    "/adminDashboard/:id",
+    requireLogin(["Admin", "Super Admin"]),
+    async (req, res) => {
+        // const adminId = req.session.user.id;
+        const adminId = req.session.user ? req.session.user.id : null;
 
-        const [admins] = await db.query(query, [adminId]);
+        console.log("Fetching admin with ID:", adminId); //
 
-        if (admins.length === 0) {
-            return res.status(404).send({ message: "No Admin found" });
+        try {
+            const query = "SELECT * FROM Admins WHERE id = ?";
+
+            const [admins] = await db.query(query, [adminId]);
+
+            console.log("Query Result:", admins); // Log the result of the query
+
+            if (admins.length === 0) {
+                return res.status(404).send({ message: "No Admin found" });
+            }
+
+            res.render("adminDashboard", {
+                admin: admins[0],
+                pageTitle: "Manage Admin",
+                cssPath: "/css/adminDashboard.css",
+            });
+            console.log(admins[0]);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                message: "Error fetching Admin " + error.message,
+            });
         }
-        res.render("adminDashboard", {
-            admins: admins[0],
-            pageTitle: "Manage Admin",
-            cssPath: manageAdmin.cssPath,
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: "Error fetching Admin " + error.message,
-        });
     }
+); */
+
+/* router.get(
+    "/adminDashboard/:id",
+    requireLogin(["Admin", "Super Admin"]),
+    async (req, res) => {
+        // const adminId = req.session.user.id;
+        const adminId = req.params.id;
+        // const adminId = req.session.user ? req.session.user.id : null;
+
+        console.log("Fetching admin with ID:", adminId); //
+
+        try {
+            const query = `SELECT * FROM Admins WHERE id = ?`;
+
+            const [admins] = await db.query(query, [adminId]);
+
+            console.log("Query Result:", admins); // Log the result of the query
+
+            if (admins.length === 0) {
+                return res.status(404).send({ message: "No Admin found" });
+            }
+
+            res.render("adminDashboard", {
+                admin: admins[0],
+                pageTitle: "Manage Admin",
+                cssPath: "/css/adminDashboard.css",
+            });
+            console.log(admins[0]);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                message: "Error fetching Admin " + error.message,
+            });
+        }
+    }
+); */
+
+router.get("/adminDashboard.html", (req, res) => {
+    res.redirect("/adminDashboard");
 });
+
+/* router.get(
+    "/adminDashboard",
+    // requireLogin(["Admin", "Super Admin"]),
+    async (req, res) => {
+        try {
+            console.log("Session user:", req.session.user);
+            console.log("Session ID:", req.session.user.id);
+
+            const query = "SELECT * FROM Admins WHERE id = 4";
+            const [admins] = await db.query(query);
+            console.log("Query result:", admins);
+
+            if (!admins.length) {
+                return res.status(404).send("Admin not found");
+            }
+
+            return res.render("adminDashboard", {
+                admin: admins[0],
+                pageTitle: "Manage Admin",
+                cssPath: "/css/adminDashboard.css",
+            });
+        } catch (error) {
+            console.error("Error in adminDashboard route:", error);
+            return res.status(500).send("Error fetching admin data");
+        }
+    }
+); */
+
+router.get(
+    "/adminDashboard",
+    requireLogin(["Admin", "Super Admin"]),
+    async (req, res) => {
+        try {
+            const adminId = req.session.adminId; // Assuming session contains adminId
+            if (!adminId) {
+                return res.status(401).send("Unauthorized");
+            }
+
+            // Query to fetch admin details
+            const query = `SELECT * FROM Admins WHERE id = ?`;
+            const [admins] = await db.query(query, [adminId]);
+
+            if (admins.length === 0) {
+                return res.status(404).send("Admin not found");
+            }
+
+            // Pass admin data to the view
+            res.render("adminDashboard", {
+                admin: admins[0], // Pass the first result
+                pageTitle: "Admin Dashboard",
+                cssPath: "/css/adminDashboard.css",
+            });
+        } catch (error) {
+            console.error("Error fetching admin data:", error.message);
+            res.status(500).send("Internal Server Error");
+        }
+    }
+);
 
 // Managing Admin
 router.get("/manageAdmin", async (req, res) => {
@@ -509,7 +619,7 @@ router.get("/manageAdmin", async (req, res) => {
         res.render("manageAdmin", {
             admin: admins[0],
             pageTitle: "Manage Admin",
-            cssPath: manageAdmin.cssPath,
+            cssPath: "/css/manageAdmin.css",
         });
     } catch (error) {
         console.error(error);
@@ -562,6 +672,35 @@ router.delete("/deleteAdmin", async (req, res) => {
     }
 }); */
 
+// Patient Dashboard
+router.get("/patientDashboard", requireLogin(["patient"]), async (req, res) => {
+    try {
+        const patientId = req.session.patientId; // Assuming session contains patientId
+        if (!patientId) {
+            return res.status(401).send("Unauthorized");
+        }
+
+        // Query to fetch admin details
+        const query = `SELECT * FROM Patients WHERE id = ?`;
+        const [patients] = await db.query(query, [patientId]);
+
+        if (patients.length === 0) {
+            return res.status(404).send("Patient not found");
+        }
+
+        // Pass admin data to the view
+        res.render("patientDashboard", {
+            patient: patients[0], // Pass the first result
+            pageTitle: "Patient Dashboard",
+            cssPath: "/css/patientDashboard.css",
+        });
+    } catch (error) {
+        console.error("Error fetching patient data:", error.message);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// Show All Patient
 router.get("/showAllPatient", async (req, res) => {
     try {
         // Get the page and limit from query parameters, set defaults if not provided
@@ -628,7 +767,7 @@ router.delete("/deletePatient/:id", async (req, res) => {
 });
 
 // Editing Patient Profile
-router.get("/editPatient/:id", async (req, res) => {
+/* router.get("/editPatient/:id", async (req, res) => {
     try {
         const patientId = req.params.id;
 
@@ -654,7 +793,6 @@ router.get("/editPatient/:id", async (req, res) => {
     }
 });
 
-
 // posting edited patient profile
 router.post("/editPatient/:id", async (req, res) => {
     try {
@@ -678,10 +816,7 @@ router.post("/editPatient/:id", async (req, res) => {
     } catch (error) {
         res.status(500).json("Error Updating Patient" + error.message);
     }
-});
-
-
-
+}); */
 
 // Delete Doctor by id
 
@@ -707,7 +842,6 @@ router.delete("/deleteDoctor/:id", async (req, res) => {
         });
     }
 });
-
 
 // Editing Doctor Profile
 router.get("/editDoctor/:id", async (req, res) => {
@@ -736,7 +870,6 @@ router.get("/editDoctor/:id", async (req, res) => {
     }
 });
 
-
 // posting edited Doctor profile
 router.post("/editDoctor/:id", async (req, res) => {
     try {
@@ -759,6 +892,66 @@ router.post("/editDoctor/:id", async (req, res) => {
         res.redirect("/Dashboard");
     } catch (error) {
         res.status(500).json("Error Updating Doctor" + error.message);
+    }
+});
+
+
+router.get("/editPatient/:id", async (req, res) => {
+    try {
+        const patientId = req.params.id;
+
+        const query = "SELECT *  FROM Patients WHERE id = ?";
+
+        const [patients] = await db.query(query, [patientId]);
+
+        if (patients.length === 0) {
+            return res.status(404).send({ message: "Patient not found" });
+        }
+
+        res.render("editPatient", {
+            patient: patients[0],
+            pageTitle: "editPatient",
+            cssPath: "/css/editPatient.css",
+            message: "Welcome to the edit page",
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error fetching patient " + error.message,
+        });
+    }
+});
+
+// posting edited patient profile
+router.post("/editPatient/:id", async (req, res) => {
+    try {
+        const patientId = req.params.id;
+        // console.log(req.body);
+
+        const { first_name, last_name, phone, date_of_birth, gender, address } =
+            req.body;
+
+        // console.log(req.body);
+
+        const query = `UPDATE Patients SET first_name = ?, last_name = ?, phone = ?, date_of_birth = ?, gender = ?, address = ? WHERE id = ?`;
+
+        await db.query(query, [
+            first_name,
+            last_name,
+            phone,
+            date_of_birth,
+            gender,
+            address,
+            patientId,
+        ]);
+        // alert("Upadate Successful")
+        // console.log("Successful");
+        // console.log(req.body);
+        res.status(200).json({ message: "Update Successful" });
+
+        // res.redirect("/patientDashboard");
+    } catch (error) {
+        res.status(500).json("Error Updating Patient " + error.message);
     }
 });
 

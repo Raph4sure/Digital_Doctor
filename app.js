@@ -7,6 +7,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const bodyParser = require("body-parser");
 const session = require("express-session");
 // Importing the router
 const staticRouter = require("./routes/staticRoutes");
@@ -31,7 +32,7 @@ const methodOverride = require("method-override");
 const db = require("./database");
 
 
-
+// Parse application/x-www-form-urlencoded
 
 
 const app = express();
@@ -46,6 +47,10 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Parse application/json
+app.use(bodyParser.json());
 
 
 
@@ -68,10 +73,16 @@ app.use(
 // for method override
 app.use(methodOverride("_method"));
 
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.url}`);
+    next();
+});
+
+
 // Using Patient router
-// app.use("/api/patients", patientRouter);
+app.use("/api/patients", patientRouter);
 // app.use("/api/doctors", doctorRouter);
-// app.use("/api/appointment", appointmentRouter);
+app.use("/api/appointment", appointmentRouter);
 app.use("/api/admin", adminRouter);
 
 // Use the static routes

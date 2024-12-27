@@ -10,7 +10,7 @@
 
         <main class="container2">
             <section class="top__container2">
-                <h3 class="top__container2-h2">Welcome, Alabi Raphael</h3>
+                <h3 class="top__container2-h2">Welcome, <%= `${patient.first_name + " " + patient.last_name}` %></h3>
                 <p class="top__container2-p">Your health, our priority</p>
             </section>
 
@@ -18,7 +18,7 @@
                 <h4 class="side__bar-h4">My Portal</h4>
                 <ul class="side__bar-ul">
                     <li class="side__bar-li"><a class="side__bar-a" href="">Dashboard</a></li>
-                    <li class="side__bar-li"><a class="side__bar-a" href="">Edit Profile</a></li>
+                    <li class="side__bar-li"><a class="side__bar-a" href="/editPatient/<%= patient.id %>">Edit Profile</a></li>
                     <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Appointment</a></li>
                     <!-- <li class="side__bar-li"><a class="side__bar-a" href="">Report</a></li> -->
                    <form action="/logout" method="POST">
@@ -28,15 +28,14 @@
             </section>
 
             <section class="body">
-                <p class="body-text">First Name: Alabi</p>
-                <p class="body-text">Last Name: Rapahel</p>
-                <p class="body-text">Email: Raph4sure007@gmail.com</p>
-                <p class="body-text">Phone: 07066886470</p>
-                <p class="body-text">Date of Birth: 17/03/2020</p>
-                <p class="body-text">Gender: Male</p>
-                <p class="body-text">
-                    Address: 29, Ifelodun str; megida, Ayobo, Alimosho LGA Lagos
-                    state
+                <p class="body-text"> <strong>First Name:</strong> <%= patient.first_name %></p>
+                <p class="body-text"><strong>Last Name:</strong> <%= patient.last_name %></p>
+                <p class="body-text"><strong>Email: </strong><%= patient.email %></p>
+                <p class="body-text"><strong>Phone:</strong> <%= patient.phone %></p>
+                <p class="body-text"><strong>Date of Birth:</strong> <%= patient.date_of_birth %></p>
+                <p class="body-text"><strong>Gender:</strong> <%= patient.gender %></p>
+                <p class="body-text"><strong>Address:</strong>
+                     <%= patient.address %>
                 </p>
             </section>
         </main>

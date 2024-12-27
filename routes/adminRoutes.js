@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 router.post("/registerAdmin", adminController.registerAdmin);
-// router.post("/login", adminController.login);
+router.post("/loginAdmin", adminController.loginAdmin);
 // router.post("/registerDoctor", requireLogin, adminController.registerDoctor);
 // router.get("/getAllDoctors", requireLogin, adminController.getAllDoctors);
 // router.put("/updateDoctor/:id", requireLogin, adminController.updateDoctor);

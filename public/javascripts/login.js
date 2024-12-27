@@ -289,7 +289,6 @@ const validateOptions = [
     },
 ];
 
-
 const validateForm = (formSelector) => {
     const formElement = document.querySelector(formSelector);
 
@@ -331,10 +330,9 @@ const validateForm = (formSelector) => {
 
             if (response.ok) {
                 alert(result.message);
-                window.location.href = "http://localhost:3300/dashboard";
-                
+                window.location.href = "http://localhost:3300/patientDashboard";
+
                 // redirect to the dashboard page
-                
             } else {
                 if (result.error.includes("email")) {
                     const emailError = document
