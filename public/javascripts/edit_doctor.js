@@ -5,6 +5,11 @@ const validateSingleFormGroup = (formGroup) => {
     const successIcon = formGroup.querySelector(".success-icon");
     const input = formGroup.querySelector("input, textarea, select");
 
+    if (!input) {
+        console.warn("Input element not found in form group:", formGroup);
+        return; // Exit if there's no input element
+    }
+
     let formGroupError = false;
 
     // Dropdown validation
@@ -62,20 +67,13 @@ const validateSingleFormGroup = (formGroup) => {
         });
     } */
 
+    // Validate options (other validations)
     validateOptions.forEach((option) => {
         if (input.hasAttribute(option.attribute) && !option.isValid(input)) {
             errorContainer.textContent = option.errorMessage(input);
             formGroupError = true;
         }
     });
-
-    // Loop through validation options
-    /*     validateOptions.forEach((option) => {
-        if (input.hasAttribute(option.attribute) && !option.isValid(input)) {
-            errorContainer.textContent = option.errorMessage(input);
-            formGroupError = true;
-        }
-    }); */
 
     // Toggle error/success state
     if (formGroupError) {
@@ -93,8 +91,13 @@ const validateSingleFormGroup = (formGroup) => {
 };
 
 const validateAllFormGroups = (formToValidate) => {
+    console.log("Validating form:", formToValidate);
     const formGroups = Array.from(formToValidate.querySelectorAll(".form_val"));
-    formGroups.forEach(validateSingleFormGroup);
+    console.log("Found form groups:", formGroups);
+    formGroups.forEach((group, index) => {
+        console.log(`Validating group ${index}:`, group);
+        validateSingleFormGroup(group);
+    });
 };
 
 // Validation logic
@@ -283,67 +286,51 @@ const enhancedValidateForm = (formSelector) => {
     );
 
     // Real-time validation and summary update
-    formElement.addEventListener("input", (event) => {
-        const formGroup = event.target.closest(".form_val");
-        if (formGroup) {
-            validateSingleFormGroup(formGroup);
-        }
-        const currentFormData = captureFormData(formElement);
-        displayFormData(currentFormData);
-    });
-
-    // Submit event validation
-
     formElement.addEventListener("submit", async (event) => {
         event.preventDefault();
         validateAllFormGroups(formElement);
 
         const allValid = !Array.from(
             formElement.querySelectorAll(".form_val")
-        ).some((formGroup) =>
-            formGroup.querySelector(".error").textContent.trim()
-        );
+        ).some((formGroup) => {
+            const errorElement = formGroup.querySelector(".error");
+            return errorElement && errorElement.textContent.trim();
+        });
 
         if (allValid) {
-            const formData = new FormData(formElement);
-
-            // Debug log to see what's being sent
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ": " + pair[1]);
-            }
-
-            displayFormData(Object.fromEntries(formData.entries()));
-
-            // Get the form's action URL directly from the form element
-            const formAction = formElement.getAttribute("action");
-
             try {
-                // Convert FormData to JSON if your API expects JSON
-                const formDataObject = Object.fromEntries(formData.entries());
+                const formData = new FormData(formElement);
 
+                // Debug log
+                console.log(
+                    "Files being sent:",
+                    formElement.querySelector('[name="medical_images"]').files
+                );
+
+                const formAction = formElement.getAttribute("action");
                 const response = await fetch(formAction, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formDataObject),
-                    // body: formData.toString(),
+                    body: formData, // Send FormData directly
+                    // Don't set Content-Type header - browser will set it automatically with boundary
+                    // headers: {
+                    //     "Content-Type": "application/json", // This can be included if no images in the form
+                    // },
+                    // body: JSON.stringify(formDataObject), // This can be included if no images in the form
                 });
 
-                // Log the response for debugging
-                const responseData = await response.json();
-                console.log("Server response:", responseData);
-
-                if (response.ok) {
-                    alert("Registration Successful");
-                    formElement.reset();
-                    window.location.href = "/patientDashboard";
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else if (response.ok) {
+                    alert("Profile updated successfully");
+                    window.location.href = "/doctorDashboard";
                 } else {
-                    alert(responseData.error || "Registration failed");
+                    const errorText = await response.text();
+                    console.error("Server error response:", errorText);
+                    alert("Update failed. Please try again.");
                 }
             } catch (error) {
+                console.error("Error during form submission:", error);
                 alert("An error occurred while submitting the form");
-                console.error("Error during fetch:", error);
             }
         } else {
             updateSubmitButton(false);

@@ -1,25 +1,48 @@
  <%- include('partials/header') %>
  <%- include('partials/nav_bar') %>
 
-<body class="container">
-    <h2 class="container-h2">Select A Doctor Of Your Choice</h2>
-  <section class="doctor-cards-container">
-    <% doctors.forEach(doctor => { %>
-    <div class="doctor-card">
-      <img class="doctor-card__image" src="/uploads/<%= doctor.profile_image %>" alt="Doctor Image">
-      <h2 class="doctor-card__name"><%= doctor.first_name + " " + doctor.last_name %></h2>
-      <p class="doctor-card__specialization"><%= doctor.specialization %></p>
-      <p class="doctor-card__bio"><%= doctor.gender %></p>
-      <p class="doctor-card__bio"><%= doctor.phone %></p>
-      <div class="doctor-card__buttons">
-        <a href="/bookAppointment" class="button book-appointment">Book Appointment</a>
-      </div>
-    </div>
-    <% }) %>
-  </section>
-</body>
+ <body class="container">
+   <h2 class="container-h2">Select A Doctor Of Your Choice</h2>
+   <section class="doctor-cards-container">
+     <% doctors.forEach(doctor => { %>
+     <div class="doctor-card">
+       <img class="doctor-card__image" src="/uploads/<%= doctor.profile_image %>" alt="Doctor Image">
+       <h2 class="doctor-card__name"><%= doctor.first_name + " " + doctor.last_name %></h2>
+       <p class="doctor-card__specialization"><%= doctor.specialization %></p>
+       <p class="doctor-card__bio"><%= doctor.gender %></p>
+       <p class="doctor-card__bio"><%= doctor.phone %></p>
+       <div class="doctor-card__buttons">
+         <a href="/bookAppointment" class="button book-appointment">Book Appointment</a>
+       </div>
+       <% if (admins.role === "Admin" || admins.role === "Super Admin") { %>
+       <div class="doctor-card__buttons">
+         <a href="/editDoctor/<%= doctor.id %>" class="button book-appointment">Edit</a>
+       </div>
+       <div class="doctor-card__buttons">
+         <a href="/bookAppointment" class="button book-appointment">Delete</a>
+       </div>
+       <% } %>
+
+     </div>
+     <% }) %>
+   </section>
+   <div class="pagination">
+     <% if (currentPage > 1) { %>
+     <a href="/showAllDoctors?page=<%= currentPage - 1 %>&limit=<%= limit %>" class="pagination__link">Previous</a>
+     <% } %>
+
+     <% for (let i = 1; i <= totalPages; i++) { %>
+     <a href="/showAllDoctors?page=<%= i %>&limit=<%= limit %>" class="pagination__link <%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+     <% } %>
+
+     <% if (currentPage < totalPages) { %>
+     <a href="/showAllDoctors?page=<%= currentPage + 1 %>&limit=<%= limit %>" class="pagination__link">Next</a>
+     <% } %>
+   </div>
+
+ </body>
 
  <%- include('partials/footer') %>
 
 
-<!-- </html> -->
+ <!-- </html> -->

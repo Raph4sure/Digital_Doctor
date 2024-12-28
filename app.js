@@ -81,7 +81,7 @@ app.use((req, res, next) => {
 
 // Using Patient router
 app.use("/api/patients", patientRouter);
-// app.use("/api/doctors", doctorRouter);
+app.use("/api/doctors", doctorRouter);
 app.use("/api/appointment", appointmentRouter);
 app.use("/api/admin", adminRouter);
 

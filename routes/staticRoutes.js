@@ -121,6 +121,18 @@ router.get("/doctors_registration", (req, res) => {
         message: "Welcome to the Doctors Reg page",
     });
 });
+// Doctors login
+router.get("/doctorLogin.html", (req, res) => {
+    res.redirect("/doctorLogin");
+});
+
+router.get("/doctorLogin", (req, res) => {
+    res.render("doctorLogin", {
+        pageTitle: "doctorLogin",
+        cssPath: "/css/doctorLogin.css",
+        message: "Welcome to the Doctors Login page",
+    });
+});
 // Patient registration
 router.get("/registration.html", (req, res) => {
     res.redirect("/registration");
@@ -373,7 +385,7 @@ router.post(
     }
 );
 
-// Route for deleting an Image
+// Route for deleting an Image in Appointment table
 
 router.post("/deleteImage", async (req, res) => {
     try {
@@ -400,6 +412,42 @@ router.post("/deleteImage", async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 });
+
+
+// Route for deleting an Image in Doctors table
+
+router.post("/deleteDoctorImage", async (req, res) => {
+    try {
+        const { imagePath } = req.body;
+
+        if (!imagePath) {
+            return res
+                .status(400)
+                .json({ success: false, message: "Image path is required" });
+        }
+
+        // File path on the server
+        const filePath = path.join(__dirname, "../public/uploads", imagePath);
+
+        // Delete the file from the filesystem
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        // Update the database (set profile_image to NULL or an empty string)
+        await db.query(
+            "UPDATE Doctors SET profile_image = NULL WHERE profile_image = ?",
+            [imagePath]
+        );
+
+        res.json({ success: true, message: "Image deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting image:", error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+module.exports = router;
 
 // Deleting an appointment
 
@@ -436,18 +484,43 @@ router.post("/logout", (req, res) => {
 });
 
 // Router to show all doctors
-router.get("/showAllDoctors", async (req, res) => {
-    try {
-        const query = `SELECT * FROM Doctors ORDER BY first_name, last_name ASC`;
+router.get(
+    "/showAllDoctors",
+    requireLogin(["Admin", "Super Admin", "doctor"]),
+    async (req, res) => {
+        // const role = req.session.user.role;
+        try {
+            // Pagination
+            // Getting the page and limit from the query parameters, and setting the default to 1 and 10
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
 
-        const [doctors] = await db.query(query);
+            // calculating the offset
+            const offset = (page - 1) * limit;
 
-        if (doctors.length === 0) {
-            return res.status(404).json({ message: "No doctors found" });
-        }
+            // Importing Admin data to have access to role
+            const queryAdmin = `SELECT role from Admins`;
 
-        // Handling showing of images
-        /*   doctors.forEach((doctor) => {
+            const [admins] = await db.query(queryAdmin);
+
+            const query = `SELECT * FROM Doctors ORDER BY first_name, last_name ASC LIMIT ? OFFSET ?`;
+
+            const [doctors] = await db.query(query, [limit, offset]);
+
+            // pagination
+            // Query total number of doctors for pagination controls
+
+            const queryCount = `SELECT COUNT(*) AS total FROM Doctors`;
+            const [[{ total }]] = await db.query(queryCount);
+
+            if (doctors.length === 0) {
+                return res.status(404).json({ message: "No doctors found" });
+            }
+
+            // pagination
+            (totalPages = Math.ceil(total / limit)),
+                // Handling showing of images
+                /*   doctors.forEach((doctor) => {
             if (doctor.profile_image === "string") {
                 try {
                     doctor.profile_image = JSON.parse(doctor.profile_image);
@@ -458,124 +531,36 @@ router.get("/showAllDoctors", async (req, res) => {
             }
         }); */
 
-        // res.render("showAllDoctors", { doctors });
-        res.render("showAllDoctors", {
-            doctors,
-            pageTitle: "showAllDoctors",
-            cssPath: "/css/showAllDoctor.css",
-            message: "showAllDoctors page",
-        });
-    } catch (error) {
-        console.error("Error fetching Data:", error);
-        res.status(500).json({
-            message: "Fetching Data failed: " + error.message,
-        });
+                // console.log(admins[0].role);
+
+                // res.render("showAllDoctors", { doctors });
+                console.log("Admin Data:", admins[0]);
+
+                res.render("showAllDoctors", {
+                    doctors,
+                    admins: admins[0],
+                    // pagination
+                    currentPage: page,
+                    totalPages,
+                    limit,
+
+                    pageTitle: "showAllDoctors",
+                    cssPath: "/css/showAllDoctor.css",
+                    message: "showAllDoctors page",
+                });
+        } catch (error) {
+            console.error("Error fetching Data:", error);
+            res.status(500).json({
+                message: "Fetching Data failed: " + error.message,
+            });
+        }
     }
-});
+);
 
 // Admin Dashboard
-/* router.get(
-    "/adminDashboard/:id",
-    requireLogin(["Admin", "Super Admin"]),
-    async (req, res) => {
-        // const adminId = req.session.user.id;
-        const adminId = req.session.user ? req.session.user.id : null;
-
-        console.log("Fetching admin with ID:", adminId); //
-
-        try {
-            const query = "SELECT * FROM Admins WHERE id = ?";
-
-            const [admins] = await db.query(query, [adminId]);
-
-            console.log("Query Result:", admins); // Log the result of the query
-
-            if (admins.length === 0) {
-                return res.status(404).send({ message: "No Admin found" });
-            }
-
-            res.render("adminDashboard", {
-                admin: admins[0],
-                pageTitle: "Manage Admin",
-                cssPath: "/css/adminDashboard.css",
-            });
-            console.log(admins[0]);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                message: "Error fetching Admin " + error.message,
-            });
-        }
-    }
-); */
-
-/* router.get(
-    "/adminDashboard/:id",
-    requireLogin(["Admin", "Super Admin"]),
-    async (req, res) => {
-        // const adminId = req.session.user.id;
-        const adminId = req.params.id;
-        // const adminId = req.session.user ? req.session.user.id : null;
-
-        console.log("Fetching admin with ID:", adminId); //
-
-        try {
-            const query = `SELECT * FROM Admins WHERE id = ?`;
-
-            const [admins] = await db.query(query, [adminId]);
-
-            console.log("Query Result:", admins); // Log the result of the query
-
-            if (admins.length === 0) {
-                return res.status(404).send({ message: "No Admin found" });
-            }
-
-            res.render("adminDashboard", {
-                admin: admins[0],
-                pageTitle: "Manage Admin",
-                cssPath: "/css/adminDashboard.css",
-            });
-            console.log(admins[0]);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                message: "Error fetching Admin " + error.message,
-            });
-        }
-    }
-); */
-
 router.get("/adminDashboard.html", (req, res) => {
     res.redirect("/adminDashboard");
 });
-
-/* router.get(
-    "/adminDashboard",
-    // requireLogin(["Admin", "Super Admin"]),
-    async (req, res) => {
-        try {
-            console.log("Session user:", req.session.user);
-            console.log("Session ID:", req.session.user.id);
-
-            const query = "SELECT * FROM Admins WHERE id = 4";
-            const [admins] = await db.query(query);
-            console.log("Query result:", admins);
-
-            if (!admins.length) {
-                return res.status(404).send("Admin not found");
-            }
-
-            return res.render("adminDashboard", {
-                admin: admins[0],
-                pageTitle: "Manage Admin",
-                cssPath: "/css/adminDashboard.css",
-            });
-        } catch (error) {
-            console.error("Error in adminDashboard route:", error);
-            return res.status(500).send("Error fetching admin data");
-        }
-    }
-); */
 
 router.get(
     "/adminDashboard",
@@ -766,58 +751,6 @@ router.delete("/deletePatient/:id", async (req, res) => {
     }
 });
 
-// Editing Patient Profile
-/* router.get("/editPatient/:id", async (req, res) => {
-    try {
-        const patientId = req.params.id;
-
-        const query = "SELECT *  FROM Patients WHERE id = ?";
-
-        const [patients] = await db.query(query, [patientId]);
-
-        if (patients.length === 0) {
-            return res.status(404).send({ message: "Patient not found" });
-        }
-
-        res.render("editPatient", {
-            patient: patients[0],
-            pageTitle: "editPatient",
-            cssPath: "/css/editPatient.css",
-            message: "Welcome to the edit page",
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: "Error fetching patient " + error.message,
-        });
-    }
-});
-
-// posting edited patient profile
-router.post("/editPatient/:id", async (req, res) => {
-    try {
-        const patientId = req.params.id;
-
-        const { first_name, last_name, phone, date_of_birth, gender, address } =
-            req.body;
-
-        const query = `UPDATE Patients SET first_name = ?, last_name = ?, phone = ?, date_of_birth = ?, gender = ?, address = ? WHERE id = ?`;
-
-        await db.query(query, [
-            first_name,
-            last_name,
-            phone,
-            date_of_birth,
-            gender,
-            address,
-        ]);
-
-        res.redirect("/Dashboard");
-    } catch (error) {
-        res.status(500).json("Error Updating Patient" + error.message);
-    }
-}); */
-
 // Delete Doctor by id
 
 router.delete("/deleteDoctor/:id", async (req, res) => {
@@ -871,31 +804,44 @@ router.get("/editDoctor/:id", async (req, res) => {
 });
 
 // posting edited Doctor profile
-router.post("/editDoctor/:id", async (req, res) => {
-    try {
-        const doctorId = req.params.id;
+router.post(
+    "/editDoctor/:id",
+    uploadFiles("medical_images", 1),
+    async (req, res) => {
+        try {
+            const doctorId = req.params.id;
 
-        const { first_name, last_name, phone, date_of_birth, gender, address } =
-            req.body;
+            console.log("body:", req.body);
+            console.log("file:", req.files);
 
-        const query = `UPDATE Doctors SET first_name = ?, last_name = ?, phone = ?, date_of_birth = ?, gender = ?, address = ? WHERE id = ?`;
 
-        await db.query(query, [
-            first_name,
-            last_name,
-            phone,
-            date_of_birth,
-            gender,
-            address,
-        ]);
+            const { first_name, last_name, phone, specialization, gender } =
+                req.body;
 
-        res.redirect("/Dashboard");
-    } catch (error) {
-        res.status(500).json("Error Updating Doctor" + error.message);
+
+            // Get the profile image filename
+            const profileImage = req.files ? req.files[0].filename : null;
+
+            const query = `UPDATE Doctors SET first_name = ?, last_name = ?, phone = ?, specialization = ?, gender = ?, profile_image = ? WHERE id = ?`;
+
+            await db.query(query, [
+                first_name,
+                last_name,
+                phone,
+                specialization,
+                gender,
+                profileImage,
+                doctorId,
+            ]);
+
+            res.redirect("/Dashboard");
+        } catch (error) {
+            res.status(500).json("Error Updating Doctor" + error.message);
+        }
     }
-});
+);
 
-
+// router to get(edit) patient information
 router.get("/editPatient/:id", async (req, res) => {
     try {
         const patientId = req.params.id;

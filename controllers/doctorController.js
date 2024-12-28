@@ -7,13 +7,10 @@ const db = require("./../database");
 // Multer is for file uploads and handling
 const multer = require("multer");
 
-
 const upload = require("../middleware/upload");
 
-
-
 // Doctors Registration route
-exports.register =  async (req, res) => {
+exports.register = async (req, res) => {
     console.log("Body", req.body);
     console.log("File:", req.files);
     console.log("Doctor ID:", req.session.doctorId);
@@ -102,14 +99,16 @@ exports.login = async (req, res) => {
         // create a session if password matches.
         req.session.doctorId = doctor.id;
         req.session.isLoggedIn = true;
+        req.session.user = {
+            id: doctor.id,
+            role: "doctor",
+        };
 
         res.json({ message: "Login Succesful", doctorId: doctor.id });
     } catch (error) {
         res.status(500).json({ error: "Login failed: " + error.message });
     }
 };
-
-
 
 // Doctor logout route
 exports.logout = (req, res) => {
@@ -124,10 +123,8 @@ exports.logout = (req, res) => {
 
 // View doctor profile
 
-
 // Update doctor profile
 exports.updateProfile = async (req, res) => {
-
     const profileImages = req.files
         ? req.files.map((file) => file.filename)
         : [];
@@ -177,4 +174,3 @@ exports.deleteProfile = async (req, res) => {
         });
     }
 };
-
