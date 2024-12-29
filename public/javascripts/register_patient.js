@@ -228,7 +228,7 @@ const enhancedValidateForm = (formSelector) => {
 
             try {
     const response = await fetch(
-        "http://localhost:3300/api/patients/register",
+        "http://localhost:3300/api/registerPatient",
         {
             method: "POST",
             headers: {

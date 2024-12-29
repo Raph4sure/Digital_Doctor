@@ -9,31 +9,29 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+
 // Importing the router
-const staticRouter = require("./routes/staticRoutes");
+const commonRouter = require("./routes/commonRoutes");
 const patientRouter = require("./routes/patientRoutes");
 const doctorRouter = require("./routes/doctorRoutes");
 const appointmentRouter = require("./routes/appointmentRoutes");
 const adminRouter = require("./routes/adminRoutes");
+
+
+
 const cors = require("cors");
 const methodOverride = require("method-override");
-
 
 // const crypto = require("crypto");
 // const secret = crypto.randomBytes(64).toString("hex");
 // console.log(secret);
 
 
-// const css = require("./public/css/homepage.css");
-
-// const bodyParser = require("body-parser");
 
 // Importing database.js
 const db = require("./database");
 
-
 // Parse application/x-www-form-urlencoded
-
 
 const app = express();
 app.use(cors()); // Use CORS to allow requests from any origin
@@ -46,13 +44,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Parse application/json
 app.use(bodyParser.json());
-
-
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -78,16 +73,18 @@ app.use((req, res, next) => {
     next();
 });
 
-
 // Using Patient router
-app.use("/api/patients", patientRouter);
-app.use("/api/doctors", doctorRouter);
-app.use("/api/appointment", appointmentRouter);
-app.use("/api/admin", adminRouter);
+// app.use("/api/patients", patientRouter);
+// app.use("/api/doctors", doctorRouter);
+// app.use("/api/appointment", appointmentRouter);
+// app.use("/api/admin", adminRouter);
 
 // Use the static routes
-app.use("/", staticRouter);
-
+app.use("/", commonRouter);
+app.use("/", doctorRouter);
+app.use("/", adminRouter);
+app.use("/", patientRouter);
+app.use("/", appointmentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -105,14 +102,6 @@ app.use(function (err, req, res, next) {
     res.render("error");
 });
 
-// app.get("/", async (req, res) => {
-//     try {
-//         const [rows] = await db.query("SELECT * FROM patients");
-//         res.json(rows);
-//     } catch (err) {
-//         res.status(500).send("Database Error: " + err.message);
-//     }
-// });
 
 // connecting to the database and starting the server
 db.getConnection()

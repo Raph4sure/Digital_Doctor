@@ -11,10 +11,12 @@
        <p class="doctor-card__specialization"><%= doctor.specialization %></p>
        <p class="doctor-card__bio"><%= doctor.gender %></p>
        <p class="doctor-card__bio"><%= doctor.phone %></p>
+        <% if (!userRole.includes("Admin") && !userRole.includes("Super Admin")) { %>
        <div class="doctor-card__buttons">
          <a href="/bookAppointment" class="button book-appointment">Book Appointment</a>
        </div>
-       <% if (admins.role === "Admin" || admins.role === "Super Admin") { %>
+         <% } %>
+       <% if (userRole.includes("Admin") || userRole.includes("Super Admin")) { %>
        <div class="doctor-card__buttons">
          <a href="/editDoctor/<%= doctor.id %>" class="button book-appointment">Edit</a>
        </div>

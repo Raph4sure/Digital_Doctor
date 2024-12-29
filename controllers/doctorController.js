@@ -1,13 +1,26 @@
 // requiring bcrypt
-const express = require("express");
-
 const bcrypt = require("bcrypt");
 // requiring database
-const db = require("./../database");
-// Multer is for file uploads and handling
+
+const express = require("express");
+const router = express.Router();
+const db = require("../database");
+
 const multer = require("multer");
 
-const upload = require("../middleware/upload");
+// const upload = require("../middleware/upload");
+const fs = require("fs");
+const path = require("path");
+
+const { sendEmail } = require("../middleware/email");
+
+const { requireLogin } = require("../middleware/authMiddleware");
+
+const uploadFiles = require("../middleware/upload");
+
+// const express = require("express");
+// const router = express.Router();
+// const db = require("./../database");
 
 // Doctors Registration route
 exports.register = async (req, res) => {
@@ -70,7 +83,7 @@ exports.register = async (req, res) => {
     }
 };
 
-// Doctor login route
+// Doctor login Route
 exports.login = async (req, res) => {
     const { email, password } = req.body;
 
@@ -101,8 +114,10 @@ exports.login = async (req, res) => {
         req.session.isLoggedIn = true;
         req.session.user = {
             id: doctor.id,
-            role: "doctor",
+            role: ["doctor"],
         };
+
+        console.log("Login User", req.session.user.role);
 
         res.json({ message: "Login Succesful", doctorId: doctor.id });
     } catch (error) {
@@ -121,56 +136,177 @@ exports.logout = (req, res) => {
     });
 };
 
-// View doctor profile
-
-// Update doctor profile
-exports.updateProfile = async (req, res) => {
-    const profileImages = req.files
-        ? req.files.map((file) => file.filename)
-        : [];
-
-    const { first_name, last_name, specialization, phone } = req.body;
-
+// Router to show all doctors
+exports.showAllDoctors = async (req, res) => {
+    // const role = req.session.user.role;
     try {
-        await db.query(
-            "UPDATE Doctors SET first_name = ?, last_name = ?, specialization = ?, gender = ?, profile_image = ?, phone = ? WHERE id = ?",
-            [
-                first_name,
-                last_name,
-                specialization,
-                gender,
-                profileImages.join(", "),
-                phone,
-                req.session.doctorId,
-            ]
-        );
+        // Pagination
+        // Getting the page and limit from the query parameters, and setting the default to 1 and 10
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
 
-        res.json({ message: "Profile updated succesfuly" });
+        // calculating the offset
+        const offset = (page - 1) * limit;
+
+        // Importing Admin data to have access to role
+        const queryAdmin = `SELECT role from Admins`;
+
+        const [admins] = await db.query(queryAdmin);
+
+        const query = `SELECT * FROM Doctors ORDER BY first_name, last_name ASC LIMIT ? OFFSET ?`;
+
+        const [doctors] = await db.query(query, [limit, offset]);
+
+        // pagination
+        // Query total number of doctors for pagination controls
+
+        const queryCount = `SELECT COUNT(*) AS total FROM Doctors`;
+        const [[{ total }]] = await db.query(queryCount);
+
+        if (doctors.length === 0) {
+            return res.status(404).json({ message: "No doctorsfound" });
+        }
+
+        // pagination
+        (totalPages = Math.ceil(total / limit)),
+            console.log("Admin Data:", admins[0]);
+        console.log("Admins Data:", admins);
+        console.log("login user:", req.session.user.role);
+
+        res.render("showAllDoctors", {
+            doctors,
+            admins: admins[0],
+            userRole: req.session.user.role,
+
+            // pagination
+            currentPage: page,
+            totalPages,
+            limit,
+
+            pageTitle: "showAllDoctors",
+            cssPath: "/css/showAllDoctor.css",
+            message: "showAllDoctors page",
+        });
     } catch (error) {
+        console.error("Error fetching Data:", error);
         res.status(500).json({
-            error: "Failed to update profile: " + error.message,
+            message: "Fetching Data failed: " + error.message,
         });
     }
 };
 
-// Delete doctor profile
-exports.deleteProfile = async (req, res) => {
+// Editing Doctor Profile
+exports.getEditDoctor = async (req, res) => {
     try {
-        await db.query("DELETE FROM Doctors WHERE id = ?", [
-            req.session.doctorId,
-        ]);
+        const doctorId = req.params.id;
 
-        // Destroy session after deleting account
-        req.session.destroy((err) => {
-            if (err) {
-                return res.status(500).json({ error: "Failed to log out" });
-            } else {
-                res.json({ message: "Account deleted successfully" });
-            }
+        const query = "SELECT *  FROM Doctors WHERE id = ?";
+
+        const [doctors] = await db.query(query, [doctorId]);
+
+        if (doctors.length === 0) {
+            return res.status(404).send({ message: "Doctor not found" });
+        }
+
+        res.render("editDoctor", {
+            doctor: doctors[0],
+            pageTitle: "editDoctor",
+            cssPath: "/css/editDoctor.css",
+            message: "Welcome to the edit page",
         });
     } catch (error) {
+        console.error(error);
         res.status(500).json({
-            error: "Failed to delete account: " + error.message,
+            message: "Error fetching Doctor " + error.message,
         });
+    }
+};
+
+// posting edited Doctor profile
+exports.postEditDoctor = async (req, res) => {
+    try {
+        const doctorId = req.params.id;
+
+        console.log("body:", req.body);
+        console.log("file:", req.files);
+
+        const { first_name, last_name, phone, specialization, gender } =
+            req.body;
+
+        // Get the profile image filename
+        const profileImage = req.files ? req.files[0].filename : null;
+
+        const query = `UPDATE Doctors SET first_name = ?, last_name = ?, phone = ?, specialization = ?, gender = ?, profile_image = ? WHERE id = ?`;
+
+        await db.query(query, [
+            first_name,
+            last_name,
+            phone,
+            specialization,
+            gender,
+            profileImage,
+            doctorId,
+        ]);
+
+        res.redirect("/Dashboard");
+    } catch (error) {
+        res.status(500).json("Error Updating Doctor" + error.message);
+    }
+};
+
+// Deleting Doctor
+exports.deleteDoctor = async (req, res) => {
+    const doctorIdToDelete = req.params.id;
+
+    try {
+        const [result] = await db.query("DELETE FROM Doctors WHERE id = ?", [
+            doctorIdToDelete,
+        ]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                error: "Doctor not found",
+            });
+        }
+
+        res.json({ message: "Doctor deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: "An error occured while deleting Doctor " + error.message,
+        });
+    }
+};
+
+// Route for deleting an Image in Doctors table
+exports.deleteDoctorImage = async (req, res) => {
+    try {
+        const { imagePath } = req.body;
+
+        if (!imagePath) {
+            return res.status(400).json({
+                success: false,
+                message: "Image path is required",
+            });
+        }
+
+        // File path on the server
+        const filePath = path.join(__dirname, "../public/uploads", imagePath);
+
+        // Delete the file from the filesystem
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        // Update the database (set profile_image to NULL or an empty string)
+        await db.query(
+            "UPDATE Doctors SET profile_image = NULL WHERE profile_image = ?",
+            [imagePath]
+        );
+
+        res.json({ success: true, message: "Image deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting image:", error);
+        res.status(500).json({ success: false, message: "Server error" });
     }
 };

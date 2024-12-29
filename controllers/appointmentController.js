@@ -3,15 +3,64 @@ const bcrypt = require("bcrypt");
 // requiring database
 const db = require("./../database");
 
+// const { router } = require("../app");
+const express = require("express");
+
+const fs = require("fs");
+const path = require("path");
+
+const uploadFiles = require("../middleware/upload");
+
+const { requireLogin } = require("../middleware/authMiddleware");
+
 const multer = require("multer");
 
-const upload = require("../middleware/upload");
+// const upload = require("../middleware/upload");
 
 const { sendEmail } = require("./../middleware/email");
 
-const express = require("express");
 const router = express.Router();
-// const db = require("./../database");
+
+// Booking An Appointment
+exports.bookAppointment = async (req, res) => {
+    try {
+        // Fetch patient details from the database
+        const [rows] = await db.query(
+            "SELECT first_name, last_name, phone, email, gender, date_of_birth FROM Patients WHERE id = ?",
+            [req.session.patientId]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).send("Patient not found");
+        }
+
+        const patientData = rows[0]; // Get the patient details
+
+        // console.log("Gender from Patient Data:", patientData.date_of_birth);
+
+        // Fetch the list of doctors from the Doctors table
+        const [doctorRows] = await db.query(
+            "SELECT id, first_name, last_name, specialization FROM Doctors"
+        );
+
+        if (doctorRows.length === 0) {
+            return res.status(404).send("No doctors available");
+        }
+
+        // Render the page and pass patientData
+        res.render("bookAppointment", {
+            pageTitle: "Book Appointment",
+            cssPath: "/css/bookAppointment.css",
+            message: "Welcome to the Patient login page",
+            patientData, // Pass patientData to the view
+            patientId: patientData.id, // Pass patientId to the view
+            doctors: doctorRows, // Pass the list of doctors to the view
+        });
+    } catch (error) {
+        console.error("Error fetching patient data:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
 
 exports.bookAppointment = async (req, res) => {
     // console.log(req.body, req.files); // Log the request body and files for debugging
@@ -117,191 +166,185 @@ exports.bookAppointment = async (req, res) => {
     }
 };
 
-// router.get("/showAppointment.html", (req, res) => {
-//     res.redirect("/showAppointment");
-// });
-
-// exports.showAppointment = async (req, res) => {
-//     try {
-//         const patientId = req.session.patientId;
-
-//         const query = `SELECT * FROM Appointments WHERE patient_id = ?
-//             ORDER BY appointment_date DESC, appointment_time DESC`;
-
-//         const [appointments] = await db.query(query, [patientId]);
-
-//         if (appointments.length === 0) {
-//             return res.status(404).json({ message: "No appointments found" });
-//         }
-
-//         // res.render("showAppointments ", { appointments });
-
-//            res.status(200).json({ appointments: appointments });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: "Error fetching appointments" });
-//     }
-// };
-
-// Update Appointment (Reschedule an appointment)
-/* exports.updateAppointment = async (req, res) => {
+exports.showAppointment = async (req, res) => {
     try {
-        const {
-            doctor_id,
-            appointment_date,
-            appointment_time,
-            status,
-            appointment_reasons,
-            preferred_doctor,
-        } = req.body;
+        const patientId = req.session.patientId;
 
-        // Check if appointment exists and belongs to user
-        const checkQuery =
-            "SELECT * FROM appointments WHERE id = ? AND patient_id = ?";
-        const [appointment] = await db.query(checkQuery, [
-            req.params.id,
-            req.user.id,
-        ]);
+        const query = `SELECT * FROM Appointments WHERE patient_id = ?
+            ORDER BY appointment_date DESC, appointment_time DESC`;
 
-        if (!appointment) {
-            return res.status(404).json({ message: "Appointment not found" });
-        }
+        const [appointments] = await db.query(query, [patientId]);
 
-        const updateQuery = `
-        UPDATE appointments 
-        SET doctor_id = ?, appointment_date = ?, appointment_time = ?,
-            status = ?, appointment_reasons = ?, preferred_doctor = ?
-        WHERE id = ? AND patient_id = ?
-      `;
+        // if (appointments.length === 0) {
+        //     return res.status(404).json({ message: "No appointments found" });
+        // }
 
-        const values = [
-            doctor_id,
-            appointment_date,
-            appointment_time,
-            status,
-            appointment_reasons,
-            preferred_doctor,
-            req.params.id,
-            req.user.id,
-        ];
+        // Parse the medical_images field if it's a stringified JSON array
+        appointments.forEach((appointment) => {
+            if (
+                appointment.medical_images &&
+                typeof appointment.medical_images === "string"
+            ) {
+                try {
+                    appointment.medical_images = JSON.parse(
+                        appointment.medical_images
+                    ); // Parse the string to array
+                } catch (err) {
+                    console.error("Error parsing medical_images:", err);
+                    appointment.medical_images = []; // Fallback to empty array if parsing fails
+                }
+            }
+        });
 
-        await db.query(updateQuery, values);
+        console.log(appointments.medical_images);
 
-        res.json({ message: "Appointment updated successfully" });
+        res.render("showAppointment", { appointments });
+
+        //    res.status(200).json({ appointments: appointments });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Error updating appointment" });
+        res.status(500).json({ message: "Error fetching appointments" });
     }
-}; */
+};
 
-// editing and posting appointment
+// Editing appointment
+exports.getEditAppointment = async (req, res) => {
+    try {
+        const appointmentId = req.params.id;
 
-/* exports.editAppointment = async (req, res) => {
+        const query = "SELECT * FROM Appointments WHERE id = ?";
+
+        const [appointments] = await db.query(query, [appointmentId]);
+
+        if (appointments.length === 0) {
+            return res.status(404).send({ message: "Appointment not found" });
+        }
+
+        appointments.forEach((appointment) => {
+            if (
+                appointment.medical_images &&
+                typeof appointment.medical_images === "string"
+            ) {
+                try {
+                    appointment.medical_images = JSON.parse(
+                        appointment.medical_images
+                    ); // Parse the string to array
+                } catch (err) {
+                    console.error("Error parsing medical_images:", err);
+                    appointment.medical_images = []; // Fallback to empty array if parsing fails
+                }
+            }
+        });
+
+        // console.log(appointments.medical_images);
+
+        res.render("editAppointment", {
+            appointment: appointments[0],
+            pageTitle: "editAppointment",
+            cssPath: "/css/editAppointment.css",
+            message: "Welcome to the Edit page",
+        });
+    } catch (error) {
+        console.error(error);
+        // res.status(500).send({ message: "Error fetching appointment" });
+        res.status(500).json({
+            message: "Error fetching appointment " + error.message,
+        });
+    }
+};
+
+exports.postEditAppointment = async (req, res) => {
     try {
         const appointmentId = req.params.id;
 
         const {
-            preffered_doctor,
+            preferred_doctor,
             appointment_date,
             appointment_time,
             appointment_reasons,
             status,
+            medical_images,
         } = req.body;
 
-        const query = `UPDATE Appointments SET preffered doctor =?, appointment_date = ?, appointment_time = ?, appointment_reasons = ?, status = ? WHERE id = ?`;
+        let medicalImages = [];
+        if (req.files && req.files.length > 0) {
+            medicalImages = req.files.map((file) => file.path); // Get paths of uploaded files
+        }
+
+        if (medicalImages.length === 0) {
+            const [appointments] = await db.query(
+                "SELECT medical_images FROM Appointments WHERE id = ?",
+                [appointmentId]
+            );
+            if (appointments.length > 0 && appointments[0].medical_images) {
+                medicalImages = JSON.parse(appointments[0].medical_images); // Parse existing images
+            }
+        }
+
+        // Convert medicalImages array to a JSON string for storage
+        const medicalImagesString = JSON.stringify(medicalImages);
+
+        const query = `UPDATE Appointments SET preferred_doctor =?, appointment_date = ?, appointment_time = ?, appointment_reasons = ?, status = ?, medical_images = ? WHERE id = ?`;
 
         await db.query(query, [
-            preffered_doctor,
+            preferred_doctor,
             appointment_date,
             appointment_time,
             appointment_reasons,
             status,
+            medicalImagesString,
             appointmentId,
         ]);
 
-        res.status(200).send("Appointment Upadated Successfuly");
+        res.redirect("/showAppointment");
+
+        // res.status(200).send("Appointment Upadated Successfuly");
     } catch (error) {
-        res.status(500).send("Error Updating Appointment");
+        // res.status(500).send("Error Updating Appointment");
+        res.status(500).json("Error Updating Appointment" + error.message);
     }
-}; */
+};
 
+// Route for deleting an Image in Appointment table
 
-// Route to show the edit form for a specific appointment
-/* router.get("/editAppointment/:id", async (req, res) => {
+exports.deleteImage = async (req, res) => {
     try {
-        // Extract the appointment ID from the route parameter
-        const appointmentId = req.params.id;
+        const { imagePath } = req.body;
 
-        // Query to fetch the appointment details from the database
-        const query = "SELECT * FROM Appointments WHERE id = ?";
-
-        // Execute the query with the appointment ID as the parameter
-        const [appointments] = await db.query(query, [appointmentId]);
-
-        // Check if the appointment exists
-        if (appointments.length === 0) {
-            // If no appointment is found, send a 404 response
-            return res.status(404).send("Appointment not found");
+        // Delete the file from the filesystem
+        const absolutePath = path.join(__dirname, "../", imagePath); // Adjust path as needed
+        if (fs.existsSync(absolutePath)) {
+            fs.unlinkSync(absolutePath); // Delete the file
         }
 
-        // Render the "editAppointment" view and pass the appointment data to it
-        res.render("editAppointment", { appointment: appointments[0] });
+        // Remove the image from the database
+        const query = `
+            UPDATE Appointments 
+            SET medical_images = JSON_REMOVE(medical_images, JSON_UNQUOTE(JSON_SEARCH(medical_images, 'one', ?)))
+            WHERE JSON_CONTAINS(medical_images, JSON_QUOTE(?))
+        `;
+
+        await db.query(query, [imagePath, imagePath]);
+
+        res.json({ success: true, message: "Image deleted successfully" });
     } catch (error) {
-        // Log any errors that occur during the process
-        console.error(error);
-        // Send a 500 response if an error occurs
-        res.status(500).send("Error fetching appointment");
+        console.error("Error deleting image:", error.message);
+        res.status(500).json({ success: false, message: error.message });
     }
-}); */
+};
 
-
-
-// Cancel an Appointment
-exports.deleteAppointment = async (req, res) => {
+// Deleting an appointment
+exports.deleteAppointmentById = async (req, res) => {
+    console.log(req.method);
     try {
         const appointmentId = req.params.id;
         const query = "DELETE FROM Appointments WHERE id = ?";
         await db.query(query, [appointmentId]);
 
-        res.redirect("/showAppointment");
+        // res.redirect("/showAppointment");
+        res.status(200).json({ message: "Appointment deleted successfully" });
     } catch (error) {
         console.error(error);
         res.status(500).send("Error deleting appointment");
     }
 };
-
-
-
-/* // Get patient data
-exports.getPatientData = (req, res) => {
-    const patient_id = req.session.patient_id; // Assuming patient_id is stored in the session after login
-
-    const query = `
-    SELECT first_name, last_name, email, phone, gender, date_of_birth
-    FROM patients
-    WHERE id = ?
-  `;
-
-    db.query(query, [patient_id], (err, results) => {
-        if (err) {
-            return res
-                .status(500)
-                .json({ message: "Error fetching patient data" });
-        }
-
-        if (results.length === 0) {
-            return res.status(404).json({ message: "Patient not found" });
-        }
-
-        const patient = results[0]; // Assuming there's only one patient with this ID
-        res.render("book-appointment", {
-            first_name: patient.first_name,
-            last_name: patient.last_name,
-            email: patient.email,
-            phone: patient.phone,
-            gender: patient.gender,
-            date_of_birth: patient.date_of_birth,
-        });
-    });
-};
- */

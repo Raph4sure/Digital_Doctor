@@ -119,7 +119,7 @@ const validateForm = (formSelector) => {
 
         try {
             const response = await fetch(
-                "http://localhost:3300/api/admin/loginAdmin",
+                "http://localhost:3300/loginAdmin",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

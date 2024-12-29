@@ -1,35 +1,61 @@
+// const { router } = require("../app");
 const express = require("express");
-// create a router instance
 const router = express.Router();
+const db = require("../database");
 
-const appointmentController = require("./../controllers/appointmentController");
-const { requireLogin } = require("./../middleware/authMiddleware");
+const fs = require("fs");
+const path = require("path");
 
 const uploadFiles = require("../middleware/upload");
 
+const { requireLogin } = require("../middleware/authMiddleware");
+
+const appointmentController = require("../controllers/appointmentController");
 
 // const authJwt = require("./../middleware/authJwt");
 
-
-
+router.get("/consultation", (req, res) => {
+    res.render("Consultation", {
+        pageTitle: "Consultation",
+        cssPath: "/css/Consultation.css",
+        message: "Welcome to the consultation page",
+    });
+});
 
 // router.use(requireLogin);
 
 // Route to handle booking appointment
-router.post("/bookAppointment", uploadFiles("medical_images", 5), appointmentController.bookAppointment);
+router
+    .route("/bookAppointment")
+    .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
+    .get(appointmentController.bookAppointment)
+    .post(
+        uploadFiles("medical_images", 5),
+        appointmentController.bookAppointment
+    );
 
-// router.post("/editAppointment/:id", uploadFiles("medical_images", 5), appointmentController.editAppointment);
+router.get(
+    "/showAppointment",
+    requireLogin(["Admin", "Super Admin", "patient", "doctor"]),
+    appointmentController.showAppointment
+);
 
-// router.get("/bookAppointment", appointmentController.bookAppointment);
-// router.post("/bookAppointment", uploadFiles("medical_images", 5), appointmentController.bookAppointment);
-// router.get("/showAppointment", appointmentController.showAppointment);
+router
+    .route("/editAppointment/:id")
+    .all(requireLogin(["Admin", "Super Admin", "patient"]))
+    .get(appointmentController.getEditAppointment)
+    .post(
+        uploadFiles("medical_images", 5),
+        appointmentController.postEditAppointment
+    );
 
+router.post("/deleteImage", appointmentController.deleteImage);
 
-// router.put("/updateAppointment/patient/:id", uploadFiles("medical_images", 5), appointmentController.updateAppointment);
-
-router.delete("/deleteAppointment/:id", appointmentController.deleteAppointment);
-
-// Route to render the book appointment form with patient data
-// router.get("/book", appointmentController.getPatientData);
+// Deleting an appointment
+router.delete(
+    "/deleteAppointment/:id",
+    requireLogin(["Admin", "Super Admin", "patient"]),
+    appointmentController.deleteAppointmentById
+);
 
 module.exports = router;
