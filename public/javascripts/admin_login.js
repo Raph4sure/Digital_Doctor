@@ -118,22 +118,18 @@ const validateForm = (formSelector) => {
         const password = document.getElementById("password").value;
 
         try {
-            const response = await fetch(
-                "http://localhost:3300/loginAdmin",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                }
-            );
+            const response = await fetch("http://localhost:3300/loginAdmin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            });
 
             const result = await response.json();
 
             if (response.ok) {
                 alert(result.message);
-                window.location.href = "http://localhost:3300/dashboard";
+                window.location.href = "http://localhost:3300/adminDashboard";
 
-                // redirect to the dashboard page
             } else {
                 if (result.error.includes("email")) {
                     const emailError = document

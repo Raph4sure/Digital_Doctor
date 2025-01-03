@@ -14,13 +14,13 @@ const appointmentController = require("../controllers/appointmentController");
 
 // const authJwt = require("./../middleware/authJwt");
 
-router.get("/consultation", (req, res) => {
-    res.render("Consultation", {
-        pageTitle: "Consultation",
-        cssPath: "/css/Consultation.css",
-        message: "Welcome to the consultation page",
-    });
-});
+// router.get("/consultation", (req, res) => {
+//     res.render("Consultation", {
+//         pageTitle: "Consultation",
+//         cssPath: "/css/Consultation.css",
+//         message: "Welcome to the consultation page",
+//     });
+// });
 
 // router.use(requireLogin);
 
@@ -28,10 +28,10 @@ router.get("/consultation", (req, res) => {
 router
     .route("/bookAppointment")
     .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
-    .get(appointmentController.bookAppointment)
+    .get(appointmentController.getBookAppointment)
     .post(
         uploadFiles("medical_images", 5),
-        appointmentController.bookAppointment
+        appointmentController.postBookAppointment
     );
 
 router.get(

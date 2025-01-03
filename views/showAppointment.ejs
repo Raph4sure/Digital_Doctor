@@ -86,7 +86,7 @@
         <tbody>
           <tr>
             <td><%= appointment.preferred_doctor %></td>
-            <td><%= appointment.appointment_date %></td>
+            <td><%= appointment.appointment_date ? appointment.appointment_date.toISOString().split("T")[0] : "" %></td>
             <td><%= appointment.appointment_time %></td>
             <td><%= appointment.appointment_reasons %></td>
             <td><%= appointment.existing_medical_record %></td>

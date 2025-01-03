@@ -22,7 +22,7 @@ const { sendEmail } = require("./../middleware/email");
 const router = express.Router();
 
 // Booking An Appointment
-exports.bookAppointment = async (req, res) => {
+exports.getBookAppointment = async (req, res) => {
     try {
         // Fetch patient details from the database
         const [rows] = await db.query(
@@ -62,8 +62,8 @@ exports.bookAppointment = async (req, res) => {
     }
 };
 
-exports.bookAppointment = async (req, res) => {
-    // console.log(req.body, req.files); // Log the request body and files for debugging
+exports.postBookAppointment = async (req, res) => {
+    console.log(req.body, req.files); // Log the request body and files for debugging
     try {
         // Extract fields from the request body
         const {
@@ -141,10 +141,14 @@ exports.bookAppointment = async (req, res) => {
                 date: appointment_date,
                 time: appointment_time,
             }
-        ).catch((err) =>
-            console.error("Error sending patient email:", err.message)
-        );
-
+        ).catch((err) => {
+            // Logging the full error details
+            console.error("Error sending patient email:", {
+                errors: err.response?.body?.errors,
+                message: err.message,
+                fullError: err,
+            });
+        });
         sendEmail(
             doctor.email,
             "New Appointment Booking",
@@ -155,8 +159,12 @@ exports.bookAppointment = async (req, res) => {
                 date: appointment_date,
                 time: appointment_time,
             }
+            // console.log(doctor.email)
         ).catch((err) =>
-            console.error("Error sending doctor email:", err.message)
+            console.error(
+                "Error sending doctor email:",
+                err.response?.body?.errors || err.message
+            )
         );
     } catch (error) {
         console.error("Error booking appointment:", error.message);
@@ -197,6 +205,7 @@ exports.showAppointment = async (req, res) => {
         });
 
         console.log(appointments.medical_images);
+        console.log(appointments.appointment_date);
 
         res.render("showAppointment", { appointments });
 
@@ -341,8 +350,8 @@ exports.deleteAppointmentById = async (req, res) => {
         const query = "DELETE FROM Appointments WHERE id = ?";
         await db.query(query, [appointmentId]);
 
-        // res.redirect("/showAppointment");
-        res.status(200).json({ message: "Appointment deleted successfully" });
+        res.redirect("/showAppointment");
+        // res.status(200).json({ message: "Appointment deletedsuccessfully" });
     } catch (error) {
         console.error(error);
         res.status(500).send("Error deleting appointment");

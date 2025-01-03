@@ -24,10 +24,10 @@ const uploadFiles = require("../middleware/upload");
 
 // Doctors Registration route
 exports.register = async (req, res) => {
-    console.log("Body", req.body);
+/*     console.log("Body", req.body);
     console.log("File:", req.files);
     console.log("Doctor ID:", req.session.doctorId);
-
+ */
     const {
         first_name,
         last_name,
@@ -125,6 +125,36 @@ exports.login = async (req, res) => {
     }
 };
 
+
+// Doctor Dashboard
+exports.doctorDashboard = async (req, res) => {
+    try {
+        const doctorId = req.session.doctorId; // Assuming session contains patientId
+        if (!doctorId) {
+            return res.status(401).send("Unauthorized");
+        }
+
+        // Query to fetch admin details
+        const query = `SELECT * FROM Doctors WHERE id = ?`;
+        const [doctors] = await db.query(query, [doctorId]);
+
+        if (doctors.length === 0) {
+            return res.status(404).send("doctor not found");
+        }
+
+        // Pass admin data to the view
+        res.render("doctorDashboard", {
+            doctor: doctors[0], // Pass the first result
+            pageTitle: "doctor Dashboard",
+            cssPath: "/css/doctorDashboard.css",
+            user: req.session.user,
+        });
+    } catch (error) {
+        console.error("Error fetching doctor data:", error.message);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
 // Doctor logout route
 exports.logout = (req, res) => {
     req.session.destroy((err) => {
@@ -169,23 +199,22 @@ exports.showAllDoctors = async (req, res) => {
 
         // pagination
         (totalPages = Math.ceil(total / limit)),
-            console.log("Admin Data:", admins[0]);
-        console.log("Admins Data:", admins);
-        console.log("login user:", req.session.user.role);
+        console.log("Admin Data:", admins[0]);
+        // console.log("Admins Data:", admins);
+        // console.log("login user:", req.session.user.role);
 
         res.render("showAllDoctors", {
             doctors,
             admins: admins[0],
             userRole: req.session.user.role,
-
             // pagination
             currentPage: page,
             totalPages,
             limit,
-
             pageTitle: "showAllDoctors",
             cssPath: "/css/showAllDoctor.css",
             message: "showAllDoctors page",
+            user: req.session.user,
         });
     } catch (error) {
         console.error("Error fetching Data:", error);

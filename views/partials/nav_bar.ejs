@@ -14,12 +14,21 @@
     <nav class="nav">
       <div class="nav__div">
         <h3 class="nav__div-h3">MENU</h3>
-        <a href="./homepage.html" class="nav__div_li">Home</a>
+        <a href="./" class="nav__div_li">Home</a>
         <a class="nav__div_li" href="./showAllDoctors">Consultation</a>
-        <a class="nav__div_li" href="./Dashboard.html">Dashboard</a>
-        <a class="nav__div_li" href="./Contact.html">Contact Us</a>
-        <a class="nav__div_li" href="./About.html">About</a>
+        <a class="nav__div_li" href="
+        <%= user && user.role.includes('patient') ? '/patientDashboard' : 
+          user && user.role.includes('doctor') ? '/doctorDashboard' : 
+         user && user.role.includes('Admin') ? '/adminDashboard' : 
+         'javascript:alert(\'Please login\'); window.location.href=\'/\';' %>">
+          Dashboard
+        </a>
+
+
+        <a class="nav__div_li" href="./contact">Contact Us</a>
+        <a class="nav__div_li" href="./about">About</a>
       </div>
+
     </nav>
   </label>
 </section>

@@ -31,7 +31,7 @@ const validateSingleFormGroup = (formGroup) => {
         }
     }
 
-/*     // Image upload validation
+    /*     // Image upload validation
     if (input.type === "file") {
         // Specific validation for file inputs
         const file = input.files[0];
@@ -61,16 +61,13 @@ const validateSingleFormGroup = (formGroup) => {
             }
         });
     } */
-    
+
     validateOptions.forEach((option) => {
-        if (
-            input.hasAttribute(option.attribute) &&
-            !option.isValid(input)
-        ) {
+        if (input.hasAttribute(option.attribute) && !option.isValid(input)) {
             errorContainer.textContent = option.errorMessage(input);
             formGroupError = true;
         }
-    })
+    });
 
     // Loop through validation options
     /*     validateOptions.forEach((option) => {
@@ -204,7 +201,6 @@ validateOptions.push({
     errorMessage: (input) => `${input.name} is required`,
 });
 
-
 // Form data handling functions
 const captureFormData = (form) => {
     const formData = {};
@@ -296,8 +292,6 @@ const enhancedValidateForm = (formSelector) => {
         displayFormData(currentFormData);
     });
 
-   
-
     // Submit event validation
 
     formElement.addEventListener("submit", async (event) => {
@@ -320,7 +314,7 @@ const enhancedValidateForm = (formSelector) => {
 
             try {
                 const response = await fetch(
-                    "http://localhost:3300/api/appointment/bookAppointment",
+                    "http://localhost:3300/bookAppointment",
                     {
                         method: "POST",
                         body: formData, // No need for Content-Type header
@@ -330,9 +324,9 @@ const enhancedValidateForm = (formSelector) => {
                 if (response.ok) {
                     alert("Registration Successful");
                     formElement.reset();
-                    // redirect to the 
+                    // redirect to the
                     // dashboard page
-                    window.location.href = "http://localhost:3300/dashboard";
+                    window.location.href = "http://localhost:3300/patientDashboard";
                 } else {
                     const data = await response.json();
                     alert(data.error || "Registration failed");

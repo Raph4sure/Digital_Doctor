@@ -7,19 +7,13 @@ const patientController = require("../controllers/patientController");
 router.get(
     "/patientDashboard",
     requireLogin(["patient", "Admin", "SuperAdmin"]),
-    (req, res) => {
-        res.render("patientDashboard", {
-            pageTitle: "patientDashboard",
-            cssPath: "/css/patientDashboard.css",
-            message: "Welcome to the Dashboard page",
-        });
-    }
+    patientController.patientDashboard
 );
 
 // Patient Registration routes
 router
     .route("/registerPatient")
-    .all(requireLogin(["Admin", "SuperAdmin"]))
+    // .all(requireLogin(["Admin", "SuperAdmin"]))
     .get((req, res) => {
         res.render("registerPatient", {
             pageTitle: "registerPatient",
@@ -37,6 +31,7 @@ router
             pageTitle: "loginPatient",
             cssPath: "/css/loginPatient.css",
             message: "Welcome to the Patient login page",
+            user: req.session.user,
         });
     })
     .post(patientController.loginPatient);

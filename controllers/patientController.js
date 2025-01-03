@@ -102,6 +102,7 @@ exports.loginPatient = async (req, res) => {
             id: patient.id,
             role: "patient",
         };
+        console.log('login User:', req.session.user.role);
 
         res.json({ message: "Login Successful", patientId: patient.id });
     } catch (error) {
@@ -147,6 +148,7 @@ exports.patientDashboard = async (req, res) => {
             patient: patients[0], // Pass the first result
             pageTitle: "Patient Dashboard",
             cssPath: "/css/patientDashboard.css",
+            user: req.session.user,
         });
     } catch (error) {
         console.error("Error fetching patient data:", error.message);
@@ -188,6 +190,7 @@ exports.showAllPatient = async (req, res) => {
             currentPage: page,
             totalPages,
             totalPatients,
+            limit
         });
     } catch (error) {
         res.status(500).json({

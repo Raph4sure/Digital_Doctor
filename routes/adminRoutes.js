@@ -18,9 +18,13 @@ router
             pageTitle: "Login Admin",
             cssPath: "/css/loginAdmin.css",
             message: "Welcome to the Admin Login Page",
+            user: req.session.use,
         });
     })
     .post(adminController.loginAdmin);
+
+
+    
 
 // Route to access the admin dashboard, requires login
 router.get(

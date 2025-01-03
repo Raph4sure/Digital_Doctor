@@ -10,6 +10,12 @@ router.get(
     doctorController.showAllDoctors
 );
 
+router.get(
+    "/doctorDashboard",
+    requireLogin(["doctor", "Admin", "SuperAdmin"]),
+    doctorController.doctorDashboard
+);
+
 // Doctors login
 router
     .route("/loginDoctor")
@@ -18,6 +24,7 @@ router
             pageTitle: "loginDoctor",
             cssPath: "/css/loginDoctor.css",
             message: "Welcome to the Doctors Login page",
+            user: req.session.user,
         });
     })
     .post(doctorController.login);

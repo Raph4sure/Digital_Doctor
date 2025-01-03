@@ -22,7 +22,7 @@ exports.requireLogin = (roles = []) => {
             // console.log("User not logged in, redirecting to login page...");
 
             return res.redirect(
-                "/login?alert=Please%20log%20in%20to%20continue"
+                "/?alert=Please%20log%20in%20to%20continue"
             );
         }
     };

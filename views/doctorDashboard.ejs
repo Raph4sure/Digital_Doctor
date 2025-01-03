@@ -1,0 +1,46 @@
+
+
+    <%- include('partials/header') %>
+    <%- include('partials/nav_bar') %>
+
+    <body class="container">
+  
+
+        <!--  -->
+
+        <main class="container2">
+            <section class="top__container2">
+                <h3 class="top__container2-h2">Welcome, <%= `${doctor.first_name + " " + doctor.last_name}` %></h3>
+                <p class="top__container2-p">Your health, our priority</p>
+            </section>
+
+            <section class="side__bar">
+                <h4 class="side__bar-h4">My Portal</h4>
+                <ul class="side__bar-ul">
+                    <li class="side__bar-li"><a class="side__bar-a" href="">Dashboard</a></li>
+                    <li class="side__bar-li"><a class="side__bar-a" href="/editDoctor/<%= doctor.id %>">Edit Profile</a></li>
+                    <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Appointment</a></li>
+                    <!-- <li class="side__bar-li"><a class="side__bar-a" href="">Report</a></li> -->
+                   <form action="/logout" method="POST">
+                     <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
+                   </form>
+                </ul>
+            </section>
+
+            <section class="body">
+                <p class="body-text"> <strong>First Name:</strong> <%= doctor.first_name %></p>
+                <p class="body-text"><strong>Last Name:</strong> <%= doctor.last_name %></p>
+                <p class="body-text"><strong>Email: </strong><%= doctor.email %></p>
+                <p class="body-text"><strong>Phone:</strong> <%= doctor.phone %></p>
+                <p class="body-text"><strong>Date of Birth:</strong> <%= doctor.date_of_birth %></p>
+                <p class="body-text"><strong>Gender:</strong> <%= doctor.gender %></p>
+                <p class="body-text"><strong>Address:</strong>
+                     <%= doctor.address %>
+                </p>
+            </section>
+        </main>
+        <!--  -->
+    <%- include('partials/footer') %>
+
+           </body>
+</html>

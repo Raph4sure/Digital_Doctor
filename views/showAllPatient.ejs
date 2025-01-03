@@ -10,7 +10,8 @@
     <% patients.forEach(patient => { %>
     <tr>
       <td><%= patient.id %></td>
-      <td><%= patient.name %></td>
+      <td><%= patient.first_name %></td>
+      <td><%= patient.last_name %></td>
       <td><%= patient.email %></td>
     </tr>
     <% }) %>

@@ -194,7 +194,11 @@ const validateOptions = [
 validateOptions.push({
     attribute: "required",
     isValid: (input) => {
-        // Check if it's a file input and whether it's required
+        // For file inputs, always return true if not required
+        if (input.type === "file" && !input.hasAttribute("required")) {
+            return true;
+        }
+        // For file inputs that are required
         if (input.type === "file" && input.hasAttribute("required")) {
             return input.files.length > 0;
         }
@@ -203,6 +207,47 @@ validateOptions.push({
     },
     errorMessage: (input) => `${input.name} is required`,
 });
+
+validateOptions.push({
+    attribute: "accept",
+    isValid: (input) => {
+        if (input.type !== "file") return true; // Skip non-file inputs
+        if (!input.files.length) return true; // Skip if no file selected
+        const file = input.files[0];
+        const allowedTypes = input.accept.split(",").map((type) => type.trim());
+        return allowedTypes.some((type) => {
+            if (type.startsWith(".")) {
+                // Check file extension
+                return file.name.toLowerCase().endsWith(type.toLowerCase());
+            }
+            // Check mime type
+            return file.type === type;
+        });
+    },
+    errorMessage: (input) => {
+        const allowedTypes = input.accept.split(",").join(", ");
+        return `Please upload a valid file of type: ${allowedTypes}`;
+    },
+});
+
+validateOptions.push({
+    attribute: "maxsize",
+    isValid: (input) => {
+        if (input.type !== "file") return true; // Skip non-file inputs
+        if (!input.files.length) return true; // Skip if no file selected
+        const file = input.files[0];
+        const maxSize = parseInt(input.getAttribute("maxsize"), 10);
+        return file.size <= maxSize;
+    },
+    errorMessage: (input) =>
+        `File size must not exceed ${(
+            parseInt(input.getAttribute("maxsize"), 10) /
+            1024 /
+            1024
+        ).toFixed(2)} MB`,
+});
+
+
 
 // Form data handling functions
 const captureFormData = (form) => {

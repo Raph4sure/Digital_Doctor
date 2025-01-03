@@ -92,6 +92,9 @@ exports.loginAdmin = async (req, res) => {
             role: ["Admin", "Super Admin"],
         };
 
+        console.log("login User:", req.session.user.role);
+      
+
         // console.log("Session set:", req.session); // Log session to check
 
         res.json({ message: "Login Successful", adminId: admin.id });
@@ -125,6 +128,7 @@ exports.adminDashboard = async (req, res) => {
             admin: admins[0], // Pass the first result
             pageTitle: "Admin Dashboard",
             cssPath: "/css/adminDashboard.css",
+            user: req.session.user,
         });
     } catch (error) {
         console.error("Error fetching admin data:", error.message);

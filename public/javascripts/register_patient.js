@@ -228,7 +228,7 @@ const enhancedValidateForm = (formSelector) => {
 
             try {
     const response = await fetch(
-        "http://localhost:3300/api/registerPatient",
+        "http://localhost:3300/registerPatient",
         {
             method: "POST",
             headers: {
@@ -245,7 +245,7 @@ const enhancedValidateForm = (formSelector) => {
         formElement.reset(); // Reset form after successful submission
 
         // Redirect to Dashboard page
-        window.location.href = "/dashboard.html";
+        window.location.href = "/patientDashboard";
 
     } else {
         alert(data.error || "Registration failed");

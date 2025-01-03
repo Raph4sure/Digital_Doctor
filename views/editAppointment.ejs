@@ -8,7 +8,9 @@
     <input type="text" id="preferred_doctor" name="preferred_doctor" value="<%= appointment.preferred_doctor %>" required /><br />
 
     <label for="appointment_date">Date:</label>
-    <input type="date" id="appointment_date" name="appointment_date" value="<%= appointment.appointment_date %>" required /><br />
+    <input type="date" id="appointment_date" name="appointment_date" value="<%= appointment.appointment_date ? appointment.appointment_date.toISOString().split('T')[0] : '' %>" required /><br />
+
+
 
     <label for="appointment_time">Time:</label>
     <input type="time" id="appointment_time" name="appointment_time" value="<%= appointment.appointment_time %>" required /><br />
@@ -53,7 +55,7 @@
 
     <button type="submit">Save Changes</button>
   </form>
-<%- include('partials/footer') %>
+  <%- include('partials/footer') %>
 
   <script>
     function deleteImage(imagePath) {
