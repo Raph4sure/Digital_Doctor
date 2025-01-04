@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Dropdown</title>
+  <style>
+    /* Container for dropdown */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Dropdown button */
+    .dropdown-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .dropdown-button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Dropdown content (hidden by default) */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: transparent;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      padding: 10px 0;
+      z-index: 1;
+      min-width: 150px;
+      border-radius: 5px;
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+      color: black;
+      text-decoration: none;
+      display: block;
+      padding: 10px 20px;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    /* Show the dropdown when hovering over the container */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dropdown">
+    <button class="dropdown-button">Dropdown</button>
+    <div class="dropdown-content">
+      <a href="#link1">Link 1</a>
+      <a href="#link2">Link 2</a>
+      <a href="#link3">Link 3</a>
+    </div>
+  </div>
+</body>
+
+</html>

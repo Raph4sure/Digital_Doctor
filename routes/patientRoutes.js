@@ -19,6 +19,7 @@ router
             pageTitle: "registerPatient",
             cssPath: "/css/registerPatient.css",
             message: "Welcome to the Patient Reg page",
+            user: req.session.user,
         });
     })
     .post(patientController.registerPatient);

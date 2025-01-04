@@ -92,7 +92,7 @@ a:hover, a:focus, a:active {
     color: rgb(6, 31, 252);
     text-decoration: underline;
   }
-  input {
+  .inp {
     display: none;
     visibility: hidden;
     -moz-appearance: none;
@@ -139,26 +139,26 @@ a:hover, a:focus, a:active {
     -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
   }
-  input:checked ~ .toggle .top_line {
+  .inp:checked ~ .toggle .top_line {
     left: 2px;
     top: 14px;
     width: 25px;
     -webkit-transform: rotate(225deg);
             transform: rotate(225deg);
   }
-  input:checked ~ .toggle .bottom_line {
+  .inp:checked ~ .toggle .bottom_line {
     left: 2px;
     top: 14px;
     width: 25px;
     -webkit-transform: rotate(-225deg);
             transform: rotate(-225deg);
   }
-  input:checked ~ .toggle .middle_line {
+  .inp:checked ~ .toggle .middle_line {
     opacity: 0;
     -webkit-transform: translateX(-50px);
             transform: translateX(-50px);
   }
-  input:checked ~ .nav {
+  .inp:checked ~ .nav {
     -webkit-transform: translateX(0);
             transform: translateX(0);
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
@@ -253,6 +253,18 @@ a:hover, a:focus, a:active {
     font-size: 3rem;
   }
 }
+.headnav .nav__div_button {
+  text-decoration: none;
+  background-color: rgb(6, 31, 252);
+  color: rgb(252, 247, 247);
+  font-weight: 700;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  border-radius: 2.5rem 0 2.5rem 0;
+  border: none;
+}
+.headnav .nav__div_button:hover {
+  background-color: rgb(253, 5, 5);
+}
 
 .footer {
   grid-column: 1/-1;
@@ -321,29 +333,25 @@ a:hover, a:focus, a:active {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-}
-
-.main_left {
-  -ms-flex-preferred-size: 0 0 40;
-      flex-basis: 0 0 40;
-}
-.container {
-  -ms-flex-preferred-size: 0 0 60;
-      flex-basis: 0 0 60;
-}
-
-.container__body {
-  display: grid;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 100vh;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#fbc2eb), to(#a6c1ee));
+  background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+  padding-top: 10rem;
 }
+
 .container__body-p {
   text-align: center;
   margin-top: 2rem;
 }
 
 .form {
+  border-radius: 5rem;
   background-color: #f5f4f8;
   padding: 5rem;
   min-width: 35vw;

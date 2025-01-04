@@ -137,17 +137,17 @@ exports.adminDashboard = async (req, res) => {
 };
 
 // Managing Admin
-exports.manageAdmin = async (req, res) => {
+exports.showAllAdmin = async (req, res) => {
     try {
         const query = "SELECT * FROM Admins";
         const [admins] = await db.query(query);
         if (admins.length === 0) {
             return res.status(404).send({ message: "No Admin found" });
         }
-        res.render("manageAdmin", {
+        res.render("showAllAdmin", {
             admin: admins[0],
             pageTitle: "Manage Admin",
-            cssPath: "/css/manageAdmin.css",
+            cssPath: "/css/showAllAdmin.css",
         });
     } catch (error) {
         console.error(error);

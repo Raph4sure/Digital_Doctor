@@ -91,13 +91,13 @@ body {
         min-width: 50vw;
     }
     @include responsive(tab-port) {
-        background-color: transparent;
+        // background-color: transparent;
 
-        min-width: 70vw;
+        min-width: 60vw;
     }
     @include responsive(phone) {
-        background-color: transparent;
-        min-width: 90vw;
+        // background-color: transparent;
+        // min-width: 90vw;
     }
 
     &__group:not(:last-child) {

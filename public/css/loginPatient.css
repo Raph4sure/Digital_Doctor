@@ -92,7 +92,7 @@ a:hover, a:focus, a:active {
     color: rgb(6, 31, 252);
     text-decoration: underline;
   }
-  input {
+  .inp {
     display: none;
     visibility: hidden;
     -moz-appearance: none;
@@ -139,26 +139,26 @@ a:hover, a:focus, a:active {
     -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
   }
-  input:checked ~ .toggle .top_line {
+  .inp:checked ~ .toggle .top_line {
     left: 2px;
     top: 14px;
     width: 25px;
     -webkit-transform: rotate(225deg);
             transform: rotate(225deg);
   }
-  input:checked ~ .toggle .bottom_line {
+  .inp:checked ~ .toggle .bottom_line {
     left: 2px;
     top: 14px;
     width: 25px;
     -webkit-transform: rotate(-225deg);
             transform: rotate(-225deg);
   }
-  input:checked ~ .toggle .middle_line {
+  .inp:checked ~ .toggle .middle_line {
     opacity: 0;
     -webkit-transform: translateX(-50px);
             transform: translateX(-50px);
   }
-  input:checked ~ .nav {
+  .inp:checked ~ .nav {
     -webkit-transform: translateX(0);
             transform: translateX(0);
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
@@ -252,6 +252,18 @@ a:hover, a:focus, a:active {
   .headnav .nav .nav__div a.nav__div_li {
     font-size: 3rem;
   }
+}
+.headnav .nav__div_button {
+  text-decoration: none;
+  background-color: rgb(6, 31, 252);
+  color: rgb(252, 247, 247);
+  font-weight: 700;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  border-radius: 2.5rem 0 2.5rem 0;
+  border: none;
+}
+.headnav .nav__div_button:hover {
+  background-color: rgb(253, 5, 5);
 }
 
 .footer {
@@ -401,14 +413,7 @@ body {
 }
 @media (max-width: 900px) {
   .form {
-    background-color: transparent;
-    min-width: 70vw;
-  }
-}
-@media (max-width: 600px) {
-  .form {
-    background-color: transparent;
-    min-width: 90vw;
+    min-width: 60vw;
   }
 }
 .form__group:not(:last-child) {

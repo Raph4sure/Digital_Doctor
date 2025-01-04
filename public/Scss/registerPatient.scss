@@ -3,25 +3,31 @@
 
 .complete_body {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+      background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+      padding-top: 10rem;
 }
 
 .main_left {
-    flex-basis: 0 0 40;
+    // flex-basis: 0 0 40;
 
-    &-img {
-        // height: 100rem;
-    }
+    // &-img {
+    //     // height: 100rem;
+
+    // }
 }
 
 .container {
-    flex-basis: 0 0 60;
+  
 }
 
 .container__body {
-    // background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
-    display: grid;
-    justify-content: center;
-    // padding: 15rem 0;
+  
+ 
+
+
 
     &-p {
         text-align: center;
@@ -30,6 +36,7 @@
 }
 
 .form {
+    border-radius: 5rem;
     &__h2 {
         text-align: center;
         // margin-bottom: -2rem;

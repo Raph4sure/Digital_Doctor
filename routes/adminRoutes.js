@@ -35,9 +35,9 @@ router.get(
 
 // Route to manage admins
 router.get(
-    "/manageAdmin",
+    "/showAllAdmin",
     requireLogin(["Super Admin"]),
-    adminController.manageAdmin
+    adminController.showAllAdmin
 );
 
 // Route to delete an admin

@@ -31,9 +31,12 @@
                 color: $link-hover;
                 text-decoration: underline;
             }
+
+           
         }
     }
-    input {
+
+    .inp {
         display: none;
         visibility: hidden;
         appearance: none;
@@ -77,7 +80,7 @@
         }
     }
 
-    input:checked {
+    .inp:checked {
         ~ .toggle {
             .top_line {
                 left: 2px;
