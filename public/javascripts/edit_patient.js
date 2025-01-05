@@ -335,7 +335,7 @@ const enhancedValidateForm = (formSelector) => {
                 console.log("Server response:", responseData);
 
                 if (response.ok) {
-                    alert("Registration Successful");
+                    alert("Profile Editted Successfully");
                     formElement.reset();
                     window.location.href = "/patientDashboard";
                 } else {

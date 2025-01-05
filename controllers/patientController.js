@@ -102,7 +102,7 @@ exports.loginPatient = async (req, res) => {
             id: patient.id,
             role: "patient",
         };
-        console.log('login User:', req.session.user.role);
+        console.log("login User:", req.session.user.role);
 
         res.json({ message: "Login Successful", patientId: patient.id });
     } catch (error) {
@@ -111,13 +111,13 @@ exports.loginPatient = async (req, res) => {
 };
 
 // Logout route
-exports.logout = (req, res) => {
+/* exports.logoutPatient = (req, res) => {
     if (req.session) {
         req.session.destroy((err) => {
             if (err) {
                 return res.status(500).json({ error: "Failed to logout" });
             } else {
-                return res.redirect("/logout");
+                return res.redirect("/");
 
                 // res.json({ message: "Logout successful" });
             }
@@ -125,7 +125,7 @@ exports.logout = (req, res) => {
     } else {
         res.status(400).json({ error: "No active session to logout" });
     }
-};
+}; */
 
 // Patient Dashboard
 exports.patientDashboard = async (req, res) => {
@@ -190,7 +190,7 @@ exports.showAllPatient = async (req, res) => {
             currentPage: page,
             totalPages,
             totalPatients,
-            limit
+            limit,
         });
     } catch (error) {
         res.status(500).json({
@@ -200,31 +200,28 @@ exports.showAllPatient = async (req, res) => {
 };
 
 // delete patient by id
-exports.deletePatientById =
-    async (req, res) => {
-        const patientIdToDelete = req.params.id;
+exports.deletePatientById = async (req, res) => {
+    const patientIdToDelete = req.params.id;
 
-        try {
-            const [result] = await db.query(
-                "DELETE FROM Patients WHERE id = ?",
-                [patientIdToDelete]
-            );
+    try {
+        const [result] = await db.query("DELETE FROM Patients WHERE id = ?", [
+            patientIdToDelete,
+        ]);
 
-            if (result.affectedRows === 0) {
-                return res.status(404).json({
-                    error: "Patient not found",
-                });
-            }
-
-            res.json({ message: "Patient deleted successfully" });
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                error:
-                    "An error occured while deleting Patient " + error.message,
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                error: "Patient not found",
             });
         }
-    };
+
+        res.json({ message: "Patient deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: "An error occured while deleting Patient " + error.message,
+        });
+    }
+};
 
 // router to get(edit) patient information
 exports.getEditPatient = async (req, res) => {
@@ -244,6 +241,7 @@ exports.getEditPatient = async (req, res) => {
             pageTitle: "editPatient",
             cssPath: "/css/editPatient.css",
             message: "Welcome to the edit page",
+            user: req.session.user,
         });
     } catch (error) {
         console.error(error);

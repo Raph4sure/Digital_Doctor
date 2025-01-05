@@ -174,7 +174,7 @@ exports.postBookAppointment = async (req, res) => {
     }
 };
 
-exports.showAppointment = async (req, res) => {
+exports.showPatientAppointment = async (req, res) => {
     try {
         const patientId = req.session.patientId;
 
@@ -204,14 +204,47 @@ exports.showAppointment = async (req, res) => {
             }
         });
 
-        console.log(appointments.medical_images);
-        console.log(appointments.appointment_date);
+        // console.log(appointments.medical_images);
+        // console.log(appointments.appointment_date);
 
-        res.render("showAppointment", { appointments });
+        res.render("showPatientAppointment", { appointments });
 
         //    res.status(200).json({ appointments: appointments });
     } catch (error) {
         console.error(error);
+        res.status(500).json({ message: "Error fetching appointments" });
+    }
+};
+
+exports.showDoctorAppointment = async (req, res) => {
+    try {
+        doctorId = req.session.user.id;
+
+        const query = `SELECT * FROM Appointments WHERE doctor_id = ? ORDER BY appointment_date DESC, appointment_time DESC`;
+
+        const [appointments] = await db.query(query, [doctorId]);
+
+        appointments.forEach((appointment) => {
+            if (
+                appointment.medical_images &&
+                typeof appointment.medical_images === "string"
+            ) {
+                try {
+                    appointment.medical_images = JSON.parse(
+                        appointment.medical_images
+                    ); // Parse the string to array
+                } catch (err) {
+                    console.error("Error parsing medical_images:", err);
+                    appointment.medical_images = []; // Fallback to empty array if parsing fails
+                }
+            }
+        });
+
+        res.render("showDoctorAppointment", { appointments });
+
+
+    } catch (error) {
+        console.error(error)
         res.status(500).json({ message: "Error fetching appointments" });
     }
 };

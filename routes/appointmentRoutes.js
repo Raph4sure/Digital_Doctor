@@ -35,9 +35,15 @@ router
     );
 
 router.get(
-    "/showAppointment",
+    "/showPatientAppointment",
     requireLogin(["Admin", "Super Admin", "patient", "doctor"]),
-    appointmentController.showAppointment
+    appointmentController.showPatientAppointment
+);
+
+router.get(
+    "/showDoctorAppointment",
+    requireLogin(["Admin", "Super Admin", "patient", "doctor"]),
+    appointmentController.showDoctorAppointment
 );
 
 router

@@ -59,6 +59,6 @@ router
     .post(patientController.getPostPatient);
 
 // Logout route
-router.post("/logout", patientController.logout);
+// router.post("/logoutPatient", patientController.logoutPatient);
 
 module.exports = router;

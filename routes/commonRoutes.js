@@ -5,7 +5,7 @@ const { requireLogin } = require("../middleware/authMiddleware");
 // const setDashboardLink = require('./../middleware/dashboardLink')
 
 // Home page
-router.get("/",  (req, res) => {
+router.get("/", (req, res) => {
     res.render("homepage", {
         pageTitle: "Homepage",
         cssPath: "/css/homepage.css",
@@ -15,7 +15,7 @@ router.get("/",  (req, res) => {
 });
 
 // About page
-router.get("/about",  (req, res) => {
+router.get("/about", (req, res) => {
     res.render("About", {
         pageTitle: "About",
         cssPath: "/css/About.css",
@@ -58,7 +58,7 @@ router.post("/logout", (req, res) => {
             if (err) {
                 return res.status(500).json({ error: "Failed to logout" });
             } else {
-                return res.redirect("/homepage");
+                return res.redirect("/");
 
                 // res.json({ message: "Logout successful" });
             }
