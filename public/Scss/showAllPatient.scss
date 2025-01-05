@@ -1,0 +1,142 @@
+@import "main";
+
+%table-line {
+    padding: 10px;
+    border: 2px solid black;
+    text-align: center;
+    color: black;
+}
+
+// start
+.container2 {
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    grid-template-rows: repeat(8, auto);
+    min-height: 70vh;
+}
+
+.top__container2 {
+    grid-column: 3/-1;
+    grid-row: 1/3;
+    background-color: $footer-color;
+    padding-left: 2rem;
+    padding: 1rem 2rem 1rem 2rem;
+    &-p {
+        margin-top: -1rem;
+        font-size: 1.5rem;
+    }
+}
+
+.side__bar {
+    grid-column: 1/3;
+    grid-row: 1/-1;
+    background-color: $body-color;
+    padding-left: 3rem;
+
+    &-h4 {
+        margin: 0rem 0rem 2.5rem 0rem;
+        color: $link-hover;
+    }
+
+    &-li {
+        list-style: none;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+
+        .side__bar-a:active {
+            color: $footer-color;
+        }
+    }
+
+    &-a {
+        color: $footer-text-color;
+    }
+}
+
+.body {
+    // background-color: yellow;
+    grid-column: 3/-1;
+    grid-row: 3/6;
+    padding-left: 2rem;
+    margin-bottom: 30rem;
+    margin-right: 3rem;
+    overflow-x: auto;
+    display: block;
+
+    &-text {
+        margin-top: 2rem;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+        // margin-right: -50rem;
+
+        th {
+            @extend %table-line;
+            background-color: $footer-color;
+            color: $body-color;
+        }
+
+        td {
+            @extend %table-line;
+            // font-size: 2.5rem;
+            font-weight: 550;
+        }
+        .link {
+            color: $link-hover;
+        }
+    }
+}
+
+hr {
+    border: 2px solid $body-color; /* Black solid line */
+    width: 95%; /* Line width */
+    margin: 20px auto; /* Center the line */
+}
+
+// end
+
+.div__style {
+    position: relative;
+    &-button {
+        text-decoration: none;
+        background-color: $button-color;
+        color: $button-text-color;
+        font-weight: 500;
+        padding: 0.5rem 2rem; // Shortened for clarity
+        border-radius: 3.5rem 0 3.5rem 0;
+        position: absolute;
+        top: -20rem;
+        left: 50rem;
+        white-space: nowrap;
+        display: inline-block;
+        text-align: center;
+        &:hover {
+            text-decoration: none !important;
+            color: $button-text-color;
+            background-color: $link-hover;
+        }
+    }
+
+    &-pagination {
+        position: absolute;
+        bottom: 25rem;
+        left: 55rem;
+        white-space: nowrap;
+        font-weight: 600;
+        font-size: 2.5rem;
+        display: inline-block;
+
+        & a.active {
+            font-weight: bold;
+            color: white;
+            background-color: blue;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    }
+}

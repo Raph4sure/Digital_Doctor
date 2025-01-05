@@ -329,104 +329,18 @@ a:hover, a:focus, a:active {
   margin: 2rem;
 }
 
-a {
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-}
-a:hover, a:focus, a:active {
-  text-decoration: underline !important;
-  outline: none;
-  color: -rgb(6, 31, 252);
-}
-
-.headnav {
-  grid-column: 1/-1;
-  grid-row: 1/2;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 0.5rem;
-}
-.headnav .header {
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 21%;
-          flex: 0 0 21%;
-}
-.headnav .lab {
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 79%;
-          flex: 0 0 79%;
-}
-.headnav .inp {
-  visibility: hidden;
-}
-.headnav .nav {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  -ms-flex-preferred-size: auto;
-      flex-basis: auto;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding-top: 0.5rem;
-}
-.headnav .nav .nav__div {
-  margin-right: 5rem;
-  margin-top: -3rem;
-}
-@media (max-width: 600px) {
-  .headnav .nav .nav__div {
-    margin-right: 1rem;
-  }
-}
-.headnav .nav .nav__div a.nav__div_li {
-  color: rgb(253, 5, 5);
-  font-size: 3rem;
-  font-weight: 530;
-  margin-right: 2rem;
-}
-.headnav .nav .nav__div a.nav__div_li:hover {
-  color: rgb(6, 31, 252);
-}
-@media (max-width: 1200px) {
-  .headnav .nav .nav__div a.nav__div_li {
-    font-size: 2.5rem;
-  }
-}
-@media (max-width: 900px) {
-  .headnav .nav .nav__div a.nav__div_li {
-    font-size: 3rem;
-  }
-}
-.headnav .nav .nav__div-h3 {
-  display: none;
-  visibility: hidden;
-  font-size: 5rem;
-  font-weight: 800;
-  margin-right: 5rem;
-  padding-right: -20rem;
-  padding: 10px 0;
-  padding-right: 30px;
-  pointer-events: none;
-}
-@media (max-width: 900px) {
-  .headnav .nav .nav__div-h3 {
-    display: block;
-    visibility: visible;
-  }
+.body .table td, .body .table th {
+  padding: 10px;
+  border: 2px solid black;
+  text-align: center;
+  color: black;
 }
 
 .container2 {
   display: grid;
   grid-template-columns: repeat(10, auto);
   grid-template-rows: repeat(8, auto);
+  min-height: 70vh;
 }
 
 .top__container2 {
@@ -446,7 +360,6 @@ a:hover, a:focus, a:active {
   grid-row: 1/-1;
   background-color: rgb(73, 11, 61);
   padding-left: 3rem;
-  min-height: 70vh;
 }
 .side__bar-h4 {
   margin: 0rem 0rem 2.5rem 0rem;
@@ -457,6 +370,9 @@ a:hover, a:focus, a:active {
   font-size: 2.5rem;
   margin-bottom: 2rem;
 }
+.side__bar-li .side__bar-a:active {
+  color: rgb(156, 149, 185);
+}
 .side__bar-a {
   color: rgb(252, 247, 247);
 }
@@ -466,7 +382,72 @@ a:hover, a:focus, a:active {
   grid-row: 3/6;
   padding-left: 2rem;
   margin-bottom: 30rem;
+  margin-right: 3rem;
+  overflow-x: auto;
+  display: block;
 }
 .body-text {
   margin-top: 2rem;
+}
+.body .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+.body .table th {
+  background-color: rgb(156, 149, 185);
+  color: rgb(73, 11, 61);
+}
+.body .table td {
+  font-weight: 550;
+}
+.body .table .link {
+  color: rgb(6, 31, 252);
+}
+
+hr {
+  border: 2px solid rgb(73, 11, 61); /* Black solid line */
+  width: 95%; /* Line width */
+  margin: 20px auto; /* Center the line */
+}
+
+.div__style {
+  position: relative;
+}
+.div__style-button {
+  text-decoration: none;
+  background-color: rgb(253, 5, 5);
+  color: rgb(252, 247, 247);
+  font-weight: 500;
+  padding: 0.5rem 2rem;
+  border-radius: 3.5rem 0 3.5rem 0;
+  position: absolute;
+  top: -20rem;
+  left: 50rem;
+  white-space: nowrap;
+  display: inline-block;
+  text-align: center;
+}
+.div__style-button:hover {
+  text-decoration: none !important;
+  color: rgb(252, 247, 247);
+  background-color: rgb(6, 31, 252);
+}
+.div__style-pagination {
+  position: absolute;
+  bottom: 25rem;
+  left: 55rem;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 2.5rem;
+  display: inline-block;
+}
+.div__style-pagination a.active {
+  font-weight: bold;
+  color: white;
+  background-color: blue;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
 }

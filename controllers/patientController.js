@@ -161,7 +161,7 @@ exports.showAllPatient = async (req, res) => {
     try {
         // Get the page and limit from query parameters, set defaults if not provided
         const page = parseInt(req.query.page) || 1; // Default to page 1
-        const limit = parseInt(req.query.limit) || 10; // Default to 10 items per page
+        const limit = parseInt(req.query.limit) || 5; // Default to 10 items per page
         const offset = (page - 1) * limit;
 
         // Query the total number of patients for pagination metadata
@@ -172,7 +172,7 @@ exports.showAllPatient = async (req, res) => {
 
         // Query the paginated data
         const [patients] = await db.query(
-            "SELECT * FROM Patients LIMIT ? OFFSET ?",
+            "SELECT * FROM Patients ORDER BY first_name LIMIT ? OFFSET ?",
             [limit, offset]
         );
 
@@ -214,7 +214,8 @@ exports.deletePatientById = async (req, res) => {
             });
         }
 
-        res.json({ message: "Patient deleted successfully" });
+        // res.json({ message: "Patient deleted successfully" });
+        res.redirect("/showAllPatient");
     } catch (error) {
         console.error(error);
         res.status(500).json({

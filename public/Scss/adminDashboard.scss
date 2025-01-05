@@ -114,6 +114,7 @@ a {
     grid-row: 1/-1;
     background-color: $body-color;
     padding-left: 3rem;
+    min-height: 70vh;
 
     &-h4 {
         margin: 0rem 0rem 2.5rem 0rem;
