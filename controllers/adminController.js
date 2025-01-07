@@ -20,6 +20,8 @@ const uploadFiles = require("../middleware/upload");
 
 //  Admin registration route
 exports.registerAdmin = async (req, res) => {
+    console.log("Admin Data: ", req.body);
+
     const { name, email, password, confirm_password, role } = req.body;
 
     // Check if password and confirm_password matches
@@ -93,7 +95,6 @@ exports.loginAdmin = async (req, res) => {
         };
 
         console.log("login User:", req.session.user.role);
-      
 
         // console.log("Session set:", req.session); // Log session to check
 
@@ -145,30 +146,45 @@ exports.showAllAdmin = async (req, res) => {
             return res.status(404).send({ message: "No Admin found" });
         }
         res.render("showAllAdmin", {
-            admin: admins[0],
+            admins,
             pageTitle: "Manage Admin",
             cssPath: "/css/showAllAdmin.css",
         });
+
+        // return res.status(200).json({
+        //     status: "success",
+        //     data: {
+        //         admins: admins,
+        //     },
+        // });
     } catch (error) {
         console.error(error);
         res.status(500).json({
             message: "Error fetching Admin " + error.message,
         });
     }
-}
+};
 
 // Deleting Admin
 exports.deleteAdmin = async (req, res) => {
-    const adminIdToDelete = req.params.id;
-    // check to stop Admin from Deleting itself
-    if (req.session.user.id === adminIdToDelete) {
-        req.status(400).json({ error: "You cannot delete your account" });
+
+
+    const adminIdToDelete = parseInt(req.params.id, 10); 
+    
+    const currentAdminId = req.session.user.id;
+
+    // Check if the admin is trying to delete their own account
+    if (currentAdminId === adminIdToDelete) {
+        return res
+            .status(400)
+            .json({ error: "You cannot delete your account" });
     }
 
     try {
         const [result] = await db.query("DELETE FROM Admins WHERE id = ?", [
             adminIdToDelete,
         ]);
+
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: "Admin not found" });
         }
@@ -177,7 +193,7 @@ exports.deleteAdmin = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({
-            error: "An error occured while deleting the admin.",
+            error: "An error occurred while deleting the admin.",
         });
     }
 };

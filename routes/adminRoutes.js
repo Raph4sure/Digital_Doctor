@@ -6,9 +6,18 @@ const adminController = require("../controllers/adminController");
 // Route to register a new admin
 router.post(
     "/registerAdmin",
-    requireLogin(["Super Admin"]),
+    // requireLogin(["Super Admin"]),
     adminController.registerAdmin
 );
+
+router.get("/registerAdmin", async (req, res) => {
+    res.render("registerAdmin", {
+        pageTitle: "Register Admin",
+        cssPath: "/css/registerAdmin.css",
+        message: "Welcome to the Admin Registration Page",
+        user: req.session.user,
+    });
+});
 
 // Route to render the admin login page
 router
@@ -23,9 +32,6 @@ router
     })
     .post(adminController.loginAdmin);
 
-
-    
-
 // Route to access the admin dashboard, requires login
 router.get(
     "/adminDashboard",
@@ -36,14 +42,14 @@ router.get(
 // Route to manage admins
 router.get(
     "/showAllAdmin",
-    requireLogin(["Super Admin"]),
+    // requireLogin(["Super Admin"]),
     adminController.showAllAdmin
 );
 
 // Route to delete an admin
 router.delete(
-    "/deleteAdmin",
-    requireLogin(["Super Admin"]),
+    "/deleteAdmin/:id",
+    // requireLogin(["Super Admin"]),
     adminController.deleteAdmin
 );
 

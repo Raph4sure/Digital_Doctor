@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Digital Doctor's homepage offers intuitive access to online medical consultations, 24/7 healthcare, and certified professionals." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/showAllAdmin.css" />
+  <title>My Appointments</title>
+</head>
+
+<body class="container">
+  <section class="headnav">
+    <header class="header">
+      <div class="header__div">
+        <img src="/img/logo6.png" class="logo" alt="Digital Doctor" />
+      </div>
+    </header>
+    <label class="lab">
+      <input class="inp" type="checkbox" />
+      <div class="toggle">
+        <span class="top_line common"></span>
+        <span class="middle_line common"></span>
+        <span class="bottom_line common"></span>
+      </div>
+      <nav class="nav">
+        <div class="nav__div">
+          <h3 class="nav__div-h3">MENU</h3>
+          <a href="/homepage.html" class="nav__div_li">Home</a>
+          <a class="nav__div_li" href="/registration.html">Consultation</a>
+          <a class="nav__div_li" href="/Doctors.html">Doctors</a>
+          <a class="nav__div_li" href="/Contact.html">Contact Us</a>
+          <a class="nav__div_li" href="/About.html">About</a>
+        </div>
+      </nav>
+    </label>
+  </section>
+
+
+  <main class="container2">
+    <section class="top__container2">
+      <h3 class="top__container2-h2">All Admin</h3>
+    </section>
+
+    <section class="side__bar">
+      <h4 class="side__bar-h4">My Portal</h4>
+      <ul class="side__bar-ul">
+        <li class="side__bar-li"><a class="side__bar-a" href="">Dashboard</a></li>
+        <li class="side__bar-li"><a class="side__bar-a" href="/showAllPatient">Patients</a></li>
+        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Appointments</a></li>
+        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Doctors</a></li>
+        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Admins</a></li>
+
+        <form action="/logout" method="POST">
+          <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
+        </form>
+      </ul>
+    </section>
+    </section>
+
+    <% if (admins && admins.length > 0) { %>
+    <section class="body">
+      <table class="table">
+        <thead class="table__head">
+          <th>Names</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Action</th>
+        </thead>
+        <% admins.forEach(admin => { %>
+        <tbody>
+          <tr>
+            <td><%= admin.name %></td>
+            <td><%= admin.email %></td>
+            <td><%= admin.role %></td>
+            <td>
+              <form action="/deleteAdmin/<%= admin.id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete(event)">
+                <!-- <input type="hidden" name="method" value="DELETE"> -->
+                <button type="submit" style="background:none; border:none; color:blue; text-decoration:none; cursor:pointer; font-size:24px">Delete</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+        <% }) %>
+      </table>
+    </section>
+
+    <% } else { %>
+    <section class="body">
+      <p style="font-weight: bold; color: red;">No Admin Found.</p>
+    </section>
+    <% } %>
+    <div class="div__style">
+      <a class="div__style-button" href="/registerAdmin">Register Admin </a>
+    </div>
+  </main>
+
+
+
+  <footer class="footer">
+    <div class="footer__div1">
+      <p class="footer__div1-p">
+        <span>About Digital Doctors:</span> Digital Doctor connects
+        you with certified doctors online, offering 24/7 access to
+        quality healthcare.
+      </p>
+    </div>
+    <div class="footer__div2">
+      <article class="footer__div2-article1">
+        <p class="footer__div2-article1-p">
+          <a href="#">Home</a>/<a href="#">Consultation</a>/<a href="#">Doctors</a>/<a href="#">About Us</a>
+        </p>
+      </article>
+      <article class="footer__div2-article2">
+        <p class="footer__div2-article2-p">Connect With Us On</p>
+        <div>
+          <a href="#"><img src="/img/linkedIn.png" alt="Facebook Logo" /></a>
+          <a href="#"><img src="/img/xtwitter.png" alt="Twitter(X) Logo" /></a>
+          <a href="#"><img src="/img/facebook.png" alt="LinkedIn Logo" /></a>
+        </div>
+      </article>
+      <article class="footer__div2-article3">
+        <p>
+          <span class="footer__div2-article3-header">Contact Us</span><br />
+          Email: <a href="#">support@digitaldoctor.com</a><br />
+          Phone: +2347066886470
+        </p>
+      </article>
+    </div>
+  </footer>
+
+  <script>
+    function confirmDelete(event) {
+      // Show confirmation dialog
+      const userConfirmed = confirm("Are you sure you want to delete this Admin?");
+
+      // If the user clicks "Cancel," prevent form submission
+      if (!userConfirmed) {
+        event.preventDefault();
+        return false;
+      }
+      return true; // Allow form submission
+    }
+  </script>
+</body>
+
+
+
+</html>
+
+
+
+
+
+<!-- .pagination a.active {
+font-weight: bold;
+color: white;
+background-color: blue;
+padding: 5px 10px;
+border-radius: 5px;
+text-decoration: none;
+} -->
