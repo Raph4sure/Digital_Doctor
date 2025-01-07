@@ -2,60 +2,162 @@
 <%- include('partials/nav_bar') %>
 
 <body>
-  <h1>Edit Appointment</h1>
-  <form action="/editAppointment/<%= appointment.id %>" method="POST" enctype="multipart/form-data">
-    <label for="preferred_doctor">Preferred Doctor:</label>
-    <input type="text" id="preferred_doctor" name="preferred_doctor" value="<%= appointment.preferred_doctor %>" required /><br />
+  <section class="complete_body">
+    <!-- <main class="main_left">
+      <div class="main_left-text">
+        <h1 class="main_left-text-h1">Digital Doctor</h1>
+        <p class="main_left-text-p">
+          Your seamless connection to trusted healthcare <br />
+          with professional Doctors, <br />
+          anytime, anywhere
+        </p>
+      </div>
+    </main> -->
+    <main class="container">
+      <section class="container__body">
+        <form action="/editAppointment/<%= appointment.id %>" enctype="multipart/form-data" method="post" class="form" id="registrationForm">
+          <div class="form__group">
+            <h2 class="form__h2">
+              Update Appointment
+            </h2>
+          </div>
 
-    <label for="appointment_date">Date:</label>
-    <input type="date" id="appointment_date" name="appointment_date" value="<%= appointment.appointment_date ? appointment.appointment_date.toISOString().split('T')[0] : '' %>" required /><br />
+          <div class="form__group form_val">
+            <label class="form__label form__label-anim" for="preferred_doctor">Preferred Doctor:</label>
+            <input type="text" class="form__input form__input-anim" id="preferred_doctor" placeholder="Preferred Doctor" name="preferred_doctor" value="<%= appointment.preferred_doctor  || ''  %>" required minlength="3" custommaxlength="50" />
+            <span class="error-icon hidden">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </span>
+            <span class="success-icon hidden">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div class="error"></div>
+          </div>
 
 
 
-    <label for="appointment_time">Time:</label>
-    <input type="time" id="appointment_time" name="appointment_time" value="<%= appointment.appointment_time %>" required /><br />
-
-    <label for="appointment_reasons">Reasons:</label>
-    <textarea id="appointment_reasons" name="appointment_reasons" required><%= appointment.appointment_reasons %></textarea><br />
-
-    <label for="status">Status:</label>
-    <select id="status" name="status" required>
-      <option value="Scheduled" <%= appointment.status === "Scheduled" ? "selected" : "" %>>Scheduled </option>
-      <option value="Completed" <%= appointment.status === "Completed" ? "selected" : "" %>>Completed</option>
-      <option value="Cancelled" <%= appointment.status === "Cancelled" ? "selected" : "" %>>Cancelled</option>
-    </select><br>
-
-    <!-- Medical Images Section -->
-    <!-- <label for="medical_images">Medical Images:</label><br>
-    <% if (Array.isArray(appointment.medical_images) && appointment.medical_images.length > 0) { %>
-    <% appointment.medical_images.forEach(function(image) { %>
-    <img src="/<%= image %>" alt="Medical Image" style="width: 100px; height: auto; margin-right: 10px" />
-    <% }); %>
-    <% } else { %>
-    Not Available
-    <% } %><br> -->
 
 
-    <!-- Medical Images Section -->
-    <h3>Medical Images</h3>
-    <% if (Array.isArray(appointment.medical_images) && appointment.medical_images.length > 0) { %>
-    <% appointment.medical_images.forEach(function(image, index) { %>
-    <div style="margin-bottom: 10px;">
-      <img src="/<%= image %>" alt="Medical Image" style="width: 100px; height: auto; margin-right: 10px;" />
-      <button type="button" onclick="deleteImage('<%= image %>')">Delete</button>
-    </div>
-    <% }); %>
-    <% } else { %>
-    <p>No images available</p>
-    <% } %>
+          <div class="form__group form_val">
+            <label class="form__label form__label-anim" for="reasons for appointment">Reasons For Appointment</label>
+            <input type="text" class="form__input form__input-anim" id="reasons for appointment" value="<%= appointment.appointment_reasons  %>" placeholder="Reasons For Appointment" name="appointment_reasons" required minlength="3" custommaxlength="500" />
+            <span class="error-icon hidden">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </span>
+            <span class="success-icon hidden">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div class="error"></div>
+          </div>
+          <div class="form__group form_val">
+            <label class="form__label form__label-anim" for="appointment_date">Date of Appointment(Note: Appointment Day is
+              Monday to Friday )</label>
+            <input type="date" class="form__input form__input-anim" id="appointment_date" name="appointment_date" value="<%= appointment.appointment_date ? appointment.appointment_date.toISOString().split('T')[0] : '' %>" placeholder="Appointment Date" required />
+            <span class="error-icon hidden">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </span>
+            <span class="success-icon hidden">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div class="error"></div>
+          </div>
 
-    <!-- Add new images -->
-    <label for="medical_images">Upload New Images:</label>
-    <input type="file" id="medical_images" name="medical_images" multiple /><br />
 
-    <button type="submit">Save Changes</button>
-  </form>
+          <div class="form__group form_val">
+            <label class="form__label form__label-anim" for="appointment_time">Time of Appointment(Note: Appointment time is
+              9:00 AM - 5:00 PM )</label>
+            <input type="time" class="form__input form__input-anim" id="appointment_time" name="appointment_time" value="<%= appointment.appointment_time %>" placeholder="Time of Appointment" required />
+            <span class="error-icon hidden">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </span>
+            <span class="success-icon hidden">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div class="error"></div>
+          </div>
+
+
+          <div class="form__group form__select-group form_val">
+
+            <label for="status">Status:</label>
+            <select id="status" name="status" class="form__select" required>
+              <option value="Scheduled" <%= appointment.status === "Scheduled" ? "selected" : "" %>>Scheduled </option>
+              <option value="Completed" <%= appointment.status === "Completed" ? "selected" : "" %>>Completed</option>
+              <option value="Cancelled" <%= appointment.status === "Cancelled" ? "selected" : "" %>>Cancelled</option>
+            </select>
+
+            <span class="error-icon hidden">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </span>
+            <span class="success-icon hidden">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div class="error"></div>
+          </div>
+
+          <div class="form__group form_val">
+            <label class="form__label form__label-anim" for="address">Existing Medical Conditions</label>
+            <input type="text" class="form__input form__input-anim" id="existing medical conditions" name="existing_medical_record" value="<%= appointment.existing_medical_record %>" placeholder="Your existing medical conditions" required minlength="5" />
+            <span class="error-icon hidden">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </span>
+            <span class="success-icon hidden">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div class="error"></div>
+          </div>
+
+          <h3>Medical Images</h3>
+          <% if (Array.isArray(appointment.medical_images) && appointment.medical_images.length > 0) { %>
+          <% appointment.medical_images.forEach(function(image, index) { %>
+          <div style="margin-bottom: 10px;">
+            <img src="/<%= image %>" alt="Medical Image" style="width: 100px; height: auto; margin-right: 10px;" />
+            <button type="button" onclick="deleteImage('<%= image %>')">Delete</button>
+          </div>
+          <% }); %>
+          <% } else { %>
+          <p>No images available</p>
+          <% } %>
+
+          <div class="form__group form_val">
+            <label class="form__label form__label-anim" for="medical_images">Upload New Medical Records (if any)</label>
+            <input type="file" class="form__input
+                            form__input-anim" id="medical_images" name="medical_images" //accept="image/png,
+                            image/jpeg" // accept=".jpg,.jpeg,.png" maxsize="2097152" multiple />
+            <span class="error-icon hidden">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </span>
+            <span class="success-icon hidden">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div class="error"></div>
+          </div>
+
+          <div class="form__group form__terms form_val">
+            <input type="checkbox" name="terms" id="terms" value="accepted" required-checkbox />
+            <label class="form__label" for="terms">I agree to the terms and condition
+            </label>
+            <span class="error-icon hidden">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </span>
+            <span class="success-icon hidden">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div class="error"></div>
+          </div>
+          <button class="form__button" type="submit">
+            Update
+          </button>
+        
+        </form>
+      </section>
+      <!-- <div id="formSummary"></div> -->
+    </main>
+  </section>
   <%- include('partials/footer') %>
+
+
+  <script src="/javascripts/edit_appointment.js"></script>
 
   <script>
     function deleteImage(imagePath) {

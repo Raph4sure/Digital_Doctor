@@ -405,7 +405,73 @@ a:hover, a:focus, a:active {
 .book-appointment {
   background-color: rgb(88, 66, 84);
 }
+.book-appointment-2 {
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: rgb(88, 66, 84);
+  border: none;
+  color: rgb(252, 247, 247);
+}
 
 .button:hover {
   opacity: 0.9;
+}
+
+.div__style {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+.div__style-pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 2rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.div__style-pagination__link {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  color: rgb(6, 31, 252);
+  border: 1px solid rgb(156, 149, 185);
+  border-radius: 3rem;
+  -webkit-transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.div__style-pagination__link:hover {
+  background-color: rgb(253, 5, 5);
+  color: rgb(252, 247, 247);
+  text-decoration: none !important;
+}
+.div__style-pagination__link.active {
+  background-color: rgb(6, 31, 252);
+  color: rgb(252, 247, 247);
+  pointer-events: none;
+}
+.div__style-button {
+  text-decoration: none;
+  margin-top: 4rem;
+  border-radius: 3.5rem 0 3.5rem 0;
+  background-color: rgb(6, 31, 252);
+  padding: 0.5rem 1rem;
+  color: rgb(252, 247, 247);
+  text-align: center;
+}
+.div__style-button:hover {
+  background-color: rgb(253, 5, 5);
+  color: rgb(252, 247, 247);
+  text-decoration: none !important;
 }

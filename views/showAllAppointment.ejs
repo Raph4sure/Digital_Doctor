@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/showAppointment.css" />
+  <link rel="stylesheet" href="/css/showAllAppointment.css" />
   <title>My Appointments</title>
 </head>
 
@@ -135,6 +135,21 @@
       <p style="font-weight: bold; color: red;">No appointments found.</p>
     </section>
     <% } %>
+        <div class="div__style">
+          <div class=" div__style-pagination">
+
+            <% if (currentPage > 1) { %>
+            <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>" class="div__style-pagination__link">Previous</a>
+            <% } %>
+            <% for (let i = 1; i <= totalPages; i++) { %>
+            <a href="?page=<%= i %>&limit=<%= limit %>" class=" div__style-pagination__link <%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+            <% } %>
+            <% if (currentPage < totalPages) { %>
+            <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>" class="div__style-pagination__link">Next</a>
+            <% } %>
+          <!-- </div>
+          <a class="div__style-button" href="/registerPatient">Register Patient </a>
+        </div> -->
   </main>
 
   <footer class="footer">

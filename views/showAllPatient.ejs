@@ -125,13 +125,13 @@
       <div class=" div__style-pagination">
 
         <% if (currentPage > 1) { %>
-        <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
+        <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>" class="div__style-pagination__link">Previous</a>
         <% } %>
         <% for (let i = 1; i <= totalPages; i++) { %>
-        <a href="?page=<%= i %>&limit=<%= limit %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+        <a href="?page=<%= i %>&limit=<%= limit %>" class=" div__style-pagination__link <%= i === currentPage ? 'active' : '' %>"><%= i %></a>
         <% } %>
         <% if (currentPage < totalPages) { %>
-        <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
+        <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>" class="div__style-pagination__link">Next</a>
         <% } %>
       </div>
       <a class="div__style-button" href="/registerPatient">Register Patient </a>

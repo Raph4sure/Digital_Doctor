@@ -24,7 +24,7 @@ const uploadFiles = require("../middleware/upload");
 
 // Doctors Registration route
 exports.register = async (req, res) => {
-/*     console.log("Body", req.body);
+    /*     console.log("Body", req.body);
     console.log("File:", req.files);
     console.log("Doctor ID:", req.session.doctorId);
  */
@@ -125,7 +125,6 @@ exports.login = async (req, res) => {
     }
 };
 
-
 // Doctor Dashboard
 exports.doctorDashboard = async (req, res) => {
     try {
@@ -199,7 +198,7 @@ exports.showAllDoctors = async (req, res) => {
 
         // pagination
         (totalPages = Math.ceil(total / limit)),
-        console.log("Admin Data:", admins[0]);
+            console.log("Admin Data:", admins[0]);
         // console.log("Admins Data:", admins);
         // console.log("login user:", req.session.user.role);
 
@@ -242,6 +241,7 @@ exports.getEditDoctor = async (req, res) => {
             pageTitle: "editDoctor",
             cssPath: "/css/editDoctor.css",
             message: "Welcome to the edit page",
+            user: req.session.user,
         });
     } catch (error) {
         console.error(error);
@@ -277,7 +277,7 @@ exports.postEditDoctor = async (req, res) => {
             doctorId,
         ]);
 
-        res.redirect("/Dashboard");
+        res.redirect("/showAllDoctors");
     } catch (error) {
         res.status(500).json("Error Updating Doctor" + error.message);
     }
@@ -298,7 +298,8 @@ exports.deleteDoctor = async (req, res) => {
             });
         }
 
-        res.json({ message: "Doctor deleted successfully" });
+        // res.json({ message: "Doctor deleted successfully" });
+        res.redirect("/showAllDoctors");
     } catch (error) {
         console.error(error);
         res.status(500).json({

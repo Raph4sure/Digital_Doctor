@@ -55,6 +55,7 @@ exports.getBookAppointment = async (req, res) => {
             patientData, // Pass patientData to the view
             patientId: patientData.id, // Pass patientId to the view
             doctors: doctorRows, // Pass the list of doctors to the view
+            user: req.session.user,
         });
     } catch (error) {
         console.error("Error fetching patient data:", error);
@@ -241,11 +242,59 @@ exports.showDoctorAppointment = async (req, res) => {
         });
 
         res.render("showDoctorAppointment", { appointments });
-
-
     } catch (error) {
-        console.error(error)
+        console.error(error);
         res.status(500).json({ message: "Error fetching appointments" });
+    }
+};
+
+exports.showAllAppointment = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1; // Default to page 1
+        const limit = parseInt(req.query.limit) || 5; // Default to 5 items per page
+        const offset = (page - 1) * limit;
+
+        // Query the total number of patients for pagination metadata
+        const [countResult] = await db.query(
+            "SELECT COUNT(*) as total FROM Appointments"
+        );
+        const totalAppointments = countResult[0].total;
+
+        query = `SELECT * FROM Appointments ORDER BY appointment_date DESC, appointment_time DESC LIMIT ? OFFSET ?`;
+
+        const [appointments] = await db.query(query, [limit, offset]);
+
+        appointments.forEach((appointment) => {
+            if (
+                appointment.medical_images &&
+                typeof appointment.medical_images === "string"
+            ) {
+                try {
+                    appointment.medical_images = JSON.parse(
+                        appointment.medical_images
+                    ); // Parse the string to array
+                } catch (err) {
+                    console.error("Error parsing medical_images:", err);
+                    appointment.medical_images = []; // Fallback to empty array if parsing fails
+                }
+            }
+        });
+
+        // Calculate total pages
+        const totalPages = Math.ceil(totalAppointments / limit);
+
+        res.render("showAllAppointment", {
+            appointments,
+            currentPage: page,
+            totalPages,
+            totalAppointments,
+            limit,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error fetching appointments: " + error,
+        });
     }
 };
 
@@ -285,6 +334,7 @@ exports.getEditAppointment = async (req, res) => {
             pageTitle: "editAppointment",
             cssPath: "/css/editAppointment.css",
             message: "Welcome to the Edit page",
+            user: req.session.user,
         });
     } catch (error) {
         console.error(error);
@@ -304,6 +354,7 @@ exports.postEditAppointment = async (req, res) => {
             appointment_date,
             appointment_time,
             appointment_reasons,
+            existing_medical_record,
             status,
             medical_images,
         } = req.body;
@@ -326,7 +377,7 @@ exports.postEditAppointment = async (req, res) => {
         // Convert medicalImages array to a JSON string for storage
         const medicalImagesString = JSON.stringify(medicalImages);
 
-        const query = `UPDATE Appointments SET preferred_doctor =?, appointment_date = ?, appointment_time = ?, appointment_reasons = ?, status = ?, medical_images = ? WHERE id = ?`;
+        const query = `UPDATE Appointments SET preferred_doctor =?, appointment_date = ?, appointment_time = ?, appointment_reasons = ?, status = ?, existing_medical_record=?, medical_images = ? WHERE id = ?`;
 
         await db.query(query, [
             preferred_doctor,
@@ -334,11 +385,14 @@ exports.postEditAppointment = async (req, res) => {
             appointment_time,
             appointment_reasons,
             status,
+            existing_medical_record,
             medicalImagesString,
             appointmentId,
         ]);
 
-        res.redirect("/showAppointment");
+        // alert("Appointment updated successfully");
+
+        res.redirect("/showAllAppointment");
 
         // res.status(200).send("Appointment Upadated Successfuly");
     } catch (error) {

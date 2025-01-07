@@ -3,7 +3,7 @@
 
 <body>
   <section class="complete_body">
-    <main class="main_left">
+    <!-- <main class="main_left">
       <div class="main_left-text">
         <h1 class="main_left-text-h1">Digital Doctor</h1>
         <p class="main_left-text-p">
@@ -12,7 +12,7 @@
           anytime, anywhere
         </p>
       </div>
-    </main>
+    </main> -->
     <main class="container">
       <section class="container__body">
         <form action="#" enctype="multipart/form-data" class="form" id="registrationForm">
@@ -21,7 +21,7 @@
               Book An Appointment With A Doctor
             </h2>
           </div>
-          <input type="hidden" name="patient_id" value="<%= patientId %>" />
+          <!-- <input type="text" name="patient_id" value="<%= patientId %>" /> -->
           <!-- <input
                             type="hidden"
                             name="doctor_id"
@@ -209,15 +209,12 @@
             <div class="error"></div>
           </div>
           <button class="form__button" type="submit">
-            Register
+            Update
           </button>
-          <p class="container__body-p">
-            Already have an account?
-            <a href="./login.html">Login</a> Instead
-          </p>
+       
         </form>
       </section>
-      <div id="formSummary"></div>
+      <!-- <div id="formSummary"></div> -->
     </main>
   </section>
   <%- include('partials/footer') %>

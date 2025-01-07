@@ -103,6 +103,7 @@ exports.loginPatient = async (req, res) => {
             role: "patient",
         };
         console.log("login User:", req.session.user.role);
+        console.log("Patient id: ", req.session.patientId);
 
         res.json({ message: "Login Successful", patientId: patient.id });
     } catch (error) {

@@ -1,8 +1,6 @@
 @import "main";
 
-
-
-.container-h2{
+.container-h2 {
     background-color: $footer-color;
     // color: $link-hover;
     text-align: center;
@@ -17,7 +15,7 @@
 }
 
 .doctor-card {
-    background-color: $button-text-color; 
+    background-color: $button-text-color;
     // background-color: rgb(156, 149, 185);
     /* background-color: rgb(73, 11, 61); */
     border: 1px solid #ddd;
@@ -70,14 +68,73 @@
     transition: background-color 0.3s;
 }
 
-.view-profile {
-    // background-color: #007bff;
-}
+// .view-profile {
+//     // background-color: #007bff;
+// }
 
 .book-appointment {
     background-color: $button-color2;
+
+    &-2{
+       padding: 2rem; 
+       border-radius: 1rem; 
+       background-color:rgb(88, 66, 84); 
+       border:none; 
+       color:rgb(252, 247, 247);
+    }
 }
 
 .button:hover {
     opacity: 0.9;
+}
+
+.div__style {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    &-pagination {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        &__link {
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            color: $link-hover;
+            border: 1px solid $footer-color;
+            border-radius: 3rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+
+            &:hover {
+                background-color: $button-color;
+                color: $button-text-color;
+                text-decoration: none !important;
+            }
+            &.active {
+                background-color: $link-hover;
+                color: $button-text-color;
+                pointer-events: none;
+            }
+        }
+    }
+
+    &-button {
+        text-decoration: none;
+        margin-top: 4rem;
+        border-radius: 3.5rem 0 3.5rem 0;
+        background-color: $link-hover;
+        padding: 0.5rem 1rem;
+        color: $button-text-color;
+        text-align: center;
+
+        &:hover {
+            background-color: $button-color;
+            color: $button-text-color;
+            text-decoration: none !important;
+        }
+    }
 }

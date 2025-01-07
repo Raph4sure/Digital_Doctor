@@ -38,6 +38,7 @@ router
             pageTitle: "doctorRegister",
             cssPath: "/css/doctors_registration.css",
             message: "Welcome to the Doctors Reg page",
+            user: req.session.user,
         });
     })
     .post(uploadFiles("profile_image", 1), doctorController.register);

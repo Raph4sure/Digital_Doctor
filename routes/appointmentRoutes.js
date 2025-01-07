@@ -27,7 +27,7 @@ const appointmentController = require("../controllers/appointmentController");
 // Route to handle booking appointment
 router
     .route("/bookAppointment")
-    .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
+    // .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
     .get(appointmentController.getBookAppointment)
     .post(
         uploadFiles("medical_images", 5),
@@ -46,13 +46,20 @@ router.get(
     appointmentController.showDoctorAppointment
 );
 
+router.get(
+    "/showAllAppointment",
+    // requireLogin(["Admin", "Super Admin"]),
+    appointmentController.showAllAppointment
+);
+
 router
     .route("/editAppointment/:id")
-    .all(requireLogin(["Admin", "Super Admin", "patient"]))
+    // .all(requireLogin(["Admin", "Super Admin", "patient"]))
     .get(appointmentController.getEditAppointment)
     .post(
         uploadFiles("medical_images", 5),
-        appointmentController.postEditAppointment
+        appointmentController.postEditAppointment,
+        
     );
 
 router.post("/deleteImage", appointmentController.deleteImage);

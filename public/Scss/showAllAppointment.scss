@@ -100,17 +100,22 @@ hr {
 // end
 
 .div__style {
-    display: flex;
-    flex-direction: column;
+    // display: flex;
+    // flex-direction: column;
+    grid-column: 3/-1;
+    grid-row: 6/-1;
+
     align-items: center;
-    margin-top: 5rem;
-    margin-bottom: 5rem;
+
+    justify-items: center;
+    margin-top: -25rem;
+    // margin-bottom: 25rem;
 
     &-pagination {
         display: flex;
         gap: 2rem;
         flex-wrap: wrap;
-        justify-content: center;
+        // justify-content: center;
 
         &__link {
             text-decoration: none;
@@ -130,22 +135,6 @@ hr {
                 color: $button-text-color;
                 pointer-events: none;
             }
-        }
-    }
-
-    &-button {
-        text-decoration: none;
-        margin-top: 4rem;
-        border-radius: 3.5rem 0 3.5rem 0;
-        background-color: $link-hover;
-        padding: 0.5rem 1rem;
-        color: $button-text-color;
-        text-align: center;
-
-        &:hover {
-            background-color: $button-color;
-            color: $button-text-color;
-            text-decoration: none !important;
         }
     }
 }
