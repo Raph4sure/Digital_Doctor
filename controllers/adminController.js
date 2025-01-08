@@ -91,7 +91,8 @@ exports.loginAdmin = async (req, res) => {
         req.session.isLoggedIn = true;
         req.session.user = {
             id: admin.id,
-            role: ["Admin", "Super Admin"],
+            role: [admin.role],
+            // role: ["Admin", "Super Admin"],
         };
 
         console.log("login User:", req.session.user.role);
@@ -124,12 +125,17 @@ exports.adminDashboard = async (req, res) => {
             return res.status(404).send("Admin not found");
         }
 
+        console.log("role:", req.session.user.role);
+
+        console.log("user role:", req.session.user.role[1]);
+
         // Pass admin data to the view
         res.render("adminDashboard", {
             admin: admins[0], // Pass the first result
             pageTitle: "Admin Dashboard",
             cssPath: "/css/adminDashboard.css",
             user: req.session.user,
+            userRole: req.session.user.role,
         });
     } catch (error) {
         console.error("Error fetching admin data:", error.message);
@@ -149,6 +155,8 @@ exports.showAllAdmin = async (req, res) => {
             admins,
             pageTitle: "Manage Admin",
             cssPath: "/css/showAllAdmin.css",
+            userRole: req.session.user.role,
+            user: req.session.user,
         });
 
         // return res.status(200).json({
@@ -167,10 +175,8 @@ exports.showAllAdmin = async (req, res) => {
 
 // Deleting Admin
 exports.deleteAdmin = async (req, res) => {
+    const adminIdToDelete = parseInt(req.params.id, 10);
 
-
-    const adminIdToDelete = parseInt(req.params.id, 10); 
-    
     const currentAdminId = req.session.user.id;
 
     // Check if the admin is trying to delete their own account

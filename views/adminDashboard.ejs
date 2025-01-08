@@ -11,20 +11,8 @@
       <h3 class="top__container2-h2">Welcome, <%= admin.role %> <%= admin.name %></h3>
     </section>
 
-    <section class="side__bar">
-      <h4 class="side__bar-h4">My Portal</h4>
-      <ul class="side__bar-ul">
-        <li class="side__bar-li"><a class="side__bar-a" href="">Dashboard</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAllPatient">Patients</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAllAppointment">Appointments</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAllDoctors">Doctors</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAllAdmin">Admins</a></li>
-     
-        <form action="/logout" method="POST">
-          <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
-        </form>
-      </ul>
-    </section>
+    <%- include('partials/adminSideBar') %>
+
 
     <section class="body">
       <p class="body-text"><Strong>First Name:</Strong> <%= admin.name %></p>

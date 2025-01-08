@@ -12,25 +12,14 @@
       <p class="top__container2-p">Your health, our priority</p>
     </section>
 
-    <section class="side__bar">
-      <h4 class="side__bar-h4">My Portal</h4>
-      <ul class="side__bar-ul">
-        <li class="side__bar-li"><a class="side__bar-a" href="">Dashboard</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/editPatient/<%= patient.id %>">Edit Profile</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showPatientAppointment">Appointment</a></li>
-        <!-- <li class="side__bar-li"><a class="side__bar-a" href="">Report</a></li> -->
-        <form action="/logout" method="POST">
-          <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
-        </form>
-      </ul>
-    </section>
+<%- include('partials/patienceSideBar') %>
 
     <section class="body">
       <p class="body-text"> <strong>First Name:</strong> <%= patient.first_name %></p>
       <p class="body-text"><strong>Last Name:</strong> <%= patient.last_name %></p>
       <p class="body-text"><strong>Email: </strong><%= patient.email %></p>
       <p class="body-text"><strong>Phone:</strong> <%= patient.phone %></p>
-      <p class="body-text"><strong>Date of Birth:</strong> <%= patient.date_of_birth %></p>
+      <p class="body-text"><strong>Date of Birth:</strong> <%= patient.date_of_birth.toISOString().split("T")[0] %></p>
       <p class="body-text"><strong>Gender:</strong> <%= patient.gender %></p>
       <p class="body-text"><strong>Address:</strong>
         <%= patient.address %>

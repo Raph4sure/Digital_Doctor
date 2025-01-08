@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -36,7 +36,10 @@
         </div>
       </nav>
     </label>
-  </section>
+  </section> -->
+
+  <%- include('partials/header') %>
+  <%- include('partials/nav_bar') %>
 
 
   <main class="container2">
@@ -44,20 +47,8 @@
       <h3 class="top__container2-h2">All Admin</h3>
     </section>
 
-    <section class="side__bar">
-      <h4 class="side__bar-h4">My Portal</h4>
-      <ul class="side__bar-ul">
-        <li class="side__bar-li"><a class="side__bar-a" href="">Dashboard</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAllPatient">Patients</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Appointments</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Doctors</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Admins</a></li>
+<%- include('partials/adminSideBar') %>
 
-        <form action="/logout" method="POST">
-          <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
-        </form>
-      </ul>
-    </section>
     </section>
 
     <% if (admins && admins.length > 0) { %>
@@ -78,7 +69,7 @@
             <td>
               <form action="/deleteAdmin/<%= admin.id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete(event)">
                 <!-- <input type="hidden" name="method" value="DELETE"> -->
-                <button type="submit" style="background:none; border:none; color:blue; text-decoration:none; cursor:pointer; font-size:24px">Delete</button>
+                <button type="submit" class="table-button">Delete</button>
               </form>
             </td>
           </tr>
@@ -97,9 +88,10 @@
     </div>
   </main>
 
+  <%- include('partials/footer') %>
 
 
-  <footer class="footer">
+<!--   <footer class="footer">
     <div class="footer__div1">
       <p class="footer__div1-p">
         <span>About Digital Doctors:</span> Digital Doctor connects
@@ -129,7 +121,7 @@
         </p>
       </article>
     </div>
-  </footer>
+  </footer> -->
 
   <script>
     function confirmDelete(event) {

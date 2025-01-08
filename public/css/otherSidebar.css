@@ -1,0 +1,41 @@
+.top__container2 {
+  grid-column: 2/-1;
+  grid-row: 1/2;
+  background-color: rgb(156, 149, 185);
+  padding-left: 2rem;
+  padding: 1rem 2rem 1rem 2rem;
+}
+.top__container2-p {
+  margin-top: -1rem;
+  font-size: 1.5rem;
+}
+
+.side__bar {
+  grid-column: 1/2;
+  grid-row: 1/-1;
+  background-color: rgb(73, 11, 61);
+  padding-left: 3rem;
+  padding-right: 4rem;
+}
+.side__bar-h4 {
+  margin: 0rem 0rem 2.5rem 0rem;
+  color: rgb(6, 31, 252);
+  font-size: 3.5rem;
+}
+.side__bar-li {
+  list-style: none;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+.side__bar-a {
+  color: rgb(252, 247, 247);
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 2.7rem;
+}
+.side__bar-a:hover {
+  color: rgb(34, 55, 245);
+  text-decoration: underline;
+}

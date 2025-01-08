@@ -40,7 +40,7 @@ router
 // Show All Patient
 router.get(
     "/showAllPatient",
-    requireLogin(["Admin", "SuperAdmin"]),
+    requireLogin(["Admin", "Super Admin"]),
     patientController.showAllPatient
 );
 

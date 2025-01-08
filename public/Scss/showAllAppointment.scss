@@ -27,31 +27,33 @@
     }
 }
 
-.side__bar {
-    grid-column: 1/3;
-    grid-row: 1/-1;
-    background-color: $body-color;
-    padding-left: 3rem;
+// .side__bar {
+//     grid-column: 1/3;
+//     grid-row: 1/-1;
+//     background-color: $body-color;
+//     padding-left: 3rem;
 
-    &-h4 {
-        margin: 0rem 0rem 2.5rem 0rem;
-        color: $link-hover;
-    }
+//     &-h4 {
+//         margin: 0rem 0rem 2.5rem 0rem;
+//         color: $link-hover;
+//     }
 
-    &-li {
-        list-style: none;
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
+//     &-li {
+//         list-style: none;
+//         font-size: 2.5rem;
+//         margin-bottom: 2rem;
 
-        .side__bar-a:active {
-            color: $footer-color;
-        }
-    }
+//         .side__bar-a:active {
+//             color: $footer-color;
+//         }
+//     }
 
-    &-a {
-        color: $footer-text-color;
-    }
-}
+//     &-a {
+//         color: $footer-text-color;
+//     }
+// }
+
+@import "partials/otherSidebar";
 
 .body {
     // background-color: yellow;

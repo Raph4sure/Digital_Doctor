@@ -208,7 +208,14 @@ exports.showPatientAppointment = async (req, res) => {
         // console.log(appointments.medical_images);
         // console.log(appointments.appointment_date);
 
-        res.render("showPatientAppointment", { appointments });
+        res.render("showPatientAppointment", {
+            appointments,
+            patient: patientId,
+            pageTitle: "Patient Appointment",
+            cssPath: "/css/showAppointment.css",
+            message: "Welcome to the Appointment page",
+            user: req.session.user,
+        });
 
         //    res.status(200).json({ appointments: appointments });
     } catch (error) {
@@ -241,7 +248,12 @@ exports.showDoctorAppointment = async (req, res) => {
             }
         });
 
-        res.render("showDoctorAppointment", { appointments });
+        res.render("showDoctorAppointment", {
+            appointments,
+            pageTitle: "Show All Doctors",
+            cssPath: "/css/showAppointment.css",
+            user: req.session.user,
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error fetching appointments" });
@@ -289,6 +301,10 @@ exports.showAllAppointment = async (req, res) => {
             totalPages,
             totalAppointments,
             limit,
+            userRole: req.session.user.role,
+            user: req.session.user,
+            cssPath: "/css/showAllAppointment.css",
+            pageTitle: "Show All Appointment",
         });
     } catch (error) {
         console.error(error);
@@ -348,6 +364,7 @@ exports.getEditAppointment = async (req, res) => {
 exports.postEditAppointment = async (req, res) => {
     try {
         const appointmentId = req.params.id;
+        const { role } = req.session.user;
 
         const {
             preferred_doctor,
@@ -391,8 +408,21 @@ exports.postEditAppointment = async (req, res) => {
         ]);
 
         // alert("Appointment updated successfully");
+        let redirectPath = "/showAllAppointment";
 
-        res.redirect("/showAllAppointment");
+        if (role) {
+            if (role.includes("doctor")) {
+                redirectPath = "/showDoctorAppointment";
+            } else if (role.includes("patient")) {
+                redirectPath = "/showPatientAppointment";
+            }
+        }
+
+        return res.redirect(redirectPath);
+
+        console.log("user role: ", req.session.user.role);
+
+        // res.redirect("/showAllAppointment");
 
         // res.status(200).send("Appointment Upadated Successfuly");
     } catch (error) {

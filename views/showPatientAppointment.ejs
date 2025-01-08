@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -35,82 +35,93 @@
           <a class="nav__div_li" href="/About.html">About</a>
         </div>
       </nav>
+      <footer class="footer">
+        <div class="footer__div1">
+          <p class="footer__div1-p">
+            <span>About Digital Doctors:</span> Digital Doctor connects
+            you with certified doctors online, offering 24/7 access to
+            quality healthcare.
+          </p>
+        </div>
+        <div class="footer__div2">
+          <article class="footer__div2-article1">
+            <p class="footer__div2-article1-p">
+              <a href="#">Home</a>/<a href="#">Consultation</a>/<a href="#">Doctors</a>/<a href="#">About Us</a>
+            </p>
+          </article>
+          <article class="footer__div2-article2">
+            <p class="footer__div2-article2-p">Connect With Us On</p>
+            <div>
+              <a href="#"><img src="/img/linkedIn.png" alt="Facebook Logo" /></a>
+              <a href="#"><img src="/img/xtwitter.png" alt="Twitter(X) Logo" /></a>
+              <a href="#"><img src="/img/facebook.png" alt="LinkedIn Logo" /></a>
+            </div>
+          </article>
+          <article class="footer__div2-article3">
+            <p>
+              <span class="footer__div2-article3-header">Contact Us</span><br />
+              Email: <a href="#">support@digitaldoctor.com</a><br />
+              Phone: +2347066886470
+            </p>
+          </article>
+        </div>
+      </footer>
     </label>
+  </section> -->
+
+<%- include('partials/header')  %>
+<%- include('partials/nav_bar')  %>
+
+
+<main class="container2">
+  <section class="top__container2">
+    <h3 class="top__container2-h2">My Appointments</h3>
   </section>
 
+<%- include("partials/patienceSideBar") %>
 
-  <main class="container2">
-    <section class="top__container2">
-      <h3 class="top__container2-h2">My Appointments</h3>
-    </section>
-
-    <section class="side__bar">
-      <h4 class="side__bar-h4">My Portal</h4>
-      <ul class="side__bar-ul">
-        <li class="side__bar-li">
-          <a class="side__bar-a" href="">Dashboard</a>
-        </li>
-        <li class="side__bar-li">
-          <a class="side__bar-a" href="">Edit Profile</a>
-        </li>
-        <li class="side__bar-li">
-          <a class="side__bar-a" href="">Appointments</a>
-        </li>
-        <li class="side__bar-li">
-          <a class="side__bar-a" href="">Reports</a>
-        </li>
-        <li class="side__bar-li">
-          <!-- <a class="side__bar-a" href="">Logout</a>
-            -->
-          <form action="/logout" method="POST">
-            <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
-          </form>
-        </li>
-      </ul>
-    </section>
-
-    <% if (appointments && appointments.length > 0) { %>
-    <section class="body">
-      <table class="table">
-        <thead class="table__head">
-          <th>Preferred Doctor</th>
-          <th>Appointment Date</th>
-          <th>Appointment Time</th>
-          <th>Appointment Reasons</th>
-          <th>Existing Medical Record</th>
-          <th>Status</th>
-          <th>Medical Images</th>
-          <th>Action</th>
-        </thead>
-        <% appointments.forEach(appointment => { %>
-        <tbody>
-          <tr>
-            <td><%= appointment.preferred_doctor %></td>
-            <td><%= appointment.appointment_date ? appointment.appointment_date.toISOString().split("T")[0] : "" %></td>
-            <td><%= appointment.appointment_time %></td>
-            <td><%= appointment.appointment_reasons %></td>
-            <td><%= appointment.existing_medical_record %></td>
-            <td><%= appointment.status %></td>
-            <td>
-              <% if (Array.isArray(appointment.medical_images)
+  <% if (appointments && appointments.length > 0) { %>
+  <section class="body">
+    <table class="table">
+      <thead class="table__head">
+        <th>Preferred Doctor</th>
+        <th>Appointment Date</th>
+        <th>Appointment Time</th>
+        <th>Appointment Reasons</th>
+        <th>Existing Medical Record</th>
+        <th>Status</th>
+        <th>Medical Images</th>
+        <th>Action</th>
+      </thead>
+      <% appointments.forEach(appointment => { %>
+      <tbody>
+        <tr>
+          <td><%= appointment.preferred_doctor %></td>
+          <td><%= appointment.appointment_date ? appointment.appointment_date.toISOString().split("T")[0] : "" %></td>
+          <td><%= appointment.appointment_time %></td>
+          <td><%= appointment.appointment_reasons %></td>
+          <td><%= appointment.existing_medical_record %></td>
+          <td><%= appointment.status %></td>
+          <td>
+            <% if (Array.isArray(appointment.medical_images)
                                 && appointment.medical_images.length > 0) { %>
-              <%
+            <%
                                 appointment.medical_images.forEach(function(image)
                                 { %>
-              <img src="<%= image %>" alt="Medical Image" style="
+            <img src="<%= image %>" alt="Medical Image" style="
                                         width: 100px;
                                         height: auto;
                                         margin-right: 10px;
                                     " />
-              <% }); %> <% } else { %> Not Available <% } %>
-            </td>
+            <% }); %> <% } else { %> Not Available <% } %>
+          </td>
 
-            <!-- <td><%= appointment.status %></td> -->
+          <!-- <td><%= appointment.status %></td> -->
 
-            <td>
-              <a class="link" href="/editAppointment/<%= appointment.id %>">Edit</a>
-              <br />
-              <!-- <form action="/deleteAppointment/<%= appointment.id %>" method="POST" ></form>
+          <td>
+            <a class="link" href="/editAppointment/<%= appointment.id %>">Edit</a>
+            <br />
+            <!-- <form action="/deleteAppointment/<%= appointment.id %>" method="POST" ></form>
                                 <a
                                     class="link"
                                     href="/deleteAppointment/<%= appointment.id %>"
@@ -118,56 +129,59 @@
                                 >
                                 </form> -->
 
-              <form action="/deleteAppointment/<%= appointment.id %>?_method=DELETE" method="POST" value="DELETE" style="display:inline;">
-                <input type="hidden" name="_method" value="DELETE" />
-                <button type="submit" style="background:none; border:none; color:blue; text-decoration:none; cursor:pointer; font-size:24px; ">Delete</button>
+            <form action="/deleteAppointment/<%= appointment.id %>?_method=DELETE" method="POST" value="DELETE" style="display:inline;">
+              <input type="hidden" name="_method" value="DELETE" />
+              <button type="submit" style="background:none; border:none; color:blue; text-decoration:none; cursor:pointer; font-size:24px; ">Delete</button>
 
-              </form>
-            </td>
-          </tr>
-        </tbody>
-        <% }) %>
-      </table>
-    </section>
-    <% } else { %>
-    <!-- <p>No appointments found.</p> -->
-    <section class="body">
-      <p style="font-weight: bold; color: red;">No appointments found.</p>
-    </section>
-    <% } %>
-  </main>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+      <% }) %>
+    </table>
+  </section>
+  <% } else { %>
+  <!-- <p>No appointments found.</p> -->
+  <section class="body">
+    <p style="font-weight: bold; color: red;">No appointments found.</p>
+  </section>
+  <% } %>
+</main>
 
-  <footer class="footer">
-    <div class="footer__div1">
-      <p class="footer__div1-p">
-        <span>About Digital Doctors:</span> Digital Doctor connects
-        you with certified doctors online, offering 24/7 access to
-        quality healthcare.
+
+<%#<footer class="footer">
+  <div class="footer__div1">
+    <p class="footer__div1-p">
+      <span>About Digital Doctors:</span> Digital Doctor connects
+      you with certified doctors online, offering 24/7 access to
+      quality healthcare.
+    </p>
+  </div>
+  <div class="footer__div2">
+    <article class="footer__div2-article1">
+      <p class="footer__div2-article1-p">
+        <a href="#">Home</a>/<a href="#">Consultation</a>/<a href="#">Doctors</a>/<a href="#">About Us</a>
       </p>
-    </div>
-    <div class="footer__div2">
-      <article class="footer__div2-article1">
-        <p class="footer__div2-article1-p">
-          <a href="#">Home</a>/<a href="#">Consultation</a>/<a href="#">Doctors</a>/<a href="#">About Us</a>
-        </p>
-      </article>
-      <article class="footer__div2-article2">
-        <p class="footer__div2-article2-p">Connect With Us On</p>
-        <div>
-          <a href="#"><img src="/img/linkedIn.png" alt="Facebook Logo" /></a>
-          <a href="#"><img src="/img/xtwitter.png" alt="Twitter(X) Logo" /></a>
-          <a href="#"><img src="/img/facebook.png" alt="LinkedIn Logo" /></a>
-        </div>
-      </article>
-      <article class="footer__div2-article3">
-        <p>
-          <span class="footer__div2-article3-header">Contact Us</span><br />
-          Email: <a href="#">support@digitaldoctor.com</a><br />
-          Phone: +2347066886470
-        </p>
-      </article>
-    </div>
-  </footer>
+    </article>
+    <article class="footer__div2-article2">
+      <p class="footer__div2-article2-p">Connect With Us On</p>
+      <div>
+        <a href="#"><img src="/img/linkedIn.png" alt="Facebook Logo" /></a>
+        <a href="#"><img src="/img/xtwitter.png" alt="Twitter(X) Logo" /></a>
+        <a href="#"><img src="/img/facebook.png" alt="LinkedIn Logo" /></a>
+      </div>
+    </article>
+    <article class="footer__div2-article3">
+      <p>
+        <span class="footer__div2-article3-header">Contact Us</span><br />
+        Email: <a href="#">support@digitaldoctor.com</a><br />
+        Phone: +2347066886470
+      </p>
+    </article>
+  </div>
+</footer>   %>
+
+<%- include('partials/footer') %>
 </body>
 
 </html>

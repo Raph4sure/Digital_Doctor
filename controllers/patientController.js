@@ -100,7 +100,7 @@ exports.loginPatient = async (req, res) => {
         req.session.isLoggedIn = true;
         req.session.user = {
             id: patient.id,
-            role: "patient",
+            role: ["patient"],
         };
         console.log("login User:", req.session.user.role);
         console.log("Patient id: ", req.session.patientId);
@@ -192,6 +192,12 @@ exports.showAllPatient = async (req, res) => {
             totalPages,
             totalPatients,
             limit,
+            // admin,
+            userRole: req.session.user.role,
+            cssPath: "/css/showAllPatient.css",
+            pageTitle: "Show All Patient",
+
+            user: req.session.user,
         });
     } catch (error) {
         res.status(500).json({

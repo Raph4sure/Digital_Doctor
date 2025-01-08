@@ -214,6 +214,7 @@ exports.showAllDoctors = async (req, res) => {
             cssPath: "/css/showAllDoctor.css",
             message: "showAllDoctors page",
             user: req.session.user,
+            userRole:req.session.user.role,
         });
     } catch (error) {
         console.error("Error fetching Data:", error);

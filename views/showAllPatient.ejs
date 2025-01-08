@@ -18,7 +18,7 @@
   </tbody>
 </table> -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -56,7 +56,10 @@
         </div>
       </nav>
     </label>
-  </section>
+  </section> -->
+
+  <%- include('partials/header') %>
+  <%- include('partials/nav_bar') %>
 
 
   <main class="container2">
@@ -64,20 +67,8 @@
       <h3 class="top__container2-h2">All Patient</h3>
     </section>
 
-    <section class="side__bar">
-      <h4 class="side__bar-h4">My Portal</h4>
-      <ul class="side__bar-ul">
-        <li class="side__bar-li"><a class="side__bar-a" href="">Dashboard</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAllPatient">Patients</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Appointments</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Doctors</a></li>
-        <li class="side__bar-li"><a class="side__bar-a" href="/showAppointment">Admins</a></li>
+ <%- include('partials/adminSideBar') %>
 
-        <form action="/logout" method="POST">
-          <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
-        </form>
-      </ul>
-    </section>
     </section>
 
     <% if (patients && patients.length > 0) { %>
@@ -100,7 +91,7 @@
             <td><%= patient.last_name %></td>
             <td><%= patient.email %></td>
             <td><%= patient.phone %></td>
-            <td><%= patient.date_of_birth.toISOString().split("T")[0] %></td>
+            <td><%= patient.date_of_birth.toISOString().split('T')[0] %></td>
             <td><%= patient.gender %></td>
             <td><%= patient.address %></td>
             <td>
@@ -138,8 +129,10 @@
     </div>
   </main>
 
+  <%- include('partials/footer') %>
 
 
+<!-- 
   <footer class="footer">
     <div class="footer__div1">
       <p class="footer__div1-p">
@@ -170,7 +163,7 @@
         </p>
       </article>
     </div>
-  </footer>
+  </footer> -->
 
   <script>
     function confirmDelete(event) {

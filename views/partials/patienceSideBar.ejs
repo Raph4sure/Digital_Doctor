@@ -1,0 +1,24 @@
+ <section class="side__bar">
+   <h4 class="side__bar-h4">My Portal</h4>
+   <ul class="side__bar-ul">
+     <li class="side__bar-li">
+       <a class="side__bar-a" href="/patientDashboard">Dashboard</a>
+     </li>
+     <li class="side__bar-li">
+       <a class="side__bar-a" href="/editPatient/<%= patient.id %>">Edit Profile</a>
+     </li>
+     <li class="side__bar-li">
+       <a class="side__bar-a" href="/showPatientAppointment">Appointments</a>
+     </li>
+     <!-- <li class="side__bar-li">
+          <a class="side__bar-a" href="">Reports</a>
+        </li> -->
+     <li class="side__bar-li">
+       <!-- <a class="side__bar-a" href="">Logout</a>
+            -->
+       <form action="/logout" method="POST">
+         <button type="submit" class="side__bar-a">Logout</button>
+       </form>
+     </li>
+   </ul>
+ </section>

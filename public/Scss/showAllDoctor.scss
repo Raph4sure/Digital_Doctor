@@ -12,6 +12,19 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
+
+
+    @include responsive(tab-port) {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    @include responsive(phone) {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
 }
 
 .doctor-card {
@@ -75,13 +88,18 @@
 .book-appointment {
     background-color: $button-color2;
 
-    &-2{
-       padding: 2rem; 
-       border-radius: 1rem; 
-       background-color:rgb(88, 66, 84); 
-       border:none; 
-       color:rgb(252, 247, 247);
+    &-2 {
+        padding: 2rem;
+        border-radius: 1rem;
+        background-color: $button-color2;
+        border: none;
+        color: rgb(252, 247, 247);
+
+        &:hover{
+        color: $footer-header;
+        text-decoration: underline;
     }
+}
 }
 
 .button:hover {

@@ -164,18 +164,6 @@ a:hover, a:focus, a:active {
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   }
-  h3 {
-    display: block;
-    visibility: visible;
-    color: rgb(252, 247, 247);
-    font-size: 5rem;
-    font-weight: 800;
-    margin-right: 5rem;
-    padding-right: -20rem;
-    padding: 10px 0;
-    padding-right: 30px;
-    pointer-events: none;
-  }
   a.nav__div_li:hover, a.nav__div_li:active, a.nav__div_li:focus {
     font-size: 130% !important;
     -webkit-transition: font-size 0.1s !important;
