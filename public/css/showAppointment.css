@@ -164,6 +164,18 @@ a:hover, a:focus, a:active {
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   }
+  .nav__div-h3 {
+    display: block;
+    visibility: visible;
+    color: rgb(73, 11, 61);
+    font-size: 5rem;
+    font-weight: 800;
+    margin-right: 5rem;
+    padding-right: -20rem;
+    padding: 10px 0;
+    padding-right: 30px;
+    pointer-events: none;
+  }
   a.nav__div_li:hover, a.nav__div_li:active, a.nav__div_li:focus {
     font-size: 130% !important;
     -webkit-transition: font-size 0.1s !important;
@@ -406,4 +418,26 @@ hr {
   border: 2px solid rgb(73, 11, 61); /* Black solid line */
   width: 95%; /* Line width */
   margin: 20px auto; /* Center the line */
+}
+
+.div__style {
+  grid-column: 2/-1;
+  grid-row: 6/-1;
+  justify-self: center;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+.div__style-button {
+  text-decoration: none;
+  margin-top: 4rem;
+  border-radius: 3.5rem 0 3.5rem 0;
+  background-color: rgb(6, 31, 252);
+  padding: 0.5rem 1rem;
+  color: rgb(252, 247, 247);
+  text-align: center;
+}
+.div__style-button:hover {
+  background-color: rgb(253, 5, 5);
+  color: rgb(252, 247, 247);
+  text-decoration: none !important;
 }

@@ -31,8 +31,6 @@
                 color: $link-hover;
                 text-decoration: underline;
             }
-
-           
         }
     }
 
@@ -105,18 +103,18 @@
             box-shadow: 0 0 15px $shadow-box-color;
         }
     }
-    // h3 {
-    //     display: block;
-    //     visibility: visible;
-    //     color: $button-text-color;
-    //     font-size: 5rem;
-    //     font-weight: 800;
-    //     margin-right: 05rem;
-    //     padding-right: -20rem;
-    //     padding: 10px 0;
-    //     padding-right: 30px;
-    //     pointer-events: none;
-    // }
+    .nav__div-h3 {
+        display: block;
+        visibility: visible;
+        color: $body-color;
+        font-size: 5rem;
+        font-weight: 800;
+        margin-right: 05rem;
+        padding-right: -20rem;
+        padding: 10px 0;
+        padding-right: 30px;
+        pointer-events: none;
+    }
 
     a.nav__div_li {
         &:hover,

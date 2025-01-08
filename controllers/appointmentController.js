@@ -461,13 +461,27 @@ exports.deleteImage = async (req, res) => {
 
 // Deleting an appointment
 exports.deleteAppointmentById = async (req, res) => {
+    const { role } = req.session.user.role;
+
     console.log(req.method);
     try {
         const appointmentId = req.params.id;
         const query = "DELETE FROM Appointments WHERE id = ?";
         await db.query(query, [appointmentId]);
 
-        res.redirect("/showAppointment");
+        let redirectPath = "/showAllAppointment";
+
+        if (role) {
+            if (role.includes("doctor")) {
+                redirectPath = "/showDoctorAppointment";
+            } else if (role.includes("patient")) {
+                redirectPath = "/showPatientAppointment";
+            }
+        }
+
+        return res.redirect(redirectPath);
+
+        // res.redirect("/showAppointment");
         // res.status(200).json({ message: "Appointment deletedsuccessfully" });
     } catch (error) {
         console.error(error);

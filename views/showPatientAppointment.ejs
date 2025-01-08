@@ -78,7 +78,7 @@
     <h3 class="top__container2-h2">My Appointments</h3>
   </section>
 
-<%- include("partials/patienceSideBar") %>
+  <%- include("partials/patienceSideBar") %>
 
   <% if (appointments && appointments.length > 0) { %>
   <section class="body">
@@ -146,6 +146,9 @@
     <p style="font-weight: bold; color: red;">No appointments found.</p>
   </section>
   <% } %>
+  <div class="div__style">
+    <a class="div__style-button" href="/bookAppointment">Book Appointment </a>
+  </div>
 </main>
 
 

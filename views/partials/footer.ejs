@@ -1,48 +1,38 @@
  <footer class="footer">
-            <div class="footer__div1">
-                <p class="footer__div1-p">
-                    <span>About Digital Doctors:</span> Digital Doctor connects
-                    you with certified doctors online, offering 24/7 access to
-                    quality healthcare. Learn more in our Privacy
-                    <a href="#">Policy and Terms</a> &
-                    <a href="#">Conditions.</a>
-                </p>
-            </div>
-            <div class="footer__div2">
-                <article class="footer__div2-article1">
-                    <p class="footer__div2-article1-p">
-                        <a href="#">Home</a>/<a href="#">Consultation</a>/<a
-                            href="#"
-                            >Doctors</a
-                        >/<a href="#">About Us</a>
-                    </p>
-                </article>
-                <article class="footer__div2-article2">
-                    <p class="footer__div2-article2-p">Connect With Us On</p>
-                    <div>
-                        <a href="#"
-                            ><img src="../img/linkedIn.png" alt="Facebook Logo"
-                        /></a>
-                        <a href="#"
-                            ><img
-                                src="../img/xtwitter.png"
-                                alt="Twitter(X) Logo"
-                        /></a>
-                        <a href="#"
-                            ><img src="../img/facebook.png" alt="LinkedIn Logo"
-                        /></a>
-                    </div>
-                </article>
-                <article class="footer__div2-article3">
-                    <p>
-                        <span class="footer__div2-article3-header"
-                            >Contact Us</span
-                        >
-                        <br />
-                        Email: <a href="#">support@digitaldoctor.com</a>
-                        <br />
-                        Phone: +2347066886470
-                    </p>
-                </article>
-            </div>
-        </footer>
+   <div class="footer__div1">
+     <p class="footer__div1-p">
+       <span>About Digital Doctors:</span> Digital Doctor connects
+       you with certified doctors online, offering 24/7 access to
+       quality healthcare. Learn more in our Privacy
+       <a href="#">Policy and Terms</a> &
+       <a href="#">Conditions.</a>
+     </p>
+   </div>
+   <div class="footer__div2">
+     <article class="footer__div2-article1">
+       <p class="footer__div2-article1-p">
+         <a href="./">Home</a>/<a href="./showAllDoctors">Consultation</a>/<a href="  <%= user && user.role.includes('patient') ? '/patientDashboard' : 
+          user && user.role.includes('doctor') ? '/doctorDashboard' : 
+         user && user.role.includes('Admin') ? '/adminDashboard' : 
+         'javascript:alert(\'Please login\'); window.location.href=\'/\';' %>">Dashboard</a> /<a href="./contact">Contact Us</a>/<a href="./about">About</a>
+       </p>
+     </article>
+     <article class="footer__div2-article2">
+       <p class="footer__div2-article2-p">Connect With Us On</p>
+       <div>
+         <a href="#"><img src="../img/linkedIn.png" alt="Facebook Logo" /></a>
+         <a href="#"><img src="../img/xtwitter.png" alt="Twitter(X) Logo" /></a>
+         <a href="#"><img src="../img/facebook.png" alt="LinkedIn Logo" /></a>
+       </div>
+     </article>
+     <article class="footer__div2-article3">
+       <p>
+         <span class="footer__div2-article3-header">Contact Us</span>
+         <br />
+         Email: <a href="#">support@digitaldoctor.com</a>
+         <br />
+         Phone: +2347066886470
+       </p>
+     </article>
+   </div>
+ </footer>

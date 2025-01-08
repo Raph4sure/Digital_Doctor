@@ -193,14 +193,18 @@
 
         &-button {
             text-decoration: none;
-            background-color: $button-color;
+            background-color: $link-hover;
             color: $button-text-color;
             font-weight: 500;
             padding: 0rem 2rem 0rem 2rem;
             border-radius: 2.5rem 0 2.5rem 0;
             margin: 2rem 0 3rem 0;
             &:hover {
-                text-decoration: none;
+                text-decoration: none !important;
+            background-color: $button-color;
+            color: $button-text-color;
+
+
             }
         }
     }

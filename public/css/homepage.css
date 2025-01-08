@@ -164,6 +164,18 @@ a:hover, a:focus, a:active {
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   }
+  .nav__div-h3 {
+    display: block;
+    visibility: visible;
+    color: rgb(73, 11, 61);
+    font-size: 5rem;
+    font-weight: 800;
+    margin-right: 5rem;
+    padding-right: -20rem;
+    padding: 10px 0;
+    padding-right: 30px;
+    pointer-events: none;
+  }
   a.nav__div_li:hover, a.nav__div_li:active, a.nav__div_li:focus {
     font-size: 130% !important;
     -webkit-transition: font-size 0.1s !important;
@@ -504,7 +516,7 @@ a:hover, a:focus, a:active {
 }
 .others__row5-button {
   text-decoration: none;
-  background-color: rgb(253, 5, 5);
+  background-color: rgb(6, 31, 252);
   color: rgb(252, 247, 247);
   font-weight: 500;
   padding: 0rem 2rem 0rem 2rem;
@@ -512,5 +524,7 @@ a:hover, a:focus, a:active {
   margin: 2rem 0 3rem 0;
 }
 .others__row5-button:hover {
-  text-decoration: none;
+  text-decoration: none !important;
+  background-color: rgb(253, 5, 5);
+  color: rgb(252, 247, 247);
 }
