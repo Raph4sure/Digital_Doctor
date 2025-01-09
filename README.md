@@ -2,7 +2,7 @@
 
 ## Project Title: Digital Doctor: A Comprehensive Digital Doctor Platform
 
-Overview: TeleMed is a robust telemedicine platform designed to connect patients with healthcare providers virtually. The platform aims to make healthcare more accessible by allowing users to register, search for nearby health centers, book appointments with doctors, and consult with healthcare professionals online. Built using HTML, CSS, and JavaScript for the frontend, with a Node.js and MySQL backend, TeleMed offers a seamless user experience while ensuring secure and efficient management of medical services.
+Overview: Digital Doctor is a robust online medical platform designed to connect patients with healthcare providers virtually. The platform aims to make healthcare more accessible by allowing users to register, book appointments with doctors, and consult with healthcare professionals online. Built using HTML, CSS, and JavaScript for the frontend, with a Node.js and MySQL backend, Digital Doctor offers a seamless user experience while ensuring secure and efficient management of medical services.
 
 ## Key Features:
 
@@ -11,9 +11,6 @@ Overview: TeleMed is a robust telemedicine platform designed to connect patients
 Registration and Login: Secure user registration and login system, with role-based access control for patients and doctors.
 Profile Management: Users can manage their profiles, update personal information, and view their appointment history.
 
-### Location-Based Services:
-
-Health Center Locator: Integration with Google Maps API to help users find and view nearby health centers based on their current location or a specified area.
 
 ### Appointment Booking:
 
