@@ -358,7 +358,6 @@ a:hover, a:focus, a:active {
 
 .doctor-card {
   background-color: rgb(252, 247, 247);
-  /* background-color: rgb(73, 11, 61); */
   border: 1px solid #ddd;
   border-radius: 8px;
   -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

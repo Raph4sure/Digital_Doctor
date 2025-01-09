@@ -3,12 +3,9 @@
 
 <body class="container">
 
-
-  <!--  -->
-
   <main class="container2">
     <section class="top__container2">
-      <h3 class="top__container2-h2">Welcome, <%= admin.role %> <%= admin.name %></h3>
+      <h3 class="top__container2-h2">Welcome, <span class="span2"><%= admin.role %> </span><%= admin.name %></h3>
     </section>
 
     <%- include('partials/adminSideBar') %>
@@ -20,7 +17,7 @@
       <p class="body-text"><strong>Role:</strong> <%= admin.role %></p>
     </section>
   </main>
-  <!--  -->
+
   <%- include('partials/footer') %>
 
 </body>

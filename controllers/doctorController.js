@@ -1,33 +1,11 @@
 // requiring bcrypt
 const bcrypt = require("bcrypt");
-// requiring database
-
-const express = require("express");
-const router = express.Router();
 const db = require("../database");
-
-const multer = require("multer");
-
-// const upload = require("../middleware/upload");
 const fs = require("fs");
 const path = require("path");
 
-const { sendEmail } = require("../middleware/email");
-
-const { requireLogin } = require("../middleware/authMiddleware");
-
-const uploadFiles = require("../middleware/upload");
-
-// const express = require("express");
-// const router = express.Router();
-// const db = require("./../database");
-
 // Doctors Registration route
 exports.register = async (req, res) => {
-    /*     console.log("Body", req.body);
-    console.log("File:", req.files);
-    console.log("Doctor ID:", req.session.doctorId);
- */
     const {
         first_name,
         last_name,
@@ -117,8 +95,6 @@ exports.login = async (req, res) => {
             role: ["doctor"],
         };
 
-        console.log("Login User", req.session.user.role);
-
         res.json({ message: "Login Succesful", doctorId: doctor.id });
     } catch (error) {
         res.status(500).json({ error: "Login failed: " + error.message });
@@ -197,24 +173,20 @@ exports.showAllDoctors = async (req, res) => {
         }
 
         // pagination
-        (totalPages = Math.ceil(total / limit)),
-            console.log("Admin Data:", admins[0]);
-        // console.log("Admins Data:", admins);
-        // console.log("login user:", req.session.user.role);
+        totalPages = Math.ceil(total / limit);
 
         res.render("showAllDoctors", {
             doctors,
             admins: admins[0],
+            pageTitle: "showAllDoctors",
+            cssPath: "/css/showAllDoctor.css",
+            message: "showAllDoctors page",
+            user: req.session.user,
             userRole: req.session.user.role,
             // pagination
             currentPage: page,
             totalPages,
             limit,
-            pageTitle: "showAllDoctors",
-            cssPath: "/css/showAllDoctor.css",
-            message: "showAllDoctors page",
-            user: req.session.user,
-            userRole:req.session.user.role,
         });
     } catch (error) {
         console.error("Error fetching Data:", error);
@@ -256,9 +228,6 @@ exports.getEditDoctor = async (req, res) => {
 exports.postEditDoctor = async (req, res) => {
     try {
         const doctorId = req.params.id;
-
-        console.log("body:", req.body);
-        console.log("file:", req.files);
 
         const { first_name, last_name, phone, specialization, gender } =
             req.body;

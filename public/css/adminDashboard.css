@@ -329,104 +329,14 @@ a:hover, a:focus, a:active {
   margin: 2rem;
 }
 
-a {
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-}
-a:hover, a:focus, a:active {
-  text-decoration: underline !important;
-  outline: none;
-  color: -rgb(6, 31, 252);
-}
-
-.headnav {
-  grid-column: 1/-1;
-  grid-row: 1/2;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 0.5rem;
-}
-.headnav .header {
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 21%;
-          flex: 0 0 21%;
-}
-.headnav .lab {
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 79%;
-          flex: 0 0 79%;
-}
-.headnav .inp {
-  visibility: hidden;
-}
-.headnav .nav {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  -ms-flex-preferred-size: auto;
-      flex-basis: auto;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding-top: 0.5rem;
-}
-.headnav .nav .nav__div {
-  margin-right: 5rem;
-  margin-top: -3rem;
-}
-@media (max-width: 600px) {
-  .headnav .nav .nav__div {
-    margin-right: 1rem;
-  }
-}
-.headnav .nav .nav__div a.nav__div_li {
-  color: rgb(253, 5, 5);
-  font-size: 3rem;
-  font-weight: 530;
-  margin-right: 2rem;
-}
-.headnav .nav .nav__div a.nav__div_li:hover {
-  color: rgb(6, 31, 252);
-}
-@media (max-width: 1200px) {
-  .headnav .nav .nav__div a.nav__div_li {
-    font-size: 2.5rem;
-  }
-}
-@media (max-width: 900px) {
-  .headnav .nav .nav__div a.nav__div_li {
-    font-size: 3rem;
-  }
-}
-.headnav .nav .nav__div-h3 {
-  display: none;
-  visibility: hidden;
-  font-size: 5rem;
-  font-weight: 800;
-  margin-right: 5rem;
-  padding-right: -20rem;
-  padding: 10px 0;
-  padding-right: 30px;
-  pointer-events: none;
-}
-@media (max-width: 900px) {
-  .headnav .nav .nav__div-h3 {
-    display: block;
-    visibility: visible;
-  }
-}
-
 .container2 {
   display: grid;
   grid-template-columns: repeat(10, auto);
   grid-template-rows: repeat(8, auto);
+}
+
+.span2 {
+  color: rgb(6, 31, 252);
 }
 
 .top__container2 {

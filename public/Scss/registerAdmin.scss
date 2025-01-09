@@ -9,17 +9,9 @@
     padding-top: 10rem;
 }
 
-.main_left {
-    // flex-basis: 0 0 40;
 
-    // &-img {
-    //     // height: 100rem;
 
-    // }
-}
 
-.container {
-}
 
 .container__body {
     &-p {
@@ -32,11 +24,9 @@
     border-radius: 5rem;
     &__h2 {
         text-align: center;
-        // margin-bottom: -2rem;
     }
 
     background-color: #f5f4f8;
-    // border-radius: 5rem;
     padding: 5rem;
     min-width: 35vw;
     display: flex;

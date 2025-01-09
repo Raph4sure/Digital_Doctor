@@ -3,16 +3,7 @@
 
 <body>
   <section class="complete_body">
-    <!-- <main class="main_left">
-      <div class="main_left-text">
-        <h1 class="main_left-text-h1">Digital Doctor</h1>
-        <p class="main_left-text-p">
-          Your seamless connection to trusted healthcare <br />
-          with professional Doctors, <br />
-          anytime, anywhere
-        </p>
-      </div>
-    </main> -->
+
     <main class="container">
       <section class="container__body">
         <form action="#" enctype="multipart/form-data" class="form" id="registrationForm">
@@ -21,12 +12,7 @@
               Book An Appointment With A Doctor
             </h2>
           </div>
-          <!-- <input type="text" name="patient_id" value="<%= patientId %>" /> -->
-          <!-- <input
-                            type="hidden"
-                            name="doctor_id"
-                            value="<%= doctors.id %>"
-                        /> -->
+
           <div class="form__group form_val">
             <label class="form__label form__label-anim" for="first_name">First Name</label>
             <input type="text" class="form__input form__input-anim" id="first_name" placeholder="First Name" name="first_name" value="<%= patientData.first_name  || ''  %>" first_name required minlength="3" custommaxlength="30" />
@@ -185,8 +171,7 @@
           <div class="form__group form_val">
             <label class="form__label form__label-anim" for="medical_image">Upload Previous Medical Records (if any)</label>
             <input type="file" class="form__input
-                            form__input-anim" id="medical_image" name="medical_images" //accept="image/png,
-                            image/jpeg" // accept=".jpg,.jpeg,.png" maxsize="2097152" multiple />
+                            form__input-anim" id="medical_image" name="medical_images" accept=".jpg,.jpeg,.png" maxsize="2097152" multiple />
             <span class="error-icon hidden">
               <i class="fa-solid fa-circle-exclamation"></i>
             </span>
@@ -211,7 +196,7 @@
           <button class="form__button" type="submit">
             Update
           </button>
-       
+
         </form>
       </section>
       <!-- <div id="formSummary"></div> -->

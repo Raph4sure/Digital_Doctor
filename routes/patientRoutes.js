@@ -13,7 +13,7 @@ router.get(
 // Patient Registration routes
 router
     .route("/registerPatient")
-    // .all(requireLogin(["Admin", "SuperAdmin"]))
+    .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
     .get((req, res) => {
         res.render("registerPatient", {
             pageTitle: "registerPatient",
@@ -57,8 +57,5 @@ router
     .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
     .get(patientController.getEditPatient)
     .post(patientController.getPostPatient);
-
-// Logout route
-// router.post("/logoutPatient", patientController.logoutPatient);
 
 module.exports = router;

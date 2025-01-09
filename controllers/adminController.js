@@ -1,26 +1,9 @@
 // requiring bcrypt
 const bcrypt = require("bcrypt");
-// requiring database
-
-const express = require("express");
-const router = express.Router();
 const db = require("../database");
-
-const multer = require("multer");
-
-// const upload = require("../middleware/upload");
-const fs = require("fs");
-const path = require("path");
-
-const { sendEmail } = require("../middleware/email");
-
-const { requireLogin } = require("../middleware/authMiddleware");
-
-const uploadFiles = require("../middleware/upload");
 
 //  Admin registration route
 exports.registerAdmin = async (req, res) => {
-    console.log("Admin Data: ", req.body);
 
     const { name, email, password, confirm_password, role } = req.body;
 
@@ -92,12 +75,7 @@ exports.loginAdmin = async (req, res) => {
         req.session.user = {
             id: admin.id,
             role: [admin.role],
-            // role: ["Admin", "Super Admin"],
         };
-
-        console.log("login User:", req.session.user.role);
-
-        // console.log("Session set:", req.session); // Log session to check
 
         res.json({ message: "Login Successful", adminId: admin.id });
     } catch (error) {
@@ -106,13 +84,9 @@ exports.loginAdmin = async (req, res) => {
 };
 
 // Admin Dashboard
-// router.get("/adminDashboard.html", (req, res) => {
-//     res.redirect("/adminDashboard");
-// });
-
 exports.adminDashboard = async (req, res) => {
     try {
-        const adminId = req.session.adminId; // Assuming session contains adminId
+        const adminId = req.session.adminId; 
         if (!adminId) {
             return res.status(401).send("Unauthorized");
         }
@@ -125,9 +99,6 @@ exports.adminDashboard = async (req, res) => {
             return res.status(404).send("Admin not found");
         }
 
-        console.log("role:", req.session.user.role);
-
-        console.log("user role:", req.session.user.role[1]);
 
         // Pass admin data to the view
         res.render("adminDashboard", {

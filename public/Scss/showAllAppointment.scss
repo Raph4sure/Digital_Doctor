@@ -27,36 +27,10 @@
     }
 }
 
-// .side__bar {
-//     grid-column: 1/3;
-//     grid-row: 1/-1;
-//     background-color: $body-color;
-//     padding-left: 3rem;
-
-//     &-h4 {
-//         margin: 0rem 0rem 2.5rem 0rem;
-//         color: $link-hover;
-//     }
-
-//     &-li {
-//         list-style: none;
-//         font-size: 2.5rem;
-//         margin-bottom: 2rem;
-
-//         .side__bar-a:active {
-//             color: $footer-color;
-//         }
-//     }
-
-//     &-a {
-//         color: $footer-text-color;
-//     }
-// }
 
 @import "partials/otherSidebar";
 
 .body {
-    // background-color: yellow;
     grid-column: 3/-1;
     grid-row: 3/6;
     padding-left: 2rem;
@@ -74,7 +48,6 @@
         border-collapse: collapse;
         margin-top: 5rem;
         margin-bottom: 5rem;
-        // margin-right: -50rem;
 
         th {
             @extend %table-line;
@@ -84,7 +57,6 @@
 
         td {
             @extend %table-line;
-            // font-size: 2.5rem;
             font-weight: 550;
         }
         .link {
@@ -102,8 +74,6 @@ hr {
 // end
 
 .div__style {
-    // display: flex;
-    // flex-direction: column;
     grid-column: 3/-1;
     grid-row: 6/-1;
 
@@ -111,13 +81,11 @@ hr {
 
     justify-items: center;
     margin-top: -25rem;
-    // margin-bottom: 25rem;
 
     &-pagination {
         display: flex;
         gap: 2rem;
         flex-wrap: wrap;
-        // justify-content: center;
 
         &__link {
             text-decoration: none;

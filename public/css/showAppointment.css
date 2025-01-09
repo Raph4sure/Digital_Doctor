@@ -329,6 +329,20 @@ a:hover, a:focus, a:active {
   margin: 2rem;
 }
 
+.body .table td, .body .table th {
+  padding: 10px;
+  border: 2px solid black;
+  text-align: center;
+  color: black;
+}
+
+.container2 {
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  grid-template-rows: repeat(8, auto);
+  min-height: 70vh;
+}
+
 .top__container2 {
   grid-column: 2/-1;
   grid-row: 1/2;
@@ -369,20 +383,6 @@ a:hover, a:focus, a:active {
 .side__bar-a:hover {
   color: rgb(34, 55, 245);
   text-decoration: underline;
-}
-
-.body .table td, .body .table th {
-  padding: 10px;
-  border: 2px solid black;
-  text-align: center;
-  color: black;
-}
-
-.container2 {
-  display: grid;
-  grid-template-columns: repeat(10, auto);
-  grid-template-rows: repeat(8, auto);
-  min-height: 70vh;
 }
 
 .body {

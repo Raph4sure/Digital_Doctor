@@ -92,7 +92,7 @@ a:hover, a:focus, a:active {
     color: rgb(6, 31, 252);
     text-decoration: underline;
   }
-  input {
+  .inp {
     display: none;
     visibility: hidden;
     -moz-appearance: none;
@@ -139,35 +139,35 @@ a:hover, a:focus, a:active {
     -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
   }
-  input:checked ~ .toggle .top_line {
+  .inp:checked ~ .toggle .top_line {
     left: 2px;
     top: 14px;
     width: 25px;
     -webkit-transform: rotate(225deg);
             transform: rotate(225deg);
   }
-  input:checked ~ .toggle .bottom_line {
+  .inp:checked ~ .toggle .bottom_line {
     left: 2px;
     top: 14px;
     width: 25px;
     -webkit-transform: rotate(-225deg);
             transform: rotate(-225deg);
   }
-  input:checked ~ .toggle .middle_line {
+  .inp:checked ~ .toggle .middle_line {
     opacity: 0;
     -webkit-transform: translateX(-50px);
             transform: translateX(-50px);
   }
-  input:checked ~ .nav {
+  .inp:checked ~ .nav {
     -webkit-transform: translateX(0);
             transform: translateX(0);
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   }
-  h3 {
+  .nav__div-h3 {
     display: block;
     visibility: visible;
-    color: rgb(252, 247, 247);
+    color: rgb(73, 11, 61);
     font-size: 5rem;
     font-weight: 800;
     margin-right: 5rem;
@@ -253,6 +253,18 @@ a:hover, a:focus, a:active {
     font-size: 3rem;
   }
 }
+.headnav .nav__div_button {
+  text-decoration: none;
+  background-color: rgb(6, 31, 252);
+  color: rgb(252, 247, 247);
+  font-weight: 700;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  border-radius: 2.5rem 0 2.5rem 0;
+  border: none;
+}
+.headnav .nav__div_button:hover {
+  background-color: rgb(253, 5, 5);
+}
 
 .footer {
   grid-column: 1/-1;
@@ -315,6 +327,16 @@ a:hover, a:focus, a:active {
 }
 .footer__div2-article1-p {
   margin: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+a:hover, a:focus, a:active {
+  text-decoration: underline !important;
+  outline: none;
+  color: -rgb(6, 31, 252);
 }
 
 .heading {

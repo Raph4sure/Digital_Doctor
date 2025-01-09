@@ -43,6 +43,7 @@ router
     })
     .post(uploadFiles("profile_image", 1), doctorController.register);
 
+// Edit Doctor
 router
     .route("/editDoctor/:id")
     .all(requireLogin(["Admin", "Super Admin"]))
@@ -55,7 +56,11 @@ router.delete(
     doctorController.deleteDoctor
 );
 
-router.post("/deleteDoctorImage", doctorController.deleteDoctorImage);
+router.post(
+    "/deleteDoctorImage",
+    requireLogin(["Admin", "SuperAdmin"]),
+    doctorController.deleteDoctorImage
+);
 
 router.post("/doctorLogout", doctorController.logout);
 

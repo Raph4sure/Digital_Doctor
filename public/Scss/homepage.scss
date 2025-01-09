@@ -17,7 +17,6 @@
     .main {
         display: grid;
         grid-template-columns: repeat(2, auto);
-        // grid-template-columns: 1fr 1fr;
 
         &__div1 {
             grid-column: 1/2;
@@ -27,23 +26,19 @@
             max-width: 80vw;
             max-height: 80vh;
             object-fit: contain;
-            // padding-left: -4rem;
             margin-left: 2rem;
         }
 
         &__div2 {
             grid-column: 2/3;
             display: grid;
-            // place-items: center;
             justify-content: left;
             align-items: center;
 
             text-align: center;
             margin-left: -9rem;
 
-            @include responsive(tab-land) {
-                // margin-left: -5rem;
-            }
+           
 
             h2.main__div2-h2 {
                 color: $headings-color;
@@ -52,7 +47,6 @@
 
              
                 @include responsive(tab-land) {
-                    // margin-left: -20rem;
                     font-size: 5rem;
                 }
                 @include responsive(tab-port) {

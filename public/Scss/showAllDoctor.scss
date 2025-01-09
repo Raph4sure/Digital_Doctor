@@ -2,7 +2,6 @@
 
 .container-h2 {
     background-color: $footer-color;
-    // color: $link-hover;
     text-align: center;
     margin: 3rem 0 2rem 0;
 }
@@ -29,8 +28,6 @@
 
 .doctor-card {
     background-color: $button-text-color;
-    // background-color: rgb(156, 149, 185);
-    /* background-color: rgb(73, 11, 61); */
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -81,9 +78,7 @@
     transition: background-color 0.3s;
 }
 
-// .view-profile {
-//     // background-color: #007bff;
-// }
+
 
 .book-appointment {
     background-color: $button-color2;

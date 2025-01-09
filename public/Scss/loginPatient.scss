@@ -2,64 +2,6 @@
 
 @import "main";
 
-$body-color: rgb(73, 11, 61);
-
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-@mixin responsive($breakpoint) {
-    @if $breakpoint == phone {
-        @media (max-width: 600px) {
-            @content;
-        }
-    }
-    @if $breakpoint == tab-port {
-        @media (max-width: 900px) {
-            @content;
-        }
-    }
-    @if $breakpoint == tab-land {
-        @media (max-width: 1200px) {
-            @content;
-        }
-    }
-    @if $breakpoint == big-desktop {
-        @media (max-width: 1900px) {
-            @content;
-        }
-    }
-}
-
-html {
-    font-size: 62.5%; // 1rem = 16px
-
-    @include responsive(big-desktop) {
-        font-size: 58%; // 1rem = 12px
-    }
-    @include responsive(tab-land) {
-        font-size: 56.25%; // 1rem = 9px
-    }
-    @include responsive(tab-port) {
-        font-size: 50%; // 1rem = 8px
-    }
-    @include responsive(phone) {
-        font-size: 35%; // 1rem = 5.6px
-    }
-}
-
-body {
-    font-family: "SUSE", sans-serif;
-    font-weight: 400;
-    font-size: 2rem;
-    line-height: 1.7;
-    color: $body-color;
-}
-
 .container__body {
     background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
     display: grid;
@@ -91,13 +33,7 @@ body {
         min-width: 50vw;
     }
     @include responsive(tab-port) {
-        // background-color: transparent;
-
         min-width: 60vw;
-    }
-    @include responsive(phone) {
-        // background-color: transparent;
-        // min-width: 90vw;
     }
 
     &__group:not(:last-child) {

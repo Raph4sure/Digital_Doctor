@@ -1,8 +1,6 @@
-// const { router } = require("../app");
 const express = require("express");
 const router = express.Router();
 const { requireLogin } = require("../middleware/authMiddleware");
-// const setDashboardLink = require('./../middleware/dashboardLink')
 
 // Home page
 router.get("/", (req, res) => {
@@ -33,23 +31,6 @@ router.get("/contact", (req, res) => {
         user: req.session.user,
     });
 });
-
-// router.get("/userDashboard", (req, res) => {
-//     let dashboardLink = "/homepage";
-
-//     if (req.session.isLoggedIn && req.session.user.role === "patient") {
-//         dashboardLink = "/patientDashboard";
-//     } else if (req.session.isLoggedIn && req.session.user.role === "doctor") {
-//         dashboardLink = "/doctorDashboard";
-//     } else if (
-//         (req.session.isLoggedIn && req.session.user.role === "Admin") ||
-//         (req.session.isLoggedIn && req.session.user.role === "Super Admin")
-//     ) {
-//         dashboardLink = "/patientDashboard";
-//     }
-
-//     res.render("Contact", { dashboardLink });
-// });
 
 // Patient Logout route
 router.post("/logout", (req, res) => {

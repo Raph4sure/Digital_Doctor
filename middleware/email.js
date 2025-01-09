@@ -55,6 +55,7 @@ exports.sendEmail = async (to, subject, templatePath, templateData) => {
         console.log(`Email sent successfully to ${to}`);
         return response;
     } catch (error) {
+        
         // Log detailed error information
         console.error("Email sending error details:", {
             name: error.name,

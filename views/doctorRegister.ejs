@@ -1,5 +1,3 @@
-
-
 <%- include('partials/header') %>
 <%- include('partials/nav_bar') %>
 
@@ -32,9 +30,16 @@
           </span>
           <div class="error"></div>
         </div>
-        <div class="form__group form_val">
-          <label class="form__label form__label-anim" for="specialization">Specialization</label>
-          <input type="text" class="form__input form__input-anim" id="specialization" placeholder="Specialization" name="specialization" required minlength="3" custommaxlength="30" />
+        <div class="form__group form__select-group form_val">
+          <label class="form__label" for="specialization">Select Your Specialization</label>
+          <select class="form__select" name="specialization" id="specialization">
+            <option value="Select">Select Specialization</option>
+            <option value="Surgical">Surgical</option>
+            <option value="Medical">Medical</option>
+            <option value="Pediatric">Pediatric</option>
+            <option value="Obstetrics">Obstetrics</option>
+            <option value="Psychiatry">Psychiatry and Neurology</option>
+          </select>
           <span class="error-icon hidden">
             <i class="fa-solid fa-circle-exclamation"></i>
           </span>

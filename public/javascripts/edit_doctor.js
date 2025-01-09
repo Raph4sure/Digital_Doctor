@@ -36,37 +36,6 @@ const validateSingleFormGroup = (formGroup) => {
         }
     }
 
-    /*     // Image upload validation
-    if (input.type === "file") {
-        // Specific validation for file inputs
-        const file = input.files[0];
-        if (!file) {
-            errorContainer.textContent = `${input.name} is required`;
-            formGroupError = true;
-        } else {
-            validateOptions.forEach((option) => {
-                if (
-                    input.hasAttribute(option.attribute) &&
-                    !option.isValid(input)
-                ) {
-                    errorContainer.textContent = option.errorMessage(input);
-                    formGroupError = true;
-                }
-            });
-        }
-    } else {
-        // Existing validation logic
-        validateOptions.forEach((option) => {
-            if (
-                input.hasAttribute(option.attribute) &&
-                !option.isValid(input)
-            ) {
-                errorContainer.textContent = option.errorMessage(input);
-                formGroupError = true;
-            }
-        });
-    } */
-
     // Validate options (other validations)
     validateOptions.forEach((option) => {
         if (input.hasAttribute(option.attribute) && !option.isValid(input)) {
@@ -124,11 +93,7 @@ const validateOptions = [
         errorMessage: (input) =>
             `${input.name} should match the required format`,
     },
-    // {
-    //     attribute: "minage",
-    //     isValid: (input) => input.value >= 18 && input.value <= 100,
-    //     errorMessage: () => "Age must be between 18 and 100",
-    // },
+
     {
         attribute: "match",
         isValid: (input) => {
@@ -160,7 +125,8 @@ const validateOptions = [
     },
 ];
 
-/* validateOptions.push({
+// Image upload validation
+validateOptions.push({
     attribute: "accept", // Use the 'accept' attribute to define acceptable file types
     isValid: (input) => {
         if (input.type !== "file") return true; // Skip non-file inputs
@@ -173,9 +139,9 @@ const validateOptions = [
         const allowedTypes = input.accept.split(",").join(", ");
         return `Please upload a valid file of type: ${allowedTypes}`;
     },
-}); */
+});
 
-/* validateOptions.push({
+validateOptions.push({
     attribute: "maxsize", // Custom attribute for maximum file size
     isValid: (input) => {
         if (input.type !== "file") return true; // Skip non-file inputs
@@ -190,15 +156,11 @@ const validateOptions = [
             1024 /
             1024
         ).toFixed(2)} MB`,
-}); */
+});
 validateOptions.push({
     attribute: "required",
     isValid: (input) => {
-        // For file inputs, always return true if not required
-        if (input.type === "file" && !input.hasAttribute("required")) {
-            return true;
-        }
-        // For file inputs that are required
+        // Check if it's a file input and whether it's required
         if (input.type === "file" && input.hasAttribute("required")) {
             return input.files.length > 0;
         }
@@ -207,47 +169,6 @@ validateOptions.push({
     },
     errorMessage: (input) => `${input.name} is required`,
 });
-
-validateOptions.push({
-    attribute: "accept",
-    isValid: (input) => {
-        if (input.type !== "file") return true; // Skip non-file inputs
-        if (!input.files.length) return true; // Skip if no file selected
-        const file = input.files[0];
-        const allowedTypes = input.accept.split(",").map((type) => type.trim());
-        return allowedTypes.some((type) => {
-            if (type.startsWith(".")) {
-                // Check file extension
-                return file.name.toLowerCase().endsWith(type.toLowerCase());
-            }
-            // Check mime type
-            return file.type === type;
-        });
-    },
-    errorMessage: (input) => {
-        const allowedTypes = input.accept.split(",").join(", ");
-        return `Please upload a valid file of type: ${allowedTypes}`;
-    },
-});
-
-validateOptions.push({
-    attribute: "maxsize",
-    isValid: (input) => {
-        if (input.type !== "file") return true; // Skip non-file inputs
-        if (!input.files.length) return true; // Skip if no file selected
-        const file = input.files[0];
-        const maxSize = parseInt(input.getAttribute("maxsize"), 10);
-        return file.size <= maxSize;
-    },
-    errorMessage: (input) =>
-        `File size must not exceed ${(
-            parseInt(input.getAttribute("maxsize"), 10) /
-            1024 /
-            1024
-        ).toFixed(2)} MB`,
-});
-
-
 
 // Form data handling functions
 const captureFormData = (form) => {
@@ -356,18 +277,11 @@ const enhancedValidateForm = (formSelector) => {
                 const response = await fetch(formAction, {
                     method: "POST",
                     body: formData, // Send FormData directly
-                    // Don't set Content-Type header - browser will set it automatically with boundary
-                    // headers: {
-                    //     "Content-Type": "application/json", // This can be included if no images in the form
-                    // },
-                    // body: JSON.stringify(formDataObject), // This can be included if no images in the form
                 });
 
                 if (response.redirected) {
-                    window.location.href = response.url;
-                } else if (response.ok) {
                     alert("Profile updated successfully");
-                    window.location.href = "/doctorDashboard";
+                    window.location.href = "/adminDashboard";
                 } else {
                     const errorText = await response.text();
                     console.error("Server error response:", errorText);

@@ -329,47 +329,6 @@ a:hover, a:focus, a:active {
   margin: 2rem;
 }
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-html {
-  font-size: 62.5%;
-}
-@media (max-width: 1900px) {
-  html {
-    font-size: 58%;
-  }
-}
-@media (max-width: 1200px) {
-  html {
-    font-size: 56.25%;
-  }
-}
-@media (max-width: 900px) {
-  html {
-    font-size: 50%;
-  }
-}
-@media (max-width: 600px) {
-  html {
-    font-size: 35%;
-  }
-}
-
-body {
-  font-family: "SUSE", sans-serif;
-  font-weight: 400;
-  font-size: 2rem;
-  line-height: 1.7;
-  color: rgb(73, 11, 61);
-}
-
 .container__body {
   background-image: -webkit-gradient(linear, left bottom, left top, from(#fbc2eb), to(#a6c1ee));
   background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
@@ -401,7 +360,7 @@ body {
   text-align: center;
   margin-bottom: -2rem;
 }
-@media (max-width: 1900px) {
+@media (max-width: 1920px) {
   .form {
     min-width: 45vw;
   }

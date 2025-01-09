@@ -133,7 +133,6 @@ const validateForm = (formSelector) => {
                 alert(result.message);
                 window.location.href = "http://localhost:3300/patientDashboard";
 
-                // redirect to the dashboard page
             } else {
                 if (result.error.includes("email")) {
                     const emailError = document

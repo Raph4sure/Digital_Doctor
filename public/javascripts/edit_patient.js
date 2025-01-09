@@ -31,36 +31,7 @@ const validateSingleFormGroup = (formGroup) => {
         }
     }
 
-    /*     // Image upload validation
-    if (input.type === "file") {
-        // Specific validation for file inputs
-        const file = input.files[0];
-        if (!file) {
-            errorContainer.textContent = `${input.name} is required`;
-            formGroupError = true;
-        } else {
-            validateOptions.forEach((option) => {
-                if (
-                    input.hasAttribute(option.attribute) &&
-                    !option.isValid(input)
-                ) {
-                    errorContainer.textContent = option.errorMessage(input);
-                    formGroupError = true;
-                }
-            });
-        }
-    } else {
-        // Existing validation logic
-        validateOptions.forEach((option) => {
-            if (
-                input.hasAttribute(option.attribute) &&
-                !option.isValid(input)
-            ) {
-                errorContainer.textContent = option.errorMessage(input);
-                formGroupError = true;
-            }
-        });
-    } */
+    
 
     validateOptions.forEach((option) => {
         if (input.hasAttribute(option.attribute) && !option.isValid(input)) {
@@ -69,13 +40,6 @@ const validateSingleFormGroup = (formGroup) => {
         }
     });
 
-    // Loop through validation options
-    /*     validateOptions.forEach((option) => {
-        if (input.hasAttribute(option.attribute) && !option.isValid(input)) {
-            errorContainer.textContent = option.errorMessage(input);
-            formGroupError = true;
-        }
-    }); */
 
     // Toggle error/success state
     if (formGroupError) {
@@ -121,11 +85,7 @@ const validateOptions = [
         errorMessage: (input) =>
             `${input.name} should match the required format`,
     },
-    // {
-    //     attribute: "minage",
-    //     isValid: (input) => input.value >= 18 && input.value <= 100,
-    //     errorMessage: () => "Age must be between 18 and 100",
-    // },
+   
     {
         attribute: "match",
         isValid: (input) => {
@@ -157,49 +117,6 @@ const validateOptions = [
     },
 ];
 
-/* validateOptions.push({
-    attribute: "accept", // Use the 'accept' attribute to define acceptable file types
-    isValid: (input) => {
-        if (input.type !== "file") return true; // Skip non-file inputs
-        const file = input.files[0];
-        if (!file) return false; // No file selected
-        const allowedTypes = input.accept.split(",").map((type) => type.trim());
-        return allowedTypes.includes(file.type);
-    },
-    errorMessage: (input) => {
-        const allowedTypes = input.accept.split(",").join(", ");
-        return `Please upload a valid file of type: ${allowedTypes}`;
-    },
-}); */
-
-/* validateOptions.push({
-    attribute: "maxsize", // Custom attribute for maximum file size
-    isValid: (input) => {
-        if (input.type !== "file") return true; // Skip non-file inputs
-        const file = input.files[0];
-        if (!file) return false; // No file selected
-        const maxSize = parseInt(input.getAttribute("maxsize"), 10);
-        return file.size <= maxSize;
-    },
-    errorMessage: (input) =>
-        `File size must not exceed ${(
-            parseInt(input.getAttribute("maxsize"), 10) /
-            1024 /
-            1024
-        ).toFixed(2)} MB`,
-}); */
-validateOptions.push({
-    attribute: "required",
-    isValid: (input) => {
-        // Check if it's a file input and whether it's required
-        if (input.type === "file" && input.hasAttribute("required")) {
-            return input.files.length > 0;
-        }
-        // For non-file inputs, proceed with the usual required check
-        return input.value.trim() !== "";
-    },
-    errorMessage: (input) => `${input.name} is required`,
-});
 
 // Form data handling functions
 const captureFormData = (form) => {
@@ -332,7 +249,7 @@ const enhancedValidateForm = (formSelector) => {
 
                 // Log the response for debugging
                 const responseData = await response.json();
-                console.log("Server response:", responseData);
+                // console.log("Server response:", responseData);
 
                 if (response.ok) {
                     alert("Profile Editted Successfully");

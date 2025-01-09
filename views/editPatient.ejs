@@ -3,19 +3,6 @@
 
 <body>
   <section class="complete_body">
-    <!-- <main class="main_left">
-      <div class="main_left-text">
-        <h1 class="main_left-text-h1">Digital patient</h1>
-        <p class="main_left-text-p">
-          Your seamless connection to trusted healthcare <br />
-          with professional patients, <br />
-          anytime, anywhere
-        </p>
-      </div>
-    </main> -->
-
-
-
     <main class="container">
       <section class="container__body">
         <form action="/editPatient/<%= patient.id %>" method="POST" class="form" id="registrationForm">
@@ -24,7 +11,6 @@
               Edit Your Profile
             </h2>
           </div>
-
           <div class="form__group form_val">
             <label class="form__label form__label-anim" for="first_name">First Name</label>
             <input type="text" class="form__input form__input-anim" id="first_name" placeholder="First Name" name="first_name" value="<%= patient.first_name  || ''  %>" first_name required minlength="3" custommaxlength="30" />
@@ -48,17 +34,6 @@
             <div class="error"></div>
           </div>
 
-          <!-- <div class="form__group form_val">
-            <label class="form__label form__label-anim" for="email">Email Address</label>
-            <input type="email" class="form__input form__input-anim" id="email" name="email" value="<%= patient.email || ''  %>" placeholder="Email Address" required minlength="5" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
-            <span class="error-icon hidden">
-              <i class="fa-solid fa-circle-exclamation"></i>
-            </span>
-            <span class="success-icon hidden">
-              <i class="fa-solid fa-circle-check"></i>
-            </span>
-            <div class="error"></div>
-          </div> -->
           <div class="form__group form_val">
             <label class="form__label form__label-anim" for="age">Phone</label>
             <input type="number" class="form__input form__input-anim" id="phone_no" placeholder="phone" name="phone" value="<%= patient.phone || ''  %>" required minlength="8" />

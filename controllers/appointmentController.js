@@ -1,25 +1,8 @@
 // requiring bcrypt
-const bcrypt = require("bcrypt");
-// requiring database
 const db = require("./../database");
-
-// const { router } = require("../app");
-const express = require("express");
-
 const fs = require("fs");
 const path = require("path");
-
-const uploadFiles = require("../middleware/upload");
-
-const { requireLogin } = require("../middleware/authMiddleware");
-
-const multer = require("multer");
-
-// const upload = require("../middleware/upload");
-
 const { sendEmail } = require("./../middleware/email");
-
-const router = express.Router();
 
 // Booking An Appointment
 exports.getBookAppointment = async (req, res) => {
@@ -35,8 +18,6 @@ exports.getBookAppointment = async (req, res) => {
         }
 
         const patientData = rows[0]; // Get the patient details
-
-        // console.log("Gender from Patient Data:", patientData.date_of_birth);
 
         // Fetch the list of doctors from the Doctors table
         const [doctorRows] = await db.query(
@@ -63,8 +44,8 @@ exports.getBookAppointment = async (req, res) => {
     }
 };
 
+// route to post an Appointment
 exports.postBookAppointment = async (req, res) => {
-    console.log(req.body, req.files); // Log the request body and files for debugging
     try {
         // Extract fields from the request body
         const {
@@ -160,7 +141,6 @@ exports.postBookAppointment = async (req, res) => {
                 date: appointment_date,
                 time: appointment_time,
             }
-            // console.log(doctor.email)
         ).catch((err) =>
             console.error(
                 "Error sending doctor email:",
@@ -175,6 +155,7 @@ exports.postBookAppointment = async (req, res) => {
     }
 };
 
+// route to show patient Appointment
 exports.showPatientAppointment = async (req, res) => {
     try {
         const patientId = req.session.patientId;
@@ -205,9 +186,6 @@ exports.showPatientAppointment = async (req, res) => {
             }
         });
 
-        // console.log(appointments.medical_images);
-        // console.log(appointments.appointment_date);
-
         res.render("showPatientAppointment", {
             appointments,
             patient: patientId,
@@ -224,6 +202,7 @@ exports.showPatientAppointment = async (req, res) => {
     }
 };
 
+// route to show patient Appointment
 exports.showDoctorAppointment = async (req, res) => {
     try {
         doctorId = req.session.user.id;
@@ -260,6 +239,7 @@ exports.showDoctorAppointment = async (req, res) => {
     }
 };
 
+// route to Show All Appointment
 exports.showAllAppointment = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1; // Default to page 1
@@ -343,7 +323,6 @@ exports.getEditAppointment = async (req, res) => {
             }
         });
 
-        // console.log(appointments.medical_images);
 
         res.render("editAppointment", {
             appointment: appointments[0],
@@ -361,6 +340,7 @@ exports.getEditAppointment = async (req, res) => {
     }
 };
 
+// Route to edit Appointment
 exports.postEditAppointment = async (req, res) => {
     try {
         const appointmentId = req.params.id;
@@ -420,10 +400,6 @@ exports.postEditAppointment = async (req, res) => {
 
         return res.redirect(redirectPath);
 
-        console.log("user role: ", req.session.user.role);
-
-        // res.redirect("/showAllAppointment");
-
         // res.status(200).send("Appointment Upadated Successfuly");
     } catch (error) {
         // res.status(500).send("Error Updating Appointment");
@@ -432,7 +408,6 @@ exports.postEditAppointment = async (req, res) => {
 };
 
 // Route for deleting an Image in Appointment table
-
 exports.deleteImage = async (req, res) => {
     try {
         const { imagePath } = req.body;
@@ -463,7 +438,8 @@ exports.deleteImage = async (req, res) => {
 exports.deleteAppointmentById = async (req, res) => {
     const { role } = req.session.user.role;
 
-    console.log(req.method);
+    // console.log(req.method);
+
     try {
         const appointmentId = req.params.id;
         const query = "DELETE FROM Appointments WHERE id = ?";
@@ -481,7 +457,6 @@ exports.deleteAppointmentById = async (req, res) => {
 
         return res.redirect(redirectPath);
 
-        // res.redirect("/showAppointment");
         // res.status(200).json({ message: "Appointment deletedsuccessfully" });
     } catch (error) {
         console.error(error);

@@ -3,9 +3,6 @@
 
 <body class="container">
 
-
-  <!--  -->
-
   <main class="container2">
     <section class="top__container2">
       <h3 class="top__container2-h2">Welcome, Dr <%= `${doctor.first_name + " " + doctor.last_name}` %></h3>
@@ -16,9 +13,9 @@
       <h4 class="side__bar-h4">My Portal</h4>
       <ul class="side__bar-ul">
         <li class="side__bar-li"><a class="side__bar-a" href="">Dashboard</a></li>
-        <!-- <li class="side__bar-li"><a class="side__bar-a" href="/editDoctor/<%= doctor.id %>">Edit Profile</a></li> -->
+
         <li class="side__bar-li"><a class="side__bar-a" href="/showDoctorAppointment">Appointment</a></li>
-        <!-- <li class="side__bar-li"><a class="side__bar-a" href="">Report</a></li> -->
+
         <form action="/logout" method="POST">
           <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
         </form>
@@ -37,7 +34,7 @@
       </p>
     </section>
   </main>
-  <!--  -->
+
   <%- include('partials/footer') %>
 
 </body>

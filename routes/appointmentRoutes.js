@@ -1,33 +1,14 @@
 // const { router } = require("../app");
 const express = require("express");
 const router = express.Router();
-const db = require("../database");
-
-const fs = require("fs");
-const path = require("path");
-
 const uploadFiles = require("../middleware/upload");
-
 const { requireLogin } = require("../middleware/authMiddleware");
-
 const appointmentController = require("../controllers/appointmentController");
-
-// const authJwt = require("./../middleware/authJwt");
-
-// router.get("/consultation", (req, res) => {
-//     res.render("Consultation", {
-//         pageTitle: "Consultation",
-//         cssPath: "/css/Consultation.css",
-//         message: "Welcome to the consultation page",
-//     });
-// });
-
-// router.use(requireLogin);
 
 // Route to handle booking appointment
 router
     .route("/bookAppointment")
-    // .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
+    .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
     .get(appointmentController.getBookAppointment)
     .post(
         uploadFiles("medical_images", 5),
@@ -48,13 +29,13 @@ router.get(
 
 router.get(
     "/showAllAppointment",
-    // requireLogin(["Admin", "Super Admin"]),
+    requireLogin(["Admin", "Super Admin"]),
     appointmentController.showAllAppointment
 );
 
 router
     .route("/editAppointment/:id")
-    // .all(requireLogin(["Admin", "Super Admin", "patient"]))
+    .all(requireLogin(["Admin", "Super Admin", "patient", "doctor"]))
     .get(appointmentController.getEditAppointment)
     .post(
         uploadFiles("medical_images", 5),

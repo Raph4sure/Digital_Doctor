@@ -1,34 +1,16 @@
 @import "main";
 
-
 .complete_body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-      background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
-      padding-top: 10rem;
+    background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+    padding-top: 10rem;
 }
 
-// .main_left {
-//     // flex-basis: 0 0 40;
-
-//     // &-img {
-//     //     // height: 100rem;
-
-//     // }
-// }
-
-// .container {
-  
-// }
 
 .container__body {
-  
- 
-
-
-
     &-p {
         text-align: center;
         margin-top: 2rem;

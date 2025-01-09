@@ -337,11 +337,6 @@ a:hover, a:focus, a:active {
   background-attachment: fixed;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
-  /* grid-template-columns: repeat(5,auto); */
-  /* font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal; */
 }
 
 .main {

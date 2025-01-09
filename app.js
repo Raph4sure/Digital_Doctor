@@ -1,4 +1,3 @@
-// Requiring and importing config.env file
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 // Importing others
@@ -16,28 +15,20 @@ const patientRouter = require("./routes/patientRoutes");
 const doctorRouter = require("./routes/doctorRoutes");
 const appointmentRouter = require("./routes/appointmentRoutes");
 const adminRouter = require("./routes/adminRoutes");
-
-
+// Importing database.js
+const db = require("./database");
 
 const cors = require("cors");
 const methodOverride = require("method-override");
 
-// const crypto = require("crypto");
-// const secret = crypto.randomBytes(64).toString("hex");
-// console.log(secret);
-
-
-
-// Importing database.js
-const db = require("./database");
-
-// Parse application/x-www-form-urlencoded
+/* const crypto = require("crypto");
+const secret = crypto.randomBytes(64).toString("hex");
+console.log(secret); */
 
 const app = express();
 app.use(cors()); // Use CORS to allow requests from any origin
 
 // to view images in the browser
-// app.use("/uploads", express.static("uploads"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // view engine setup
@@ -69,15 +60,17 @@ app.use(
 app.use(methodOverride("_method"));
 
 app.use((req, res, next) => {
-    console.log(`Incoming request: ${req.method} ${req.url}`);
+    console.log(
+        `Incoming request: ${req.method} ${req.url}`
+    );
     next();
 });
 
-// Using Patient router
-// app.use("/api/patients", patientRouter);
-// app.use("/api/doctors", doctorRouter);
-// app.use("/api/appointment", appointmentRouter);
-// app.use("/api/admin", adminRouter);
+// Api route
+/* app.use("/api/patients", patientRouter);
+app.use("/api/doctors", doctorRouter);
+app.use("/api/appointment", appointmentRouter);
+app.use("/api/admin", adminRouter);*/
 
 // Use the static routes
 app.use("/", commonRouter);
@@ -93,7 +86,7 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
+    // setting locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
 
@@ -101,7 +94,6 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render("error");
 });
-
 
 // connecting to the database and starting the server
 db.getConnection()

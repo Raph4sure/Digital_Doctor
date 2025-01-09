@@ -1,23 +1,9 @@
 // requiring bcrypt
 const bcrypt = require("bcrypt");
-// requiring database
 const db = require("./../database");
 
-// const { router } = require("../app");
-const express = require("express");
-const router = express.Router();
-
-const fs = require("fs");
-const path = require("path");
-
-const uploadFiles = require("../middleware/upload");
-
-const { requireLogin } = require("../middleware/authMiddleware");
-
-// const adminController = require("../controllers/adminController");
-
+// Route to register patient
 exports.registerPatient = async (req, res) => {
-    // console.log("Request Body:", req.body); // Debugging
     const {
         first_name,
         last_name,
@@ -71,6 +57,7 @@ exports.registerPatient = async (req, res) => {
     }
 };
 
+// Route for patient login
 exports.loginPatient = async (req, res) => {
     const { email, password } = req.body;
 
@@ -86,7 +73,7 @@ exports.loginPatient = async (req, res) => {
         }
 
         const patient = rows[0];
-        // console.log("Patient Information:", patient);
+
         // comparing entered password with the hashed password in the database
         const passwordMatch = await bcrypt.compare(
             password,
@@ -102,8 +89,7 @@ exports.loginPatient = async (req, res) => {
             id: patient.id,
             role: ["patient"],
         };
-        console.log("login User:", req.session.user.role);
-        console.log("Patient id: ", req.session.patientId);
+       
 
         res.json({ message: "Login Successful", patientId: patient.id });
     } catch (error) {
@@ -111,22 +97,6 @@ exports.loginPatient = async (req, res) => {
     }
 };
 
-// Logout route
-/* exports.logoutPatient = (req, res) => {
-    if (req.session) {
-        req.session.destroy((err) => {
-            if (err) {
-                return res.status(500).json({ error: "Failed to logout" });
-            } else {
-                return res.redirect("/");
-
-                // res.json({ message: "Logout successful" });
-            }
-        });
-    } else {
-        res.status(400).json({ error: "No active session to logout" });
-    }
-}; */
 
 // Patient Dashboard
 exports.patientDashboard = async (req, res) => {
@@ -160,9 +130,9 @@ exports.patientDashboard = async (req, res) => {
 // Show All Patient
 exports.showAllPatient = async (req, res) => {
     try {
-        // Get the page and limit from query parameters, set defaults if not provided
+        // Getting the page and limit from query parameters, setting defaults if not provided
         const page = parseInt(req.query.page) || 1; // Default to page 1
-        const limit = parseInt(req.query.limit) || 5; // Default to 10 items per page
+        const limit = parseInt(req.query.limit) || 5; // Default to 5 items per page
         const offset = (page - 1) * limit;
 
         // Query the total number of patients for pagination metadata
@@ -192,11 +162,9 @@ exports.showAllPatient = async (req, res) => {
             totalPages,
             totalPatients,
             limit,
-            // admin,
             userRole: req.session.user.role,
             cssPath: "/css/showAllPatient.css",
             pageTitle: "Show All Patient",
-
             user: req.session.user,
         });
     } catch (error) {
@@ -263,12 +231,10 @@ exports.getEditPatient = async (req, res) => {
 exports.getPostPatient = async (req, res) => {
     try {
         const patientId = req.params.id;
-        // console.log(req.body);
 
         const { first_name, last_name, phone, date_of_birth, gender, address } =
             req.body;
 
-        // console.log(req.body);
 
         const query = `UPDATE Patients SET first_name = ?, last_name = ?, phone = ?, date_of_birth = ?, gender = ?, address = ? WHERE id = ?`;
 
@@ -281,12 +247,9 @@ exports.getPostPatient = async (req, res) => {
             address,
             patientId,
         ]);
-        // alert("Upadate Successful")
-        // console.log("Successful");
-        // console.log(req.body);
+     
         res.status(200).json({ message: "Update Successful" });
 
-        // res.redirect("/patientDashboard");
     } catch (error) {
         res.status(500).json("Error Updating Patient " + error.message);
     }
