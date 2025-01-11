@@ -230,7 +230,7 @@ exports.showDoctorAppointment = async (req, res) => {
         res.render("showDoctorAppointment", {
             appointments,
             pageTitle: "Show All Doctors",
-            cssPath: "/css/showAppointment.css",
+            cssPath: "/css/showDocotorAppointment.css",
             user: req.session.user,
         });
     } catch (error) {

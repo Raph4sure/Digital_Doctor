@@ -1,5 +1,5 @@
 // requiring bcrypt
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const db = require("../database");
 const fs = require("fs");
 const path = require("path");

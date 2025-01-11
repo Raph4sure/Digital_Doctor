@@ -14,11 +14,26 @@
 
 @import "partials/otherSidebar";
 
+
+.side__bar{
+   min-height: 75vh;
+
+}
+
 .body {
     grid-column: 2/-1;
     grid-row: 3/6;
     padding-left: 2rem;
     margin-bottom: 30rem;
+    margin-top: -8rem;
+
+      @include responsive(big-desktop) {
+        margin-top: -2rem;
+    }
+
+    @include responsive(tab-port) {
+        margin-top: -16rem;
+    }
 
     &-text {
         margin-top: 2rem;

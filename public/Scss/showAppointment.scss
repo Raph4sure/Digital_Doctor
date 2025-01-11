@@ -17,6 +17,12 @@
 
 @import "partials/otherSidebar";
 
+.side__bar{
+    @include responsive(tab-port){
+        min-height: 75vh;
+    }
+}
+
 .body {
     grid-column: 2/-1;
     grid-row: 3/6;
@@ -25,6 +31,9 @@
     margin-right: 3rem;
     overflow-x: auto;
     display: block;
+      @include responsive(tab-port){
+        margin-top: -85rem;
+    }
 
     &-text {
         margin-top: 2rem;

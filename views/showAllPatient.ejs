@@ -39,7 +39,7 @@
             <a class="link" href="/editPatient/<%= patient.id %>">Edit</a>
             <form action="/deletePatient/<%= patient.id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete(event)">
               <!-- <input type="hidden" name="method" value="DELETE"> -->
-              <button type="submit" style="background:none; border:none; color:blue; text-decoration:none; cursor:pointer; font-size:24px">Delete</button>
+              <button type="submit" class="table-button2">Delete</button>
             </form>
           </td>
         </tr>

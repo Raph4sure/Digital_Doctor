@@ -6,7 +6,7 @@
   <main class="container2">
     <section class="top__container2">
       <h3 class="top__container2-h2">Welcome, Dr <%= `${doctor.first_name + " " + doctor.last_name}` %></h3>
-      <p class="top__container2-p">Your health, our priority</p>
+      <!-- <p class="top__container2-p">Your health, our priority</p> -->
     </section>
 
     <section class="side__bar">
@@ -17,7 +17,7 @@
         <li class="side__bar-li"><a class="side__bar-a" href="/showDoctorAppointment">Appointment</a></li>
 
         <form action="/logout" method="POST">
-          <button type="submit" style="background:none; border:none; text-decoration:none; cursor:pointer; font-size:22px;" class="side__bar-a">Logout</button>
+          <button type="submit" class="side__bar-a">Logout</button>
         </form>
       </ul>
     </section>

@@ -11,6 +11,7 @@ html {
 
     @include responsive(big-desktop) {
         font-size: 58%; // 1rem = 12px
+        
     }
     @include responsive(tab-land) {
         font-size: 56.25%; // 1rem = 9px
@@ -29,7 +30,10 @@ body {
     font-size: 2.5rem;
     line-height: 1.7;
     color: $body-color;
+    // max-width: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
+
 }
 
 a {

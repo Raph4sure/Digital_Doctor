@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["../../Scss/partials/otherSidebar.scss","../../Scss/partials/_variables.scss"],"names":[],"mappings":"AAGA;EACI;EACA;EACA,kBCCW;EDAX;EACA;;AAEA;EACI;EACA;;;AAIR;EACI;EACA;EACA,kBCfS;EDgBT;EACA;;AAQA;EACI;EACA,OC1BK;ED2BL;;AAGJ;EACI;EACA;EACA;;AAGJ;EACI,OCjCY;EDkCZ;EACA;EACA;EACA;EACA;;AAEA;EACI,OC5CI;ED6CJ","file":"otherSidebar.css"}

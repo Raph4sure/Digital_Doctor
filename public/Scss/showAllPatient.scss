@@ -49,6 +49,18 @@
         .link {
             color: $link-hover;
         }
+        &-button2 {
+            background: none;
+            border: none;
+            color: blue;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 2.5rem;
+            &:hover{
+                color: $button-color;
+                text-decoration: underline;
+            }
+        }
     }
 }
 

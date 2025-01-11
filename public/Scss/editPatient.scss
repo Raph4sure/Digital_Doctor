@@ -38,6 +38,7 @@
 .form {
     border-radius: 7rem;
     margin-bottom: 9rem;
+    margin-top: 6rem;
 
     &__h2 {
         text-align: center;
@@ -55,13 +56,13 @@
         min-width: 50vw;
     }
     @include responsive(tab-port) {
-        background-color: transparent;
+        // background-color: transparent;
 
         min-width: 70vw;
     }
     @include responsive(phone) {
-        background-color: transparent;
-        min-width: 90vw;
+        // background-color: transparent;
+        min-width: 80vw;
     }
 
     &__group:not(:last-child) {

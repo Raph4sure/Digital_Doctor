@@ -1,0 +1,108 @@
+@import "main";
+
+%table-line {
+    padding: 10px;
+    border: 2px solid black;
+    text-align: center;
+    color: black;
+}
+
+// start
+.container2 {
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    grid-template-rows: repeat(8, auto);
+    min-height: 70vh;
+}
+
+@import "partials/otherSidebar";
+
+.side__bar {
+    @include responsive(tab-port) {
+        min-height: 75vh;
+    }
+}
+
+.body {
+    grid-column: 2/-1;
+    grid-row: 3/6;
+    padding-left: 2rem;
+    margin-bottom: 30rem;
+    margin-right: 3rem;
+    overflow-x: auto;
+    display: block;
+    @include responsive(tab-port) {
+        margin-top: -10rem;
+    }
+
+    &-text {
+        margin-top: 2rem;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+
+        th {
+            @extend %table-line;
+            background-color: $footer-color;
+            color: $body-color;
+        }
+
+        td {
+            @extend %table-line;
+            font-weight: 550;
+        }
+        .link {
+            color: $link-hover;
+        }
+    }
+}
+
+hr {
+    border: 2px solid $body-color; /* Black solid line */
+    width: 95%; /* Line width */
+    margin: 20px auto; /* Center the line */
+}
+
+// end
+
+.div__style {
+    grid-column: 2/-1;
+    grid-row: 6/-1;
+    justify-self: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    &-button {
+        text-decoration: none;
+        margin-top: 4rem;
+        border-radius: 3.5rem 0 3.5rem 0;
+        background-color: $link-hover;
+        padding: 0.5rem 1rem;
+        color: $button-text-color;
+        text-align: center;
+
+        &:hover {
+            background-color: $button-color;
+            color: $button-text-color;
+            text-decoration: none !important;
+        }
+    }
+}
+
+.side__bar-b {
+    color: $link-hover;
+    background: none;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 2.7rem;
+
+    &:hover {
+        color: $button-color;
+        text-decoration: underline;
+    }
+}

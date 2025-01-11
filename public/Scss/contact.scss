@@ -47,14 +47,19 @@
         grid-template-columns: repeat(3 1fr);
         gap: -5rem;
         justify-content: space-between;
+        @include responsive(tab-port) {
+            gap: 4rem;
+            margin-left: -7rem;
+        }
 
-        @media (max-width: 600px) {
+        @include responsive(phone) {
             display: grid;
             grid-template-rows: repeat(3 1fr);
             grid-template-columns: repeat(1 1fr);
             gap: 3rem;
             align-self: center;
             padding: 0 0 0 0px;
+            margin-left: -5rem;
         }
 
         &-card1 {
@@ -64,7 +69,6 @@
                 grid-column: 1/-1;
                 grid-row: 1/2;
             }
-         
         }
         &-card2 {
             grid-column: 2/3;
@@ -73,7 +77,6 @@
                 grid-column: 1/-1;
                 grid-row: 2/3;
             }
-         
         }
         &-card3 {
             grid-column: 3/4;
@@ -82,7 +85,6 @@
                 grid-column: 1/-1;
                 grid-row: 3/4;
             }
-       
         }
     }
 }
@@ -98,7 +100,6 @@
     max-width: 35rem;
     min-width: 35rem;
     font-size: 17px;
-    // color: red;
 
     &:hover {
         box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.651);
@@ -112,16 +113,15 @@
         margin-bottom: 25px;
     }
 
-    @media (max-width: 900px) {
-        max-width: 27.3rem;
-        min-width: 27.3rem;
+    @include responsive(tab-port) {
+        max-width: 30rem;
+        min-width: 30rem;
         margin-bottom: 25px;
-        gap: 2rem;
     }
 
     @media (max-width: 600px) {
-        max-width: 72rem;
-        min-width: 72rem;
+        max-width: 60rem;
+        min-width: 60rem;
         font-size: 17px;
     }
 
@@ -149,16 +149,27 @@
     width: 100px;
 }
 
-.message__div {
+.message {
     margin-top: 10rem;
+    margin-bottom: 10rem;
+    display: grid;
+    justify-items: center;
+}
+
+.message__div {
+    margin-bottom: 5rem;
+    text-align: center;
+    font-size: 3rem;
 }
 
 .form {
     background-color: #f5f4f8;
-    padding: 5rem;
-    min-width: 35vw;
+    padding-left: 9rem;
+    width: 60vw;
     display: flex;
     flex-direction: column;
+    padding-top: 7rem;
+    border-radius: 7rem;
     @include responsive(big-desktop) {
         min-width: 45vw;
     }
@@ -187,7 +198,7 @@
         background-color: rgba(255, 255, 255, 0.5);
         border: none;
         border-bottom: 2px solid black;
-        width: 70%;
+        width: 90%;
         transition: all 0.3s;
 
         &-message {
@@ -245,9 +256,9 @@
         justify-content: center;
         align-self: center;
         cursor: pointer;
-        // margin-right: 10rem;
-        margin-left: -50rem;
+        margin-left: -13rem;
         margin-top: 3rem;
+        margin-bottom: 5rem;
     }
 }
 

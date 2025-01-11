@@ -9,14 +9,24 @@
 
 @include responsive(tab-port) {
     .nav {
-        height: 30%;
-        width: 30vw;
+        height: 63rem;
+        // height: 42%;
+        // width: 35vw;
+        width: 35rem;
         position: absolute;
         background-color: $footer-color;
         transition: all 0.5s;
-        transform: translateX(30vw);
+        transform: translateX(40vw);
         z-index: 2;
         right: 0;
+        @include responsive(phone) {
+            // height: 45%;
+            // width: 45vw;
+            height: 70rem;
+            // width: 35rem;
+            // transform: translateX(45vw);
+            transform: translateX(50vw);
+        }
 
         &__div {
             display: flex;
@@ -26,6 +36,9 @@
             &_li {
                 color: $button-text-color;
                 text-decoration: none;
+                @include responsive(tab-port) {
+                    font-size: 3.5rem !important;
+                }
             }
             &_li:hover {
                 color: $link-hover;
@@ -45,13 +58,16 @@
         position: absolute;
         height: 30px;
         width: 30px;
-        top: 20px;
+        top: 2.6rem;
         right: 15px;
         z-index: 3;
         cursor: pointer;
         border-radius: 2px;
         background-color: $button-text-color;
         box-shadow: 0 0 10px $shadow-box-color;
+        @include responsive(phone){
+            top: 1rem;
+        }
 
         .common {
             position: absolute;
@@ -109,11 +125,12 @@
         color: $body-color;
         font-size: 5rem;
         font-weight: 800;
-        margin-right: 05rem;
+        margin-right: 5rem;
         padding-right: -20rem;
         padding: 10px 0;
         padding-right: 30px;
         pointer-events: none;
+        margin-bottom: -1.5rem;
     }
 
     a.nav__div_li {
