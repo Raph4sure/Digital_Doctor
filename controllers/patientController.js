@@ -82,21 +82,34 @@ exports.loginPatient = async (req, res) => {
         if (!passwordMatch) {
             return res.status(400).json({ error: "Invalid email or password" });
         }
+
+
+        const time = new Date().getHours();
+
+        let greet;
+
+        if (time < 12) {
+            greet = "Good Morning";
+        } else if (time < 16) {
+            greet = "Good Afternoon";
+        } else {
+            greet = "Good Evening";
+        }
+
         // If password matches, create a session
         req.session.patientId = patient.id;
         req.session.isLoggedIn = true;
         req.session.user = {
             id: patient.id,
             role: ["patient"],
+            greet,
         };
-       
 
         res.json({ message: "Login Successful", patientId: patient.id });
     } catch (error) {
         res.status(500).json({ error: "Login failed: " + error.message });
     }
 };
-
 
 // Patient Dashboard
 exports.patientDashboard = async (req, res) => {
@@ -120,6 +133,7 @@ exports.patientDashboard = async (req, res) => {
             pageTitle: "Patient Dashboard",
             cssPath: "/css/patientDashboard.css",
             user: req.session.user,
+            greet: req.session.user.greet,
         });
     } catch (error) {
         console.error("Error fetching patient data:", error.message);
@@ -228,7 +242,7 @@ exports.getEditPatient = async (req, res) => {
 };
 
 // posting edited patient profile
-exports.getPostPatient = async (req, res) => {
+/* exports.getPostPatient = async (req, res) => {
     try {
         const patientId = req.params.id;
 
@@ -252,5 +266,59 @@ exports.getPostPatient = async (req, res) => {
 
     } catch (error) {
         res.status(500).json("Error Updating Patient " + error.message);
+    }
+}; */
+
+// Controller
+exports.updatePatient = async (req, res) => {
+    try {
+        const patientId = req.params.id;
+        const allowedFields = [
+            "first_name",
+            "last_name",
+            "phone",
+            "date_of_birth",
+            "gender",
+            "address",
+        ];
+
+        // Filter out undefined fields from request body
+        const updates = {};
+        Object.keys(req.body).forEach((key) => {
+            if (allowedFields.includes(key) && req.body[key] !== undefined) {
+                updates[key] = req.body[key];
+            }
+        });
+
+        if (Object.keys(updates).length === 0) {
+            return res
+                .status(400)
+                .json({ message: "No valid fields to update" });
+        }
+
+        // Dynamically build UPDATE query based on provided fields
+        const setClause = Object.keys(updates)
+            .map((key) => `${key} = ?`)
+            .join(", ");
+        const query = `UPDATE Patients SET ${setClause} WHERE id = ?`;
+        const values = [...Object.values(updates), patientId];
+
+        const [result] = await db.query(query, values);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Patient not found" });
+        }
+
+        console.log(updates);
+
+        res.status(200).json({
+            message: "Patient updated successfully",
+            updatedFields: updates,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error updating patient",
+            error: error.message,
+        });
     }
 };

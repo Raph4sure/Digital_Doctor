@@ -56,6 +56,6 @@ router
     .route("/editPatient/:id")
     .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
     .get(patientController.getEditPatient)
-    .post(patientController.getPostPatient);
+    .patch(patientController.updatePatient);
 
 module.exports = router;

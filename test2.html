@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Digital Doctor's homepage offers intuitive access to online medical consultations, 24/7 healthcare, and certified professionals." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="./../public/css/appointmentConfirmation.css" /> -->
+  <title>Appointment Confirmation</title>
+</head>
+
+
+<style>
+  *,
+  *::after,
+  *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 62.5%;
+  }
+
+  body {
+    font-family: "SUSE", sans-serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1.7;
+    color: rgb(73, 11, 61);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+
+
+  a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+  }
+
+  a:hover,
+  a:focus,
+  a:active {
+    text-decoration: underline !important;
+    outline: none;
+    color: -rgb(6, 31, 252);
+  }
+
+  .heading {
+    background-color: rgb(156, 149, 185);
+    width: 100%;
+    text-align: center;
+    color: rgb(73, 11, 61);
+    font-size: 3rem;
+  }
+
+  .subheading {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    font-size: 3.5rem;
+  }
+
+  .content__div1-p {
+    margin-top: 2rem;
+    padding-left: 3rem;
+  }
+
+  .content__div2 {
+    text-align: center;
+    margin-top: 20rem;
+    margin-bottom: 1rem;
+    color: rgb(253, 5, 5);
+  }
+
+  .footer {
+    grid-column: 1/-1;
+    grid-row: 4/5;
+    background-color: rgb(156, 149, 185);
+    color: rgb(252, 247, 247);
+  }
+
+  .footer__div-p {
+    text-align: center;
+    color: rgb(0, 0, 0);
+  }
+
+  .footer__div-p-a {
+    color: rgb(253, 5, 5);
+    text-decoration: none;
+  }
+
+  .footer__div-p-a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+
+<body class="container">
+  <section class="headnav">
+    <header class="header">
+      <div class="header__div">
+        <img src="./../public/img/logo6.png" class="logo" alt="Digital Doctor" />
+      </div>
+    </header>
+  </section>
+
+
+  <section class="heading">
+    <div class="heading__div">
+      <div class="header__div">
+        <img src="./../public/img/logo6.png" class="logo" alt="Digital Doctor" />
+        <h2>Appointment Confirmation</h2>
+      </div>
+  </section>
+
+  <section class="subheading">
+    <div class="subheading__div">
+      <h4>
+        Dear <%= name %>, this is a confirmation email of a booked
+        appointment
+      </h4>
+    </div>
+  </section>
+
+
+  <section class="content">
+    <div class="content__div1">
+      <p class="content__div1-p">
+        An appointment have been scheduled with <%= doctorName %> which
+        will take place on <%= date %> at <%= time %>
+        <br>
+        Please contact him/her on whatsapp with this phone number <%= phone %> on whatsapp at the scheduled time
+        <br>Please make
+        yourself available at the scheduled time.
+      </p>
+    </div>
+    <div class="content__div2">
+      <p class="content__div2-p">
+        Thank you for choosing Digital Doctor Service
+      </p>
+    </div>
+
+  </section>
+
+
+  <footer class="footer">
+    <div class="footer__div">
+      <p class="footer__div-p"><a class="footer__div-p-a" href="#">Unsubscribe</a> from this mail</p>
+    </div>
+  </footer>
+</body>
+
+</html>
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Digital Doctor's homepage offers intuitive access to online medical consultations, 24/7 healthcare, and certified professionals." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="./../public/css/appointmentConfirmation.css" /> -->
+<title>Appointment Confirmation</title>
+</head>
+
+
+<body class="container" style="height: 100vh;width:100%;overflow-x: hidden;
+    overflow-y: auto;">
+  <section class="headnav">
+    <header class="header">
+      <div class="header__div">
+        <img src="./../public/img/logo6.png" class="logo" style="position:relative;top: 25px;background:white;z-index:2" alt="Digital Doctor" />
+      </div>
+    </header>
+  </section>
+
+
+  <section class="heading">
+    <div class="heading__div" style="color:rgb(73,11,61);background-color:rgb(156,149,185); text-align:center;font-family:SUSE, sans-serif;font-weight: 400;font-size: 2.0rem;position:relative;bottom:80px;">
+      <h2>Appointment Confirmation</h2>
+    </div>
+  </section>
+
+  <section class="subheading">
+    <div class="subheading__div" style="color:rgb(73,11,61);font-size: 2.0rem;font-family:SUSE, sans-serif;text-align:center;position:relative;bottom:30px;">
+      <h4>
+        Dear <%= name %>, this is a confirmation email of a booked
+        appointment
+      </h4>
+    </div>
+  </section>
+
+
+  <section class="content">
+    <div class="content__div1">
+      <p class="content__div1-p" style=" font-family:SUSE, sans-serif;font-weight: 400; font-size: 1.5rem;color:rgb(56, 45, 99);position:relative;bottom:35px;line-height:50px">
+        An appointment have been scheduled with <%= doctorName %> which
+        will take place on <%= date %> at <%= time %>
+        <br>
+        Please contact him/her on whatsapp with this phone number <%= phone %> on whatsapp at the scheduled time
+        <br>Please make
+        yourself available at the scheduled time.
+      </p>
+    </div>
+    <div class="content__div2">
+      <p class="content__div2-p" style=" text-align: center;font-family:SUSE,sans-serif;font-weight:400;
+    font-size:1.5rem;position:relative;top:90px;color: rgb(253, 5, 5);">Thank you for choosing Digital Doctor Service
+      </p>
+    </div>
+
+  </section>
+
+
+  <footer class="footer">
+    <div class="footer__div">
+
+
+
+
+      <p class="footer__div-p" style=" color:black;
+      font-family:SUSE,sans-serif;font-size:1.5rem;background-color:rgb(156,149,185);position:relative;top:90px;text-align:center;height:50px;width:100%;"> <span style="font-size:30px;margin-right:5px;color:rgb(253,5,5);">Unsuscribe</span>from this mail</p>
+
+
+
+
+    </div>
+  </footer>
+</body>
+<html> -->

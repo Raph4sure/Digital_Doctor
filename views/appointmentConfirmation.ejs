@@ -1,73 +1,262 @@
-
-
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta
-            name="description"
-            content="Digital Doctor's homepage offers intuitive access to online medical consultations, 24/7 healthcare, and certified professionals."
-        />
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap"
-            rel="stylesheet"
-        />
-        <link rel="stylesheet" href="./../public/css/appointmentConfirmation.css" />
-        <title>Appointment Confirmation</title>
-    </head>
-    <body class="container">
-        <section class="headnav">
-            <header class="header">
-                <div class="header__div">
-                    <img
-                        src="../img/logo6.png"
-                        class="logo"
-                        alt="Digital Doctor"
-                    />
-                </div>
-            </header>
-        </section>
-        <section class="heading">
-            <div class="heading__div">
-                <h2>Appointment Confirmation</h2>
-            </div>
-        </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Digital Doctor's homepage offers intuitive access to online medical consultations, 24/7 healthcare, and certified professionals." />
 
-        <section class="subheading">
-            <div class="subheading__div">
-                <h4>
-                    Dear <%= name %>, this is a confirmation email of a booked
-                    appointment
-                </h4>
-            </div>
-        </section>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet" />
+  <title>Appointment Confirmation</title>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .heading {
+      flex-shrink: 0;
+    }
+
+    .heading__div {
+      margin-top: 0.5rem;
+      display: grid;
+      grid-template-columns: 1fr 5fr;
+    }
+
+    .heading__div-logo {
+      background-color: white;
+      grid-column: 1/2;
+
+    }
+
+    .heading__div-h2 {
+      background-color: rgb(156, 149, 185);
+      color: rgb(73, 11, 61);
+      font-size: 3rem;
+      margin: 0;
+      padding-bottom: 0.4rem;
+      padding-top: 0.4rem;
+      grid-column: 2/3;
+      text-align: center;
+      padding-right: 5rem;
+    }
 
 
-        <section class="content">
-            <div class="content__div1">
-                <p class="content__div1-p">
-                    An appointment have been scheduled with <%= doctorName %> which
-                    will take place on <%= date %> at <%= time %> <br>Please make
-                    yourself available at the scheduled time.
-            </p>
-            </div>
-            <div class="content__div2">
-                <p class="content__div2-p">
-                   Thank you for choosing Digital Doctor Service
-            </p>
-            </div>
+    .subheading {
+      flex-shrink: 0;
+    }
 
-        </section>
-        
+    .subheading__div {
+      color: rgb(73, 11, 61);
+      font-size: 2rem;
+      font-family: SUSE, sans-serif;
+      text-align: center;
+      margin-bottom: -2rem;
+      padding: 0.5rem;
+    }
 
-        <footer class="footer">
-            <div class="footer__div">
-                <p class="footer__div-p"><a class="footer__div-p-a" href="#">Unsubscribe</a> from this mail</p>
-            </div>
-        </footer>
-    </body>
+    .content {
+      flex: 1;
+    }
+
+    .content__div1 p {
+      font-family: SUSE, sans-serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: rgb(56, 45, 99);
+      line-height: 3rem;
+      padding: 1rem;
+    }
+
+    .content__div2 p {
+      text-align: center;
+      font-family: SUSE, sans-serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: rgb(253, 5, 5);
+
+    }
+
+    .footer {
+      flex-shrink: 0;
+      margin-top: auto;
+    }
+
+    .footer__div p {
+      color: black;
+      font-family: SUSE, sans-serif;
+      font-size: 1.5rem;
+      background-color: rgb(156, 149, 185);
+      text-align: center;
+      height: 50px;
+      width: 100%;
+      margin: 0;
+      padding-top: 0.8rem;
+    }
+
+    .footer__div span a {
+      font-size: 30px;
+      margin-right: 5px;
+      color: rgb(253, 5, 5);
+      text-decoration: none;
+    }
+
+    .footer__div span a:hover {
+      text-decoration: underline;
+    }
+
+    /* Media Query for Small Screens */
+    @media (max-width: 900px) {
+      .heading__div {
+        margin-top: 0.5rem;
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+
+      }
+
+      .heading__div-logo {
+        background-color: white;
+        grid-column: 1/2;
+        width: 8rem;
+        height: 8rem;
+        object-fit: contain;
+        padding-bottom: -3rem;
+      }
+
+      .heading__div-h2 {
+        background-color: rgb(156, 149, 185);
+        color: rgb(73, 11, 61);
+        font-size: 2.5rem;
+        margin: 0;
+        padding-bottom: 0.4rem;
+        padding-top: 0.4rem;
+        grid-column: 2/3;
+        text-align: center;
+        padding-right: 5rem;
+        padding-bottom: -5rem;
+        height: 45%;
+        margin-top: 1.7rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .heading__div {
+        margin-top: 0rem;
+        display: grid;
+        grid-template-rows: auto auto;
+      }
+
+      .heading__div-logo {
+        grid-row: 1/2;
+        width: 100vw;
+        height: 5rem;
+        object-fit: contain;
+        margin-top: 0.5rem;
+
+
+      }
+
+      .heading__div-h2 {
+        background-color: rgb(156, 149, 185);
+        color: rgb(73, 11, 61);
+        font-size: 1.5rem;
+        margin: 0;
+        margin-top: 1rem;
+        padding-bottom: 0.4rem;
+        padding-top: 0.8rem;
+        grid-row: 2/3;
+        text-align: center;
+        padding-right: 5rem;
+        margin-left: -28rem;
+        padding: 1rem;
+      }
+
+      .subheading__div {
+        font-size: 1.2rem;
+
+      }
+
+      .content__div1 p {
+        font-size: 1rem;
+      }
+
+      .footer__div p {
+
+        font-size: 1rem;
+
+      }
+
+      .footer__div span a {
+        font-size: 1.2rem;
+
+      }
+
+
+    }
+  </style>
+</head>
+
+<body class="container">
+  <!-- <section class="headnav">
+    <header class="header">
+      <div class="header__div">
+        <img src="./../public/img/logo6.png" class="logo" alt="Digital Doctor" />
+      </div>
+    </header>
+  </section> -->
+
+  <section class="heading">
+    <div class="heading__div">
+      <img src="./../public/img/logo6.png" class="heading__div-logo" alt="Digital Doctor" />
+      <h2 class="heading__div-h2">Appointment Confirmation</h2>
+    </div>
+  </section>
+
+  <section class="subheading">
+    <div class="subheading__div">
+      <h4>
+        Dear <%= name %>, this is a confirmation email of a booked
+        appointment
+      </h4>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="content__div1">
+      <p>
+        An appointment has been scheduled with <%= doctorName %> which
+        will take place on <%= date %> at <%= time %>.
+        <br>
+        Please contact him/her on WhatsApp with this phone number <%= phone %> at the scheduled time.
+        <br>Please make
+        yourself available at the scheduled time.
+      </p>
+    </div>
+
+  </section>
+
+  <footer class="footer">
+    <div class="content__div2">
+      <p>Thank you for choosing Digital Doctor Service</p>
+    </div>
+    <div class="footer__div">
+
+      <p><span><a href="#">Unsubscribe</a></span> from this mail</p>
+    </div>
+  </footer>
+</body>
+
 </html>

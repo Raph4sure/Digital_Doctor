@@ -87,12 +87,25 @@ exports.login = async (req, res) => {
             return res.status(400).json({ error: "Invalid email or password" });
         }
 
+           const time = new Date().getHours();
+
+           let greet;
+
+           if (time < 12) {
+               greet = "Good Morning";
+           } else if (time < 16) {
+               greet = "Good Afternoon";
+           } else {
+               greet = "Good Evening";
+           }
+
         // create a session if password matches.
         req.session.doctorId = doctor.id;
         req.session.isLoggedIn = true;
         req.session.user = {
             id: doctor.id,
             role: ["doctor"],
+            greet,
         };
 
         res.json({ message: "Login Succesful", doctorId: doctor.id });
@@ -123,6 +136,7 @@ exports.doctorDashboard = async (req, res) => {
             pageTitle: "doctor Dashboard",
             cssPath: "/css/doctorDashboard.css",
             user: req.session.user,
+            greet: req.session.user.greet,
         });
     } catch (error) {
         console.error("Error fetching doctor data:", error.message);

@@ -39,8 +39,7 @@ router
     .get(appointmentController.getEditAppointment)
     .post(
         uploadFiles("medical_images", 5),
-        appointmentController.postEditAppointment,
-        
+        appointmentController.postEditAppointment
     );
 
 router.post("/deleteImage", appointmentController.deleteImage);

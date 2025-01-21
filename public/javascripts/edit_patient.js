@@ -239,7 +239,7 @@ const enhancedValidateForm = (formSelector) => {
                 const formDataObject = Object.fromEntries(formData.entries());
 
                 const response = await fetch(formAction, {
-                    method: "POST",
+                    method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
                     },

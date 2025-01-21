@@ -57,12 +57,11 @@
     // Show confirmation dialog
     const userConfirmed = confirm("Are you sure you want to delete this Admin?");
 
-    // If the user clicks "Cancel," prevent form submission
     if (!userConfirmed) {
       event.preventDefault();
       return false;
     }
-    return true; // Allow form submission
+    return true;
   }
 </script>
 </body>

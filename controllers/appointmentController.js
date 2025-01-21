@@ -5,6 +5,7 @@ const path = require("path");
 const { sendEmail } = require("./../middleware/email");
 
 // Booking An Appointment
+
 exports.getBookAppointment = async (req, res) => {
     try {
         // Fetch patient details from the database
@@ -19,12 +20,26 @@ exports.getBookAppointment = async (req, res) => {
 
         const patientData = rows[0]; // Get the patient details
 
+        // Fetching the selected doctor's details from the Doctors table
+        const doctorId = req.query.doctorId;
+        let selectedDoctor = null;
+
+        if (doctorId) {
+            const [doctorRows] = await db.query(
+                "SELECT id, first_name, last_name, specialization FROM Doctors WHERE id = ?", [doctorId]
+            );
+            if (doctorRows.length > 0) {
+                selectedDoctor = doctorRows[0];
+            }
+        }
+        
+        
         // Fetch the list of doctors from the Doctors table
-        const [doctorRows] = await db.query(
+        const [allDocotors] = await db.query(
             "SELECT id, first_name, last_name, specialization FROM Doctors"
         );
 
-        if (doctorRows.length === 0) {
+        if (allDocotors.length === 0) {
             return res.status(404).send("No doctors available");
         }
 
@@ -35,7 +50,8 @@ exports.getBookAppointment = async (req, res) => {
             message: "Welcome to the Patient login page",
             patientData, // Pass patientData to the view
             patientId: patientData.id, // Pass patientId to the view
-            doctors: doctorRows, // Pass the list of doctors to the view
+            selectedDoctor,
+            doctors: allDocotors, // Pass the list of doctors to the view
             user: req.session.user,
         });
     } catch (error) {
@@ -43,6 +59,7 @@ exports.getBookAppointment = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 };
+
 
 // route to post an Appointment
 exports.postBookAppointment = async (req, res) => {
@@ -122,6 +139,8 @@ exports.postBookAppointment = async (req, res) => {
                 doctorName: `Dr. ${doctor.first_name} ${doctor.last_name}`,
                 date: appointment_date,
                 time: appointment_time,
+                doctor: preffered_doctor,
+                phone: doctor.phone,
             }
         ).catch((err) => {
             // Logging the full error details
@@ -140,6 +159,8 @@ exports.postBookAppointment = async (req, res) => {
                 doctorName: `${first_name} ${last_name}`,
                 date: appointment_date,
                 time: appointment_time,
+                doctor: preffered_doctor,
+                phone: phone,
             }
         ).catch((err) =>
             console.error(
@@ -436,7 +457,9 @@ exports.deleteImage = async (req, res) => {
 
 // Deleting an appointment
 exports.deleteAppointmentById = async (req, res) => {
-    const { role } = req.session.user.role;
+    const role  = req.session.user.role;
+
+    console.log("role for Deleting: ", role);
 
     // console.log(req.method);
 

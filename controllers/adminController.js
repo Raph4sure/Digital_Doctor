@@ -69,12 +69,25 @@ exports.loginAdmin = async (req, res) => {
                 .json({ error: "Invalid username or password" });
         }
 
+        const time = new Date().getHours();
+
+        let greet;
+
+        if (time < 12) {
+            greet = "Good Morning";
+        } else if (time < 16) {
+            greet = "Good Afternoon";
+        } else {
+            greet = "Good Evening";
+        }
+
         // If password matches, create a session
         req.session.adminId = admin.id;
         req.session.isLoggedIn = true;
         req.session.user = {
             id: admin.id,
             role: [admin.role],
+            greet,
         };
 
         res.json({ message: "Login Successful", adminId: admin.id });
@@ -107,6 +120,7 @@ exports.adminDashboard = async (req, res) => {
             cssPath: "/css/adminDashboard.css",
             user: req.session.user,
             userRole: req.session.user.role,
+            greet: req.session.user.greet,
         });
     } catch (error) {
         console.error("Error fetching admin data:", error.message);

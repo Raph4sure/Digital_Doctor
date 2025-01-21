@@ -133,7 +133,7 @@
           </div>
 
 
-          <div class="form__group form__select-group form_val">
+          <!--     <div class="form__group form__select-group form_val">
             <label class="form__label" for="preferred_doctor">Select Your Preferred Doctor</label>
             <select name="doctor_id" id="doctor_id" class="form__select" validate-select>
               <option value="">-- Select a Doctor --</option>
@@ -146,6 +146,19 @@
               <% }) %>
 
             </select>
+            <span class="error-icon hidden">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </span>
+            <span class="success-icon hidden">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div class="error"></div>
+          </div> -->
+
+          <div class="form__group form__select-group form_val">
+            <label class="form__label" for="preferred_doctor">Your Preferred Doctor</label>
+            <input type="hidden" name="doctor_id" value="<%= selectedDoctor ? selectedDoctor.id : '' %>">
+            <input type="text" class="form__input form__input-anim" id="doctor_id" name="preferred_doctor" value="<%= selectedDoctor ? selectedDoctor.first_name + " " + selectedDoctor.last_name + " - " + selectedDoctor.specialization  : '' %>" readonly>
             <span class="error-icon hidden">
               <i class="fa-solid fa-circle-exclamation"></i>
             </span>
@@ -171,7 +184,8 @@
           <div class="form__group form_val">
             <label class="form__label form__label-anim" for="medical_image">Upload Previous Medical Records (if any)</label>
             <input type="file" class="form__input
-                            form__input-anim" id="medical_image" name="medical_images" accept=".jpg,.jpeg,.png" maxsize="2097152" multiple />
+                            form__input-anim" id="medical_image" name="medical_images" accept="image/png,
+                            image/jpeg, image/jpg" maxsize="2097152" multiple />
             <span class="error-icon hidden">
               <i class="fa-solid fa-circle-exclamation"></i>
             </span>
@@ -194,7 +208,7 @@
             <div class="error"></div>
           </div>
           <button class="form__button" type="submit">
-            Update
+            Book Appointment
           </button>
 
         </form>

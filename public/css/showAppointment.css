@@ -463,4 +463,17 @@ hr {
   text-decoration: none !important;
 }
 
+#button_delete {
+  background: none;
+  border: none;
+  color: blue;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 2.5rem;
+}
+#button_delete:hover {
+  color: rgb(253, 5, 5);
+  text-decoration: underline;
+}
+
 /*# sourceMappingURL=showAppointment.css.map */
