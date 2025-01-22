@@ -186,6 +186,12 @@ a:hover, a:focus, a:active {
     transition: font-size 0.1s !important;
   }
 }
+.logout-form {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
 .container {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, auto);
@@ -345,16 +351,26 @@ a:hover, a:focus, a:active {
 
 .container2 {
   display: grid;
-  grid-template-columns: repeat(10, auto);
-  grid-template-rows: repeat(8, auto);
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 80vh;
 }
 
 .top__container2 {
-  grid-column: 2/-1;
+  grid-column: 2/3;
   grid-row: 1/2;
   background-color: rgb(156, 149, 185);
   padding-left: 2rem;
   padding: 1rem 2rem 1rem 2rem;
+}
+
+.body {
+  grid-column: 2/-1;
+  grid-row: 2/3;
+  padding-left: 2rem;
+  margin-top: 2rem;
+  line-height: 6rem;
+  overflow-x: auto;
 }
 
 .side__bar {
@@ -385,27 +401,6 @@ a:hover, a:focus, a:active {
 .side__bar-a:hover {
   color: rgb(34, 55, 245);
   text-decoration: underline;
-}
-
-@media (max-width: 900px) {
-  .side__bar {
-    min-height: 75vh;
-  }
-}
-
-.body {
-  grid-column: 2/-1;
-  grid-row: 3/6;
-  padding-left: 2rem;
-  margin-bottom: 30rem;
-}
-@media (max-width: 900px) {
-  .body {
-    margin-top: -8rem;
-  }
-}
-.body-text {
-  margin-top: 2rem;
 }
 
 /*# sourceMappingURL=patientDashboard.css.map */

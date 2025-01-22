@@ -8,37 +8,10 @@
 }
 
 // start
-.container2 {
-    display: grid;
-    grid-template-columns: repeat(10, auto);
-    grid-template-rows: repeat(8, auto);
-    min-height: 70vh;
-}
 
 @import "partials/otherSidebar";
 
-.side__bar{
-    @include responsive(tab-port){
-        min-height: 75vh;
-    }
-}
-
 .body {
-    grid-column: 2/-1;
-    grid-row: 3/6;
-    padding-left: 2rem;
-    margin-bottom: 30rem;
-    margin-right: 3rem;
-    overflow-x: auto;
-    display: block;
-      @include responsive(tab-port){
-        margin-top: -85rem;
-    }
-
-    &-text {
-        margin-top: 2rem;
-    }
-
     .table {
         width: 100%;
         border-collapse: collapse;
@@ -62,19 +35,16 @@
 }
 
 hr {
-    border: 2px solid $body-color; /* Black solid line */
-    width: 95%; /* Line width */
-    margin: 20px auto; /* Center the line */
+    border: 2px solid $body-color;
+    width: 95%;
+    margin: 20px auto;
 }
 
 // end
 
 .div__style {
-    grid-column: 2/-1;
-    grid-row: 6/-1;
-    justify-self: center;
-    margin-top: 5rem;
-    margin-bottom: 5rem;
+    text-align: center;
+    margin-bottom: 4rem;
 
     &-button {
         text-decoration: none;
@@ -93,15 +63,15 @@ hr {
     }
 }
 
-#button_delete{
-    background:none; 
-    border:none; 
-    color:blue; 
-    text-decoration:none; 
-    cursor:pointer; 
-    font-size:2.5rem;
+#button_delete {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 2.5rem;
 
-    &:hover{
+    &:hover {
         color: $button-color;
         text-decoration: underline;
     }

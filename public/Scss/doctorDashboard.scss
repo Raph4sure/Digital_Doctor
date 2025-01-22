@@ -1,35 +1,7 @@
 @import "main";
 
 // start
-.container2 {
-    display: grid;
-    grid-template-columns: repeat(10, auto);
-    grid-template-rows: repeat(8, auto);
-}
 
 @import "partials/otherSidebar";
-
-
-.side__bar{
-    @include responsive(tab-port){
-        min-height: 75vh;
-    }
-}
-
-.body {
-    grid-column: 2/-1;
-    grid-row: 3/6;
-    padding-left: 2rem;
-    margin-bottom: 30rem;
-    
-
-     @include responsive(tab-port){
-        margin-top: -10rem;
-    }
- 
-    &-text {
-        margin-top: 2rem;
-    }
-}
 
 // end

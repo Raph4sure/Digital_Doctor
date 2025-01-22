@@ -1,19 +1,18 @@
-
-  <%- include('partials/header') %>
-  <%- include('partials/nav_bar') %>
-
-
-  <main class="container2">
-    <section class="top__container2">
-      <h3 class="top__container2-h2">My Appointments</h3>
-    </section>
+<%- include('partials/header') %>
+<%- include('partials/nav_bar') %>
 
 
-    <%- include('partials/adminSideBar') %>
+<main class="container2">
+  <section class="top__container2">
+    <h3 class="top__container2-h2">My Appointments</h3>
+  </section>
 
 
+  <%- include('partials/adminSideBar') %>
+
+  <section class="body">
     <% if (appointments && appointments.length > 0) { %>
-    <section class="body">
+    <section class="body1">
       <table class="table">
         <thead class="table__head">
           <th>Preferred Doctor</th>
@@ -74,7 +73,7 @@
     </section>
     <% } else { %>
     <!-- <p>No appointments found.</p> -->
-    <section class="body">
+    <section class="body1">
       <p style="font-weight: bold; color: red;">No appointments found.</p>
     </section>
     <% } %>
@@ -90,10 +89,13 @@
         <% if (currentPage < totalPages) { %>
         <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>" class="div__style-pagination__link">Next</a>
         <% } %>
-  </main>
+      </div>
+    </div>
+  </section>
+</main>
 
 
-   <%- include('partials/footer') %>
+<%- include('partials/footer') %>
 
 </body>
 

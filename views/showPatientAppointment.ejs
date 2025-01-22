@@ -8,75 +8,79 @@
   </section>
 
   <%- include("partials/patienceSideBar") %>
-
-  <% if (appointments && appointments.length > 0) { %>
   <section class="body">
-    <table class="table">
-      <thead class="table__head">
-        <th>Preferred Doctor</th>
-        <th>Appointment Date</th>
-        <th>Appointment Time</th>
-        <th>Appointment Reasons</th>
-        <th>Existing Medical Record</th>
-        <th>Status</th>
-        <th>Medical Images</th>
-        <th>Action</th>
-      </thead>
-      <% appointments.forEach(appointment => { %>
-      <tbody>
-        <tr>
-          <td><%= appointment.preferred_doctor %></td>
-          <td><%= appointment.appointment_date ? appointment.appointment_date.toISOString().split("T")[0] : "" %></td>
-          <td><%= appointment.appointment_time %></td>
-          <td><%= appointment.appointment_reasons %></td>
-          <td><%= appointment.existing_medical_record %></td>
-          <td><%= appointment.status %></td>
-          <td>
-            <% if (Array.isArray(appointment.medical_images)
+    <% if (appointments && appointments.length > 0) { %>
+    <section class="body1">
+      <table class="table">
+        <thead class="table__head">
+          <th>Preferred Doctor</th>
+          <th>Appointment Date</th>
+          <th>Appointment Time</th>
+          <th>Appointment Reasons</th>
+          <th>Existing Medical Record</th>
+          <th>Status</th>
+          <th>Medical Images</th>
+          <th>Action</th>
+        </thead>
+        <% appointments.forEach(appointment => { %>
+        <tbody>
+          <tr>
+            <td><%= appointment.preferred_doctor %></td>
+            <td><%= appointment.appointment_date ? appointment.appointment_date.toISOString().split("T")[0] : "" %></td>
+            <td><%= appointment.appointment_time %></td>
+            <td><%= appointment.appointment_reasons %></td>
+            <td><%= appointment.existing_medical_record %></td>
+            <td><%= appointment.status %></td>
+            <td>
+              <% if (Array.isArray(appointment.medical_images)
                                 && appointment.medical_images.length > 0) { %>
-            <%
+              <%
                                 appointment.medical_images.forEach(function(image)
                                 { %>
-            <img src="<%= image %>" alt="Medical Image" style="
+              <img src="<%= image %>" alt="Medical Image" style="
                                         width: 100px;
                                         height: auto;
                                         margin-right: 10px;
                                     " />
-            <% }); %> <% } else { %> Not Available <% } %>
-          </td>
+              <% }); %> <% } else { %> Not Available <% } %>
+            </td>
 
 
-          <td>
-            <a class="link" href="/editAppointment/<%= appointment.id %>">Edit</a>
-            <br />
+            <td>
+              <a class="link" href="/editAppointment/<%= appointment.id %>">Edit</a>
+              <br />
 
 
-            <form action="/deleteAppointment/<%= appointment.id %>?_method=DELETE" method="POST" value="DELETE" onsubmit="return confirmDelete(event)" style="display:inline;">
-              <input type="hidden" name="_method" value="DELETE" />
-              <button type="submit" id="button_delete">Delete</button>
+              <form action="/deleteAppointment/<%= appointment.id %>?_method=DELETE" method="POST" value="DELETE" onsubmit="return confirmDelete(event)" style="display:inline;">
+                <input type="hidden" name="_method" value="DELETE" />
+                <button type="submit" id="button_delete">Delete</button>
 
-            </form>
-          </td>
-        </tr>
-      </tbody>
-      <% }) %>
-    </table>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+        <% }) %>
+      </table>
+    </section>
+
+    <% } else { %>
+    <section class="body1">
+      <p style="font-weight: bold; color: red;">No appointments found.</p>
+      <% } %>
+      <div class="div__style">
+        <a class="div__style-button" href="/showAllDoctors">Book Appointment </a>
+      </div>
+    </section>
   </section>
-  <% } else { %>
-  <section class="body">
-    <p style="font-weight: bold; color: red;">No appointments found.</p>
-  </section>
-  <% } %>
-  <div class="div__style">
-    <a class="div__style-button" href="/showAllDoctors">Book Appointment </a>
-  </div>
+
+
 </main>
 
 <%- include('partials/footer') %>
 <script>
-  function confirmDelete(event){
+  function confirmDelete(event) {
     const userConfirmed = confirm("Are you sure you want to delete this appointment?")
-    if(!userConfirmed){
+    if (!userConfirmed) {
       event.preventDefault();
       return false;
     }

@@ -14,8 +14,8 @@
     <nav class="nav">
       <div class="nav__div">
         <h3 class="nav__div-h3">MENU</h3>
-        <a href="./" class="nav__div_li">Home</a>
-        <a class="nav__div_li" href="./showAllDoctors">Consultation</a>
+        <a href="/" class="nav__div_li">Home</a>
+        <a class="nav__div_li" href="/showAllDoctors">Consultation</a>
         <a class="nav__div_li" href="
         <%= user && user.role.includes('patient') ? '/patientDashboard' : 
           user && user.role.includes('doctor') ? '/doctorDashboard' : 
@@ -25,9 +25,20 @@
         </a>
 
 
-        <a class="nav__div_li" href="./contact">Contact Us</a>
-        <a class="nav__div_li" href="./about">About</a>
+        <a class="nav__div_li" href="/contact">Contact Us</a>
+        <a class="nav__div_li" href="/about">About</a>
+
+        <% if (user) { %>
+
+        <form action="/logout" method="POST" class="logout-form">
+          <button type="submit" class="nav__div_li logout-button nav__div_button">Logout</button>
+        </form>
+
+        <% } else { %>
+
         <a href="/loginPatient"><button class="nav__div_button">Login</button></a>
+
+        <% } %>
 
       </div>
 

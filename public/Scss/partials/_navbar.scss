@@ -10,8 +10,6 @@
 @include responsive(tab-port) {
     .nav {
         height: 63rem;
-        // height: 42%;
-        // width: 35vw;
         width: 35rem;
         position: absolute;
         background-color: $footer-color;
@@ -20,11 +18,7 @@
         z-index: 2;
         right: 0;
         @include responsive(phone) {
-            // height: 45%;
-            // width: 45vw;
             height: 70rem;
-            // width: 35rem;
-            // transform: translateX(45vw);
             transform: translateX(50vw);
         }
 
@@ -47,6 +41,7 @@
         }
     }
 
+
     .inp {
         display: none;
         visibility: hidden;
@@ -65,7 +60,7 @@
         border-radius: 2px;
         background-color: $button-text-color;
         box-shadow: 0 0 10px $shadow-box-color;
-        @include responsive(phone){
+        @include responsive(phone) {
             top: 1rem;
         }
 
@@ -142,3 +137,10 @@
         }
     }
 }
+
+.logout-form {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
