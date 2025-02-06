@@ -31,7 +31,7 @@ exports.registerAdmin = async (req, res) => {
 
         await db.query(query, [name, email, hashedPassword, role]);
 
-        res.status(201).json({ message: "Admin registered succesfuly" });
+        res.status(201).json({ message: "Admin registered successfully" });
     } catch (error) {
         res.status(500).json({
             error: "Registration failed: " + error.message,

@@ -6,11 +6,18 @@
         <li class="side__bar-li"><a class="side__bar-a" href="/showAllAppointment">Appointments</a></li>
         <li class="side__bar-li"><a class="side__bar-a" href="/showAllDoctors">Doctors</a></li>
 
-        <% if (userRole && userRole.includes("Super Admin")) { %>
+
 
         <li class="side__bar-li"><a class="side__bar-a" href="/showAllAdmin">Admins</a></li>
 
-        <% } %>
+
+
+
+        <!-- <% if (userRole && userRole.includes("Super Admin")) { %>
+
+        <li class="side__bar-li"><a class="side__bar-a" href="/showAllAdmin">Admins</a></li>
+
+        <% } %> -->
 
 
         <form action="/logout" method="POST">

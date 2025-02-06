@@ -13,8 +13,9 @@
 
   </section>
 
-  <% if (admins && admins.length > 0) { %>
   <section class="body">
+  <% if (admins && admins.length > 0) { %>
+  <section class="body1">
     <table class="table">
       <thead class="table__head">
         <th>Names</th>
@@ -40,13 +41,14 @@
   </section>
 
   <% } else { %>
-  <section class="body">
+  <section class="body1">
     <p style="font-weight: bold; color: red;">No Admin Found.</p>
   </section>
   <% } %>
   <div class="div__style">
     <a class="div__style-button" href="/registerAdmin">Register Admin </a>
   </div>
+  </section>
 </main>
 
 <%- include('partials/footer') %>

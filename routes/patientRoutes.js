@@ -13,7 +13,7 @@ router.get(
 // Patient Registration routes
 router
     .route("/registerPatient")
-    .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
+    // .all(requireLogin(["Admin", "SuperAdmin", "patient"]))
     .get((req, res) => {
         res.render("registerPatient", {
             pageTitle: "registerPatient",

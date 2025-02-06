@@ -6,7 +6,7 @@ const adminController = require("../controllers/adminController");
 // Route to register a new admin
 router.post(
     "/registerAdmin",
-    requireLogin(["Super Admin"]),
+    requireLogin(["Super Admin", "Admin"]),
     adminController.registerAdmin
 );
 
@@ -42,7 +42,7 @@ router.get(
 // Route to manage admins
 router.get(
     "/showAllAdmin",
-    requireLogin(["Super Admin"]),
+    // requireLogin(["Super Admin"]),
     adminController.showAllAdmin
 );
 
