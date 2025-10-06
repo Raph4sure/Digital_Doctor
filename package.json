@@ -3,7 +3,9 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "concurrently \"nodemon app.js\" \"sass --watch public/Scss:public/css\"",
+        "start": "node app.js",
+        "build:css": "sass public/Scss:public/css",
+        "start2": "concurrently \"nodemon app.js\" \"sass --watch public/Scss:public/css\"",
         "sass": "sass --watch public/Scss:public/css"
     },
     "dependencies": {
