@@ -99,7 +99,7 @@ app.use(function (err, req, res, next) {
 db.getConnection()
     .then(() => {
         console.log("Connected to the database");
-        const port = process.env.PORT || 3001;
+        const port = process.env.PORT || 21037;
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);
         });
