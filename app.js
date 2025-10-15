@@ -1,4 +1,5 @@
 const dotenv = require("dotenv");
+const fs = require("fs");
 dotenv.config({ path: "./config.env" });
 // Importing others
 const createError = require("http-errors");
