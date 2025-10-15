@@ -9,7 +9,7 @@ const pool = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0,
     ssl: {
-        rejectUnauthorized: true, // This enforces a secure connection
+        ca: fs.readFileSync(__dirname + "/ca.pem"),
     },
 });
 

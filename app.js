@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
 
 // Importing the router
 const commonRouter = require("./routes/commonRoutes");
@@ -24,6 +25,17 @@ const methodOverride = require("method-override");
 /* const crypto = require("crypto");
 const secret = crypto.randomBytes(64).toString("hex");
 console.log(secret); */
+
+
+const sessionStore = new MySQLStore({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    ssl: { ca: fs.readFileSync(__dirname + "/ca.pem") },
+});
+
 
 const app = express();
 app.use(cors()); // Use CORS to allow requests from any origin
@@ -51,7 +63,8 @@ app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
+        store: sessionStore,
         cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }, // 1 day
     })
 );
