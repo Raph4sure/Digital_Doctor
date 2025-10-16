@@ -1,4 +1,6 @@
-
 config.env
 config.env.avien
 node_modules/
+
+# Ignore source map files
+**/*.css.map
