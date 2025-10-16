@@ -22,6 +22,9 @@ html {
     @include responsive(phone) {
         font-size: 35%; // 1rem = 5.6px
     }
+    @include responsive(sm-phone) {
+        font-size: 27%; // 1rem = 5.6px
+    }
 }
 
 body {
