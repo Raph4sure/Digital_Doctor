@@ -25,6 +25,7 @@ router
             cssPath: "/css/loginDoctor.css",
             message: "Welcome to the Doctors Login page",
             user: req.session.user,
+            apiBaseUrl: process.env.API_BASE_URL,
         });
     })
     .post(doctorController.login);

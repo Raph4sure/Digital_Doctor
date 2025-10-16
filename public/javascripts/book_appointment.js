@@ -246,7 +246,7 @@ const enhancedValidateForm = (formSelector) => {
 
             try {
                 const response = await fetch(
-                    "http://localhost:3300/bookAppointment",
+                    `${API_BASE_URL}/bookAppointment`,
                     {
                         method: "POST",
                         body: formData, 
@@ -258,7 +258,7 @@ const enhancedValidateForm = (formSelector) => {
                         " ✅ Appointment Booked Successfully, You Will Recieve A Confirmation Email Shortly"
                     );
                     formElement.reset();
-                    window.location.href = "http://localhost:3300/patientDashboard";
+                    window.location.href = `${API_BASE_URL}/patientDashboard`;
                 } else {
                     const data = await response.json();
                     alert(data.error || "Registration failed");

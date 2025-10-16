@@ -119,7 +119,7 @@ const validateForm = (formSelector) => {
 
         try {
             const response = await fetch(
-                "http://localhost:3300/loginPatient",
+                `${API_BASE_URL}/loginPatient`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -131,7 +131,7 @@ const validateForm = (formSelector) => {
 
             if (response.ok) {
                 alert(result.message);
-                window.location.href = "http://localhost:3300/patientDashboard";
+                window.location.href = `${API_BASE_URL}/patientDashboard`;
 
             } else {
                 if (result.error.includes("email")) {

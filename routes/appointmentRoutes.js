@@ -6,6 +6,8 @@ const { requireLogin } = require("../middleware/authMiddleware");
 const appointmentController = require("../controllers/appointmentController");
 
 // Route to handle booking appointment
+
+
 router
     .route("/bookAppointment")
     .all(requireLogin(["Admin", "SuperAdmin", "patient"]))

@@ -118,7 +118,7 @@ const validateForm = (formSelector) => {
         const password = document.getElementById("password").value;
 
         try {
-            const response = await fetch("http://localhost:3300/loginAdmin", {
+            const response = await fetch(`${API_BASE_URL}/loginAdmin`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -128,7 +128,7 @@ const validateForm = (formSelector) => {
 
             if (response.ok) {
                 alert(result.message);
-                window.location.href = "http://localhost:3300/adminDashboard";
+                window.location.href = `${API_BASE_URL}/adminDashboard`;
 
             } else {
                 if (result.error.includes("email")) {
