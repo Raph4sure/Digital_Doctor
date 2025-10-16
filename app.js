@@ -86,7 +86,7 @@ app.use("/api/doctors", doctorRouter);
 app.use("/api/appointment", appointmentRouter);
 app.use("/api/admin", adminRouter);*/
 
-// Use the static routes
+// static routes
 app.use("/", commonRouter);
 app.use("/", doctorRouter);
 app.use("/", adminRouter);
@@ -113,7 +113,7 @@ app.use(function (err, req, res, next) {
 db.getConnection()
     .then(() => {
         console.log("Connected to the database");
-        const port = process.env.PORT || 3306;
+        const port = process.env.PORT || 3300;
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);
         });
