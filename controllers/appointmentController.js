@@ -26,14 +26,14 @@ exports.getBookAppointment = async (req, res) => {
 
         if (doctorId) {
             const [doctorRows] = await db.query(
-                "SELECT id, first_name, last_name, specialization FROM Doctors WHERE id = ?", [doctorId]
+                "SELECT id, first_name, last_name, specialization FROM Doctors WHERE id = ?",
+                [doctorId]
             );
             if (doctorRows.length > 0) {
                 selectedDoctor = doctorRows[0];
             }
         }
-        
-        
+
         // Fetch the list of doctors from the Doctors table
         const [allDocotors] = await db.query(
             "SELECT id, first_name, last_name, specialization FROM Doctors"
@@ -48,18 +48,17 @@ exports.getBookAppointment = async (req, res) => {
             pageTitle: "Book Appointment",
             cssPath: "/css/bookAppointment.css",
             message: "Welcome to the Patient login page",
-            patientData, // Pass patientData to the view
-            patientId: patientData.id, // Pass patientId to the view
-            selectedDoctor,
-            doctors: allDocotors, // Pass the list of doctors to the view
             user: req.session.user,
+            patientData,
+            doctors: allDocotors,
+            selectedDoctor,
+            apiBaseUrl: process.env.API_BASE_URL,
         });
     } catch (error) {
         console.error("Error fetching patient data:", error);
         res.status(500).send("Internal Server Error");
     }
 };
-
 
 // route to post an Appointment
 exports.postBookAppointment = async (req, res) => {
@@ -344,7 +343,6 @@ exports.getEditAppointment = async (req, res) => {
             }
         });
 
-
         res.render("editAppointment", {
             appointment: appointments[0],
             pageTitle: "editAppointment",
@@ -457,7 +455,7 @@ exports.deleteImage = async (req, res) => {
 
 // Deleting an appointment
 exports.deleteAppointmentById = async (req, res) => {
-    const role  = req.session.user.role;
+    const role = req.session.user.role;
 
     console.log("role for Deleting: ", role);
 
