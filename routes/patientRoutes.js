@@ -20,7 +20,6 @@ router
             cssPath: "/css/registerPatient.css",
             message: "Welcome to the Patient Reg page",
             user: req.session.user,
-            apiBaseUrl: process.env.API_BASE_URL,
         });
     })
     .post(patientController.registerPatient);
@@ -34,7 +33,6 @@ router
             cssPath: "/css/loginPatient.css",
             message: "Welcome to the Patient login page",
             user: req.session.user,
-            apiBaseUrl: process.env.API_BASE_URL,
         });
     })
     .post(patientController.loginPatient);

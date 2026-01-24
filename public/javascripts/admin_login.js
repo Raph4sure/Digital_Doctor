@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config({ path: "./../../config.env" });
+
 const validateSingleFormGroup = (formGroup) => {
     const errorContainer = formGroup.querySelector(".error");
     const errorIcon = formGroup.querySelector(".error-icon");
@@ -118,7 +121,7 @@ const validateForm = (formSelector) => {
         const password = document.getElementById("password").value;
 
         try {
-            const response = await fetch(`${API_BASE_URL}/loginAdmin`, {
+            const response = await fetch('/loginAdmin', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -128,7 +131,7 @@ const validateForm = (formSelector) => {
 
             if (response.ok) {
                 alert(result.message);
-                window.location.href = `${API_BASE_URL}/adminDashboard`;
+                window.location.href = `${process.env.DB_HOST2}/adminDashboard`;
 
             } else {
                 if (result.error.includes("email")) {

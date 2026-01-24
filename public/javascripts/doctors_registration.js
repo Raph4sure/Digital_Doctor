@@ -240,7 +240,7 @@ const enhancedValidateForm = (formSelector) => {
 
             try {
                 const response = await fetch(
-                    `${API_BASE_URL}/doctorRegister`,
+                    '/doctorRegister',
                     {
                         method: "POST",
                         body: formData, // Use FormData directly, no need for Content-Type header
@@ -252,7 +252,7 @@ const enhancedValidateForm = (formSelector) => {
                 if (response.ok) {
                     alert("Registration Successful");
                      window.location.href =
-                         `${API_BASE_URL}/adminDashboard`;
+                         '/adminDashboard';
                     formElement.reset(); // Reset form after successful submission
                 } else {
                     alert(data.error || "Registration failed");

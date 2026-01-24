@@ -16,7 +16,6 @@ router.get("/registerAdmin", async (req, res) => {
         cssPath: "/css/registerAdmin.css",
         message: "Welcome to the Admin Registration Page",
         user: req.session.user,
-        apiBaseUrl: process.env.API_BASE_URL,
     });
 });
 
@@ -29,7 +28,6 @@ router
             cssPath: "/css/loginAdmin.css",
             message: "Welcome to the Admin Login Page",
             user: req.session.user,
-            apiBaseUrl: process.env.API_BASE_URL,
         });
     })
     .post(adminController.loginAdmin);

@@ -34,7 +34,7 @@ const validateAllFormGroups = (formToValidate) => {
     formGroups.forEach((formGroup) => {
         validateSingleFormGroup(formGroup);
     });
-};
+}
 
 const validateOptions = [
     {
@@ -118,8 +118,7 @@ const validateForm = (formSelector) => {
         const password = document.getElementById("password").value;
 
         try {
-            const response = await fetch(
-                `${API_BASE_URL}/loginPatient`,
+            const response = await fetch('/loginPatient',
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -131,7 +130,7 @@ const validateForm = (formSelector) => {
 
             if (response.ok) {
                 alert(result.message);
-                window.location.href = `${API_BASE_URL}/patientDashboard`;
+                window.location.href = '/patientDashboard';
 
             } else {
                 if (result.error.includes("email")) {

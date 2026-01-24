@@ -52,7 +52,6 @@ exports.getBookAppointment = async (req, res) => {
             patientData,
             doctors: allDocotors,
             selectedDoctor,
-            apiBaseUrl: process.env.API_BASE_URL,
         });
     } catch (error) {
         console.error("Error fetching patient data:", error);

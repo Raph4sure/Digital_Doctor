@@ -215,7 +215,7 @@ const enhancedValidateForm = (formSelector) => {
 
             try {
                 const response = await fetch(
-                    `${API_BASE_URL}/registerAdmin`,
+                    '/registerAdmin',
                     {
                         method: "POST",
                         headers: {

@@ -118,7 +118,7 @@ const validateForm = (formSelector) => {
         const password = document.getElementById("password").value;
 
         try {
-            const response = await fetch(`${API_BASE_URL}/loginDoctor`, {
+            const response = await fetch('/loginDoctor', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -128,7 +128,7 @@ const validateForm = (formSelector) => {
 
             if (response.ok) {
                 alert(result.message);
-                window.location.href = `${API_BASE_URL}/doctorDashboard`;
+                window.location.href = '/doctorDashboard';
 
                 // redirect to the dashboard page
             } else {
