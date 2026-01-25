@@ -241,33 +241,7 @@ exports.getEditPatient = async (req, res) => {
     }
 };
 
-// posting edited patient profile
-/* exports.getPostPatient = async (req, res) => {
-    try {
-        const patientId = req.params.id;
 
-        const { first_name, last_name, phone, date_of_birth, gender, address } =
-            req.body;
-
-
-        const query = `UPDATE Patients SET first_name = ?, last_name = ?, phone = ?, date_of_birth = ?, gender = ?, address = ? WHERE id = ?`;
-
-        await db.query(query, [
-            first_name,
-            last_name,
-            phone,
-            date_of_birth,
-            gender,
-            address,
-            patientId,
-        ]);
-     
-        res.status(200).json({ message: "Update Successful" });
-
-    } catch (error) {
-        res.status(500).json("Error Updating Patient " + error.message);
-    }
-}; */
 
 // Controller
 exports.updatePatient = async (req, res) => {

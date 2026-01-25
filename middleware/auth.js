@@ -13,19 +13,3 @@ function requireLogin(req, res, next) {
 
 
 
-
-
-// function requireLogin(req, res, next) {
-//     if (req.session && req.session.isLoggedIn) {
-//         next();
-//     } else {
-//         // return res
-//         //     .status(401)
-//         //     .json({ error: "Unathourized: You need to log in " });
-//         console.log("User not logged in, redirecting to login page...");
-
-//         return res.redirect('/login?alert=Please%20log%20in%20to%20continue');
-//     }
-// }
-
-// module.exports = requireLogin;

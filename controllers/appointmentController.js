@@ -1,4 +1,3 @@
-// requiring bcrypt
 const db = require("./../database");
 const fs = require("fs");
 const path = require("path");
