@@ -1,3 +1,5 @@
+import { successfulProgress } from "../utils/notification.js";
+
 const validateSingleFormGroup = (formGroup) => {
     const errorContainer = formGroup.querySelector(".error");
     const errorIcon = formGroup.querySelector(".error-icon");
@@ -118,7 +120,7 @@ const validateForm = (formSelector) => {
         const password = document.getElementById("password").value;
 
         try {
-            const response = await fetch('/loginDoctor', {
+            const response = await fetch("/loginDoctor", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -127,8 +129,9 @@ const validateForm = (formSelector) => {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.message);
-                window.location.href = '/doctorDashboard';
+                successfulProgress("Login Succesful 👍️", () => {
+                    window.location.href = "/doctorDashboard";
+                });
 
                 // redirect to the dashboard page
             } else {
@@ -170,4 +173,3 @@ inputAnimations.forEach((input, index) => {
         }
     });
 });
-

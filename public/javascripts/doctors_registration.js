@@ -31,7 +31,6 @@ const validateSingleFormGroup = (formGroup) => {
         }
     }
 
-
     // Toggle error/success state
     if (formGroupError) {
         input.classList.add("form__input--error");
@@ -58,7 +57,9 @@ const validateOptions = [
         attribute: "required",
         isValid: (input) => {
             if (input.type === "file") {
-                return !input.hasAttribute("required") || input.files.length > 0;
+                return (
+                    !input.hasAttribute("required") || input.files.length > 0
+                );
             }
             return input.value.trim() !== "";
         },
@@ -67,29 +68,42 @@ const validateOptions = [
     {
         attribute: "minlength",
         isValid: (input) => input.value.length >= parseInt(input.minLength, 10),
-        errorMessage: (input) => `${input.name} must be at least ${input.minLength} characters`,
+        errorMessage: (input) =>
+            `${input.name} must be at least ${input.minLength} characters`,
     },
     {
         attribute: "custommaxlength",
-        isValid: (input) => input.value.length <= parseInt(input.getAttribute("custommaxlength"), 10),
-        errorMessage: (input) => `${input.name} must be less than ${input.getAttribute("custommaxlength")} characters`,
+        isValid: (input) =>
+            input.value.length <=
+            parseInt(input.getAttribute("custommaxlength"), 10),
+        errorMessage: (input) =>
+            `${input.name} must be less than ${input.getAttribute(
+                "custommaxlength"
+            )} characters`,
     },
     {
         attribute: "pattern",
         isValid: (input) => new RegExp(input.pattern).test(input.value),
-        errorMessage: (input) => `${input.name} should match the required format`,
+        errorMessage: (input) =>
+            `${input.name} should match the required format`,
     },
     {
         attribute: "match",
         isValid: (input) => {
-            const matchInput = document.querySelector(`#${input.getAttribute("match")}`);
+            const matchInput = document.querySelector(
+                `#${input.getAttribute("match")}`
+            );
             return matchInput && matchInput.value.trim() === input.value.trim();
         },
-        errorMessage: (input) => `${input.name} must match ${input.getAttribute("match")}`,
+        errorMessage: (input) =>
+            `${input.name} must match ${input.getAttribute("match")}`,
     },
     {
         attribute: "required-radio",
-        isValid: (input) => Array.from(document.querySelectorAll(`input[name="${input.name}"]`)).some((btn) => btn.checked),
+        isValid: (input) =>
+            Array.from(
+                document.querySelectorAll(`input[name="${input.name}"]`)
+            ).some((btn) => btn.checked),
         errorMessage: (input) => `Please select a ${input.name}`,
     },
     {
@@ -97,14 +111,16 @@ const validateOptions = [
         isValid: (input) => input.checked,
         errorMessage: () => "Please agree to the terms",
     },
-// validation for image or files
+    // validation for image or files
     {
         attribute: "accept",
         isValid: (input) => {
             if (input.type !== "file") return true;
-            if (!input.files.length) return true; 
+            if (!input.files.length) return true;
             const file = input.files[0];
-            const allowedTypes = input.accept.split(",").map((type) => type.trim());
+            const allowedTypes = input.accept
+                .split(",")
+                .map((type) => type.trim());
             return allowedTypes.includes(file.type);
         },
         errorMessage: (input) => {
@@ -116,16 +132,19 @@ const validateOptions = [
         attribute: "maxsize",
         isValid: (input) => {
             if (input.type !== "file") return true;
-            if (!input.files.length) return true; 
+            if (!input.files.length) return true;
             const file = input.files[0];
             const maxSize = parseInt(input.getAttribute("maxsize"), 10);
             return file.size <= maxSize;
         },
-        errorMessage: (input) => 
-            `File size must not exceed ${(parseInt(input.getAttribute("maxsize"), 10) / 1024 / 1024).toFixed(2)} MB`,
-    }
+        errorMessage: (input) =>
+            `File size must not exceed ${(
+                parseInt(input.getAttribute("maxsize"), 10) /
+                1024 /
+                1024
+            ).toFixed(2)} MB`,
+    },
 ];
-
 
 // Form data handling functions
 const captureFormData = (form) => {
@@ -239,21 +258,18 @@ const enhancedValidateForm = (formSelector) => {
             updateSubmitButton(true);
 
             try {
-                const response = await fetch(
-                    '/doctorRegister',
-                    {
-                        method: "POST",
-                        body: formData, // Use FormData directly, no need for Content-Type header
-                    }
-                );
+                const response = await fetch("/doctorRegister", {
+                    method: "POST",
+                    body: formData, // Use FormData directly, no need for Content-Type header
+                });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    alert("Registration Successful");
-                     window.location.href =
-                         '/adminDashboard';
-                    formElement.reset(); // Reset form after successful submission
+                    successfulProgress("Registration Successful👍️", () => {
+                        window.location.href = "/adminDashboard";
+                        formElement.reset();
+                    });
                 } else {
                     alert(data.error || "Registration failed");
                 }
@@ -282,4 +298,3 @@ const handleLabelAnimation = () => {
 // Initialize the form validation and handling
 enhancedValidateForm("#registrationForm");
 handleLabelAnimation();
-
