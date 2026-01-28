@@ -198,6 +198,71 @@ a:hover, a:focus, a:active {
   display: inline;
 }
 
+.succesful-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 400px;
+  background: #28a745;
+  border-radius: 4px;
+  padding: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 9999;
+  color: #ffffff;
+  transform: translateX(130%);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.succesful-container.show {
+  transform: translateX(0);
+}
+
+.succesful-container::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: #03fd3d;
+  animation: progress 3s linear forwards;
+}
+
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+.succesful-content {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-right: 20px;
+  color: #333;
+  font-weight: 500;
+}
+
+.succesful-close {
+  position: absolute;
+  top: -5px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.succesful-close:hover {
+  color: #b9b4b4;
+}
+
 .container {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, auto);
@@ -384,14 +449,16 @@ a:hover, a:focus, a:active {
 
 .form {
   border-radius: 8rem;
+}
+.form__h2 {
+  text-align: center;
+}
+.form {
   background-color: #f5f4f8;
   padding: 5rem;
   min-width: 50vw;
   display: flex;
   flex-direction: column;
-}
-.form__h2 {
-  text-align: center;
 }
 @media (max-width: 1900px) {
   .form {

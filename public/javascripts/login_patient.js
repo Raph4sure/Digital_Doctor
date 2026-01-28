@@ -1,3 +1,5 @@
+import { successfulProgress } from "../utils/notification.js";
+
 const validateSingleFormGroup = (formGroup) => {
     const errorContainer = formGroup.querySelector(".error");
     const errorIcon = formGroup.querySelector(".error-icon");
@@ -34,7 +36,7 @@ const validateAllFormGroups = (formToValidate) => {
     formGroups.forEach((formGroup) => {
         validateSingleFormGroup(formGroup);
     });
-}
+};
 
 const validateOptions = [
     {
@@ -118,20 +120,22 @@ const validateForm = (formSelector) => {
         const password = document.getElementById("password").value;
 
         try {
-            const response = await fetch('/loginPatient',
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                }
-            );
+            const response = await fetch("/loginPatient", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            });
 
             const result = await response.json();
 
-            if (response.ok) {
-                alert(result.message);
-                window.location.href = '/patientDashboard';
+            // if (response.ok) {
+            //     alert(result.message);
+            //     window.location.href = '/patientDashboard';
 
+            if (response.ok) {
+                successfulProgress("Login Succesful 👍️", () => {
+                    window.location.href = "/patientDashboard";
+                });
             } else {
                 if (result.error.includes("email")) {
                     const emailError = document

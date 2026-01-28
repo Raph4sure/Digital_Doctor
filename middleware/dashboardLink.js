@@ -11,7 +11,7 @@ const setDashboardLink = (req, res, next) => {
         (req.session.user.role === "Admin" ||
             req.session.user.role === "Super Admin")
     ) {
-        dashboardLink = "/patientDashboard";
+        dashboardLink = "/adminDashboard";
     }
 
     res.locals.dashboardLink = dashboardLink;
