@@ -17,6 +17,9 @@
     }
     .lab {
         flex: 0 0 79%;
+        display: flex;
+        align-content: center;
+        align-self: center;
     }
 
     .inp {
@@ -29,11 +32,9 @@
         flex-basis: auto;
         justify-content: flex-end;
         align-items: center;
-        padding-top: 0.5rem;
 
         .nav__div {
             margin-right: 5rem;
-            margin-top: -3rem;
 
             @include responsive(phone) {
                 margin-right: 1rem;
